@@ -1,0 +1,12 @@
+#Padrão de nomenclatura (utilizar sempre em ingles)
+
+#Nomes de arquivos
+
+	- utiliza notação camelCase
+	- nome do arquivo deve ser igual ao nome do Model, Controller.
+	- nome do model sempre deve ser nomeModel. Ex. userModel.
+	- nome do controller sempre deve ser nomeController. Ex. userController
+	
+
+
+
