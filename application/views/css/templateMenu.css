@@ -1,0 +1,67 @@
+/* Custom Stylesheet */
+/**
+* Use this file to override Materialize files so you can update
+* the core Materialize files in the future
+*
+* Made By MaterializeCSS.com
+*/
+.margMenu{
+
+  margin-top: 20px;
+  position: relative;
+
+}
+.colorr{
+
+  color:  #425f9c;
+}
+.labelLogo{
+
+  font-size: 25px;
+  margin-top: 15px;
+  position: relative;
+
+}
+.fontUt{
+  font-family: 'Montserrat', sans-serif;
+}
+.color{
+  background-color: #425f9c;
+}
+.strMenu{
+
+  font-size: 15px;
+
+
+}
+.tamanhoMenu{
+  max-height: 70px;
+}
+
+.ulMenu{
+
+  margin-top: 0px;  
+}
+
+ul li:hover{
+
+  background-color: white;
+  color: #425f9c;
+
+}
+
+
+.liclass{
+  display: inline-block;
+  margin: 0px 25px 0px 25px;
+  background-color: #425f9c;
+  height: 70px;
+  width: 110px;
+
+
+}
+
+.aColor{
+  color: white;
+}
+
