@@ -3,7 +3,7 @@
 ##Nomes de arquivos
 
 * utiliza notação camelCase
-* nome do arquivo deve ser igual ao nome do Model, Controller.
+* nome do arquivo deve ser igual ao nome  do Model, Controller e conter letra maiuscula no começo.
 * nome do model sempre deve ser nomeModel. Ex. userModel.
 * nome do controller sempre deve ser nomeController. Ex. userController
 * nome de objeto, singular, listas, plural
