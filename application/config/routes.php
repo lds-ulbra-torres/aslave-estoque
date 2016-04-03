@@ -49,6 +49,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | Examples:	my-controller/index	-> my_controller/index
 |		my-controller/my-method	-> my_controller/my_method
 */
-$route['default_controller'] = 'welcome';
+$route['default_controller'] = 'homeController';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
+
+/* ROTAS FINANCEIRO */
+$route['financial'] = 'financialController';
+$route['create-classification'] = 'classificationController/create';
+$route['delete-classification/(:num)'] = 'classificationController/delete/$1';
+$route['update-classification/(:num)'] = 'classificationController/update/$1';
+$route['create-people'] = 'peopleController/create';
+$route['delete-people/(:num)'] = 'peopleController/delete/$1';
+
+/* ROTAS CONTROLE DE ESTOQUE */ 
+$route['stock'] = 'StockController';
+$route['create-stock'] = 'stock/stockController/createStock';
+$route['create-group'] = 'stock/stockController/createGroup';
+$route['create-product'] = 'stock/stockController/createProduct';
+$route['update-group'] = 'stock/stockController/updateGroup';
+$route['update-product'] = 'stock/stockController/updateProduct';
