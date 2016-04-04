@@ -13,7 +13,8 @@ class ClassificationController extends CI_Controller {
 
 	public function index()
 	{
-		
+		$data['classifications'] = $this->classificationModel->get();
+		$this->template->load('template/templateMenu', 'classification/classificationView', $data);
 	}
 
 	public function create(){
@@ -26,27 +27,27 @@ class ClassificationController extends CI_Controller {
 			);
 
 			$this->classificationModel->create($classification);
-			redirect('financial','refresh');
+			redirect('classification','refresh');
 		}else{
 			echo "falho";
 		}
 	}
 
-	public function update($classification){
+	public function update(){
 		$data = array(
-			'id' => $classification,
-			'name' => $this->input->post('updateClasname'),
+			'id' => $this->input->post('updateClasId'),
+			'name' => $this->input->post('updateClasName'),
 			'classification_type' => $this->input->post('updateClasType')
 			);
 		$this->classificationModel->update($data);
-		redirect('financial','refresh');
+		redirect('classification','refresh');
 	}
 
 	public function delete($classification){
 		$data = array('id' => $classification);
 
 		$this->classificationModel->delete($data);
-		redirect('financial','refresh');
+		redirect('classification','refresh');
 	}
 }
 

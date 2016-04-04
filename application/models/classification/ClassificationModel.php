@@ -14,7 +14,8 @@ class ClassificationModel extends CI_Model {
 	}
 
 	public function update($classification){
-		return $this->db->replace($this->table, $classification);
+		$this->db->where('id', $classification['id']);
+		return $this->db->update($this->table, $classification);
 	}
 
 	public function get(){
