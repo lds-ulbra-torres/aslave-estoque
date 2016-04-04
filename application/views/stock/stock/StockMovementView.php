@@ -40,4 +40,4 @@
 					?>
 			</tbody>
 		</table>	
-	</div>
+</div>

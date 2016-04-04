@@ -16,11 +16,6 @@
 	<a class="waves-effect waves-dark btn modal-trigger" id="" href="<?= base_url('stock/groups'); ?>">Ver categorias</a>
 
 <?php 
-	echo (isset($create_success)) ? "<div class=\"alert alert-success\"><strong>$create_success</strong><a class=\"close\" data-dismiss=\"alert\">×</a></div>" : '';
-	echo (isset($create_error)) ? "<div class=\"alert alert-error\"><strong>$create_error</strong><a class=\"close\" data-dismiss=\"alert\">×</a></div>" : '';
- ?>
-
-<?php 
 	switch ($view){
 		case 'groups':
 			$this->load->view('stock/group/GroupView', $groups);

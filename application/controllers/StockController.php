@@ -112,9 +112,12 @@ class StockController extends CI_Controller {
 	}
 
 	public function deleteGroup() {
-		$group = array('id_group' => $this->uri->segment(4));
-		$this->GroupModel->delete($group);
-		redirect('stock/groups');
+		$group = array('id_group' => $this->input->post('id_group'));
+		if($this->GroupModel->delete($group)){
+			echo true;
+		}else{
+			echo false;
+		}
 	}
 
 	public function searchGroup() {
@@ -163,9 +166,12 @@ class StockController extends CI_Controller {
 	}
 
 	public function deleteProduct() {
-		$product = array('id_product' => $this->uri->segment(4));
-		$this->ProductModel->delete($product);
-		redirect('stock/products');
+		$product = array('id_product' => $this->input->post('id_product'));
+		if($this->ProductModel->delete($product)){
+			echo true;
+		}else{
+			echo false;
+		}
 	}
 
 	public function searchProduct() {
