@@ -63,8 +63,15 @@ $route['delete-people/(:num)'] = 'peopleController/delete/$1';
 
 /* ROTAS CONTROLE DE ESTOQUE */ 
 $route['stock'] = 'StockController';
-$route['create-stock'] = 'stock/stockController/createStock';
-$route['create-group'] = 'stock/stockController/createGroup';
-$route['create-product'] = 'stock/stockController/createProduct';
-$route['update-group'] = 'stock/stockController/updateGroup';
-$route['update-product'] = 'stock/stockController/updateProduct';
+$route['stock/inputstock'] = 'StockController/createStock';
+$route['stock/group/create'] = 'StockController/createGroup';
+$route['stock/group/update/(:num)'] = 'StockController/updateGroup/$1';
+$route['stock/group/delete/(:num)'] = 'StockController/deleteGroup/$1';
+$route['stock/product/create'] = 'StockController/createProduct';
+$route['stock/product/update/(:num)'] = 'StockController/updateProduct/$1';
+$route['stock/product/delete/(:num)'] = 'StockController/deleteProduct/$1';
+
+$route['update-group/(:num)'] = 'StockController/updateGroup';
+$route['update-product'] = 'StockController/updateProduct';
+$route['stock/groups'] = 'StockController/groups';
+$route['stock/products'] = 'StockController/products';

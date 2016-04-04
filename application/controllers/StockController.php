@@ -16,6 +16,23 @@ class StockController extends CI_Controller {
 		$data['groups'] = $this->GroupModel->getGroups();
 		$data['products'] = $this->ProductModel->getProducts();
         $data['stocks'] = $this->StockModel->getStocks();
+        $data['view'] = null;
+        $this->template->load('template/templateMenu','stock/StockView', $data);
+	}
+
+	public function products() {
+		$data['groups'] = $this->GroupModel->getGroups();
+		$data['products'] = $this->ProductModel->getProducts();
+        $data['stocks'] = $this->StockModel->getStocks();
+		$data['view'] = 'products';
+		$this->template->load('template/templateMenu','stock/StockView', $data);
+	}
+
+	public function groups() {
+		$data['groups'] = $this->GroupModel->getGroups();
+		$data['products'] = $this->ProductModel->getProducts();
+        $data['stocks'] = $this->StockModel->getStocks();
+		$data['view'] = 'groups';
         $this->template->load('template/templateMenu','stock/StockView', $data);
 	}
     

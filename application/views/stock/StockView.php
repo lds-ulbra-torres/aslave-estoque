@@ -13,7 +13,9 @@
       // modal estoque
       $("#stock").click(function(){
       	$("#stockModal").openModal();
+
       });
+
       function reloadTable(){
       	$("#divTable").load(location.href + " #divTable>*", "");
       }
@@ -94,11 +96,15 @@
  	 });
 </script>
 
-<div>
-	<div>
+<div class="">
+	<div class="">
 		<a class="waves-effect waves-light btn modal-trigger" id="cate" href="#cateModal">+Categoria</a>
 		<a class="waves-effect waves-light btn modal-trigger" id="product" href="#productModal">+Produto</a>
 		<a class="waves-effect waves-light btn modal-trigger" id="stock" href="#stockModal">+Entrada de estoque</a>
+		<a class="waves-effect waves-light btn modal-trigger" id="" href="#">-Saída de estoque</a>
+		<a class="waves-effect waves-dark btn modal-trigger" id="" href="<?= base_url('stock'); ?>">Estoque</a>
+		<a class="waves-effect waves-dark btn modal-trigger" id="" href="<?= base_url('stock/products'); ?>">Ver produtos</a>
+		<a class="waves-effect waves-dark btn modal-trigger" id="" href="<?= base_url('stock/groups'); ?>">Ver categorias</a>
 
 		<br>
 		<div id="cateModal" class="modal">
@@ -108,8 +114,8 @@
 					<form id="addCat" class="col s12">
 						<label id="error_name_cat"></label>
 						<input placeholder="Nome da categoria" id="cat_name" name="group_name" type="text" class="validate"></input>
-						<button class="btn waves-effect waves-light" type="submit" name="action">Adicionar
-							<i class="material-icons right">send</i>
+						<button class="btn waves-effect waves-light" type="submit" name="action">
+							Adicionar<i class="material-icons right">send</i>
 						</button>
 					</form>
 				</div>
@@ -158,7 +164,7 @@
 						<div class="input-field col s12">
 							<lavel id="error_stock"></lavel>
 							<select id="name_product">
-								<option value="" disabled selected>Seleciona um Produto</option>
+								<option value="" disabled selected>Selecione um Produto</option>
 								<?php
 									foreach($products as $dados){ 
 										echo "<option value=".$dados['id_product'].">";
@@ -173,7 +179,7 @@
 						<input placeholder="Quantidade" id="amount_product" name="amount_product" type="text" class="validate"></input>
 						<input placeholder="Data de Entrada" id="date_product" name="date_product" type="date" class="datepicker">
 						<button class="btn waves-effect waves-light" type="submit" name="action">Adicionar
-							<i class="material-icons right">send</i>
+							<i class="material-icons right">Enviar</i>
 						</button>
 					</form>
 				</div>
@@ -182,66 +188,22 @@
 				<a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Fechar</a>
 			</div>
 		</div>
-
 	</div>
 
-	<div id="divTable">
-		<table class="striped">
-			<thead>
-				<td>
-					Produto
-				</td>
-				<td>
-					Categoria
-				</td>
-				<td>
-					Preço
-				</td>
-				<td>
-					Quantidade
-				</td>
-				<td>
-					Total
-				</td>
-				<td>
-					Data de entrada
-				</td>
-				<td>
-					Data de saida
-				</td>
-				<td>
-					Saida de estoque
-				</td>
-			</thead>
-			<tbody>
-					<?php
-						foreach($stocks as $dados){ 
-							echo "<tr>";
-							echo "<td>";
-							echo $dados['name_product'];
-							echo "</td>";
-							echo "<td>";
-							echo $dados['name_group'];
-							echo "</td>";
-							echo "<td>";
-							echo $dados['price'];
-							echo "</td>";
-							echo "<td>";
-							echo $dados['amount'];
-							echo "</td>";
-							echo "<td>";
-							echo $dados['total'];
-							echo "</td>";
-							echo "<td>";
-							echo $dados['input'];
-							echo "</td>";
-							echo "<td>";
-							echo $dados['output'];
-							echo "</td>";
-							echo"</tr>";
-						}
-					?>
-			</tbody>
-		</table>	
-	</div>
+	<?php 
+		switch ($view){
+			case 'groups':
+				$this->load->view('stock/GroupView', $groups);
+				break;
+
+			case 'products':
+				$this->load->view('stock/ProductView', $products);
+				break;
+
+			default :
+				$this->load->view('stock/StockMovementView', $stocks);
+				break;
+		}
+	?>
+
 </div>

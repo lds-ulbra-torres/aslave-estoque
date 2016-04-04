@@ -3,11 +3,11 @@
 <head>
   <title>Slave</title>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
   <link rel="stylesheet" type="text/css" href="<?= base_url ('assets/css/materialize.css')?>">
-  <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <link rel="stylesheet" type="text/css" href="<?= base_url('assets/css/templateMenu.css') ?>">
+  <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
 
 
@@ -43,8 +43,8 @@
 
           <label class="white-text labelLogo left fontUt"  style="margin-left: 25px;"><strong>PROJETO SLAVE</strong></label>
           <a href="<?= base_url() ?>" class="aColor"><li class="liclass"><p class="fontUt strMenu " style="vertical-align: middle;">HOME</p></li></a>  
-          <a href="stock" class="aColor"><li class="liclass"><p class="fontUt strMenu " style="vertical-align: middle;">ESTOQUE</p></li></a>
-          <a href="financial" class="aColor"><li class="liclass"><p class="fontUt strMenu " style="vertical-align: middle;">FINANCEIRO</p></li></a>
+          <a href="<?= base_url('stock'); ?>" class="aColor"><li class="liclass"><p class="fontUt strMenu " style="vertical-align: middle;">ESTOQUE</p></li></a>
+          <a href="<?= base_url('financial'); ?>" class="aColor"><li class="liclass"><p class="fontUt strMenu " style="vertical-align: middle;">FINANCEIRO</p></li></a>
 
 
         </ul>
