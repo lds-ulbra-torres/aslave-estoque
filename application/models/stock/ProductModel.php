@@ -7,6 +7,7 @@ class ProductModel extends CI_Model {
 	var $name = 'name_product';
 	var $id = 'id_product';
 
+
 	public function __construct()
 	{
 		parent::__construct();
@@ -23,6 +24,7 @@ class ProductModel extends CI_Model {
 	}
 
 	public function delete($product) {
+		
 		return $this->db->delete($this->table, $product);
 	}
 
