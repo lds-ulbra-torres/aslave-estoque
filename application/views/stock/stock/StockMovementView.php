@@ -1,43 +1,77 @@
-<div id="content_table" class="container">
-		<table class="striped centered">
-			<legend><h4>Movimentações de estoque</h4></legend>
-			<thead>
-				<td>Produto</td>
-				<td>Categoria</td>
-				<td>Preço</td>
-				<td>Quantidade</td>
-				<td>Total</td>
-				<td>Data de entrada</td>
-				<td>Data de saida</td>
-			</thead>
-			<tbody>
-					<?php
-						foreach($stocks as $dados){ 
-							echo "<tr>";
-							echo "<td>";
-							echo $dados['name_product'];
-							echo "</td>";
-							echo "<td>";
-							echo $dados['name_group'];
-							echo "</td>";
-							echo "<td>";
-							echo $dados['price'];
-							echo "</td>";
-							echo "<td>";
-							echo $dados['amount'];
-							echo "</td>";
-							echo "<td>";
-							echo $dados['total'];
-							echo "</td>";
-							echo "<td>";
-							echo $dados['input'];
-							echo "</td>";
-							echo "<td>";
-							echo $dados['output'];
-							echo "</td>";
-							echo"</tr>";
-						}
-					?>
-			</tbody>
-		</table>	
+<div class="container">
+	<div class="container row">
+		<div class="col s12">
+			<table class="striped">
+				<legend><h4>Entradas de estoque</h4></legend>
+				<thead>
+					<td>Produto</td>
+					<td>Categoria</td>
+					<td>Preço</td>
+					<td>Quantidade</td>
+					<td>Data de entrada</td>
+				</thead>
+				<tbody>
+						<?php
+							foreach($stock_in as $dados){ 
+								echo "<tr>";
+								echo "<td>";
+								echo $dados['name_product'];
+								echo "</td>";
+								echo "<td>";
+								echo $dados['name_group'];
+								echo "</td>";
+								echo "<td>";
+								echo $dados['unit_price'];
+								echo "</td>";
+								echo "<td>";
+								echo $dados['input_amount'];
+								echo "</td>";
+								echo "<td>";
+								echo $dados['input_date'];
+								echo "</td>";
+								echo"</tr>";
+							}
+						?>
+				</tbody>
+			</table>	
+		</div>
+	</div>
+
+	<div class="container row">
+		<div class="col s12">
+			<table class="striped">
+				<legend><h4>Saídas de estoque</h4></legend>
+				<thead>
+					<td>Produto</td>
+					<td>Categoria</td>
+					<td>Preço</td>
+					<td>Quantidade</td>
+					<td>Data de saída</td>
+				</thead>
+				<tbody>
+						<?php
+							foreach($stock_out as $dados){ 
+								echo "<tr>";
+								echo "<td>";
+								echo $dados['name_product'];
+								echo "</td>";
+								echo "<td>";
+								echo $dados['name_group'];
+								echo "</td>";
+								echo "<td>";
+								echo $dados['unit_price'];
+								echo "</td>";
+								echo "<td>";
+								echo $dados['output_amount'];
+								echo "</td>";
+								echo "<td>";
+								echo $dados['output_date'];
+								echo "</td>";
+								echo"</tr>";
+							}
+						?>
+				</tbody>
+			</table>
+		</div>
+	</div>
 </div>

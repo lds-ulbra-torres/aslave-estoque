@@ -25,8 +25,8 @@
       });
 		 });
 </script>
-<div class="container">
-	<div class="">
+<div class="container row">
+	<div class="col s6">
 		<form method="post" id="addProduct">
 			<h4>Cadastrar produto</h4>
 			<input placeholder="Nome" name="product_name" type="text"></input>

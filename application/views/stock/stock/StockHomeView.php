@@ -10,8 +10,8 @@
 		<ul class="">
 			<lu><a class="waves-effect waves-light btn modal-trigger" id="" href="<?= base_url('stock/groups/create'); ?>">+Categoria</a></lu>
 			<lu><a class="waves-effect waves-light btn modal-trigger" id="" href="<?= base_url('stock/products/create'); ?>">+Produto</a></lu>
-			<lu><a class="waves-effect waves-light btn modal-trigger" id="" href="<?= base_url('stock/create'); ?>">+Entrada de estoque</a></lu>
-			<lu><a class="waves-effect waves-light btn modal-trigger" id="" href="<?= base_url('stock'); ?>">-Saída de estoque</a></lu>
+			<lu><a class="waves-effect waves-light btn modal-trigger" id="" href="<?= base_url('stock/input'); ?>">+Entrada de estoque</a></lu>
+			<lu><a class="waves-effect waves-light btn modal-trigger" id="" href="<?= base_url('stock/output'); ?>">-Saída de estoque</a></lu>
 			<lu><a class="waves-effect waves-dark btn modal-trigger" id="" href="<?= base_url('stock'); ?>">Ver Estoque</a></lu>
 			<lu><a class="waves-effect waves-dark btn modal-trigger" id="" href="<?= base_url('stock/products'); ?>">Ver produtos</a></lu>
 			<lu><a class="waves-effect waves-dark btn modal-trigger" id="" href="<?= base_url('stock/groups'); ?>">Ver categorias</a></lu>
@@ -40,12 +40,16 @@
 			$this->load->view('stock/product/CreateProductView', $groups);
 			break;
 
-		case 'stock/create':
-			$this->load->view('stock/stock/StockCreateView', $products);
+		case 'stock/input':
+			$this->load->view('stock/stock/StockInputView', $products);
+			break;
+
+		case 'stock/output':
+			$this->load->view('stock/stock/StockOutputView', $products);
 			break;
 
 		default :
-			$this->load->view('stock/stock/StockMovementView', $stocks);
+			$this->load->view('stock/stock/StockMovementView', $stock_in, $stock_out);
 			break;
 	}
 ?>

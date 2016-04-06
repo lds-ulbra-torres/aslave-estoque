@@ -22,8 +22,9 @@
       });
 	 });
 </script>
-<div class="container">
-	<form method="post" id="addCat">
+<div class="container row">
+	<div class="col s6">
+		<form method="post" id="addCat">
 		<h4>Cadastrar categoria</h4>
 		<input type="text" name="group_name" placeholder="Nome">
 
@@ -31,4 +32,5 @@
 			<i class="material-icons right">send</i>
 		</button>
 	</form>
+	</div>
 </div>

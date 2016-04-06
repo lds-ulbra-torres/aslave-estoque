@@ -63,7 +63,8 @@ $route['delete-people/(:num)'] = 'peopleController/delete/$1';
 
 /* ROTAS CONTROLE DE ESTOQUE */ 
 $route['stock'] = 'StockController';
-$route['stock/create'] = 'StockController/inputStock';
+$route['stock/input'] = 'StockController/inputStock';
+$route['stock/output'] = 'StockController/outputStock';
 $route['stock/groups'] = 'StockController/groups';
 $route['stock/products'] = 'StockController/products';
 $route['stock/inputstock'] = 'StockController/createStock';

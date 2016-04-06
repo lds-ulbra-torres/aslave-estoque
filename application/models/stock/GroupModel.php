@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class GroupModel extends CI_Model {
 
-	var $table = 'product_groups';
+	var $table = 'stock_product_groups';
 	var $name = 'name_group';
 	var $id = 'id_group';
 
