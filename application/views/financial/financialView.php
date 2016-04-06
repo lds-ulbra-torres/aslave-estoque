@@ -1,19 +1,6 @@
 <script type="text/javascript"  src="<?= base_url('assets/js/jquery-2.2.2.js')?>"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
-		$("#typeSelect").change(function(){
-			if($(this).val("fisica")){
-				$('input[name=cpf]').attr('type', 'text');
-				$("#cpf").text("CPF");
-				$('input[name=cnpj]').attr('type', 'hidden');
-				$("#cnpj").text("");
-			}else if($(this).val("juridica")){
-				$('input[name=cnpj]').attr('type', 'text');
-				$("#cnpj").text("CNPJ");
-				$('input[name=cpf]').attr('type', 'hidden');
-				$("#cpf").text("");
-			}
-		});
 		$("#openIt2").click(function(){
 			$('#modal2').openModal();
 		});
@@ -115,7 +102,6 @@
 					<thead>
 						<td><strong>Nome </strong></td>
 						<td><strong>CPF </strong></td>
-						<td><strong>Nome </strong></td>
 						<td><strong>CNPJ </strong></td>
 						<td><strong>RG </strong></td>
 						<td><strong>Inscrição Estadual </strong></td>
