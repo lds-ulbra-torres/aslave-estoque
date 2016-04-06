@@ -63,7 +63,6 @@
   </div>
 
 </body>
-<script type="text/javascript" src="<?= base_url('assets/js/jquery-2.2.2.js')?>"></script>
 <script type="text/javascript" src="<?= base_url('assets/js/materialize.js')?>"></script>
 <script>
   $(".button-collapse").sideNav();

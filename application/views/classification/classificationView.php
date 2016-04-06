@@ -9,6 +9,7 @@
 			document.getElementById('id').value=$(this).attr('id');
 		});
 	});
+
 </script>
 
 <div>
@@ -25,7 +26,7 @@
 						<li>
 							<strong><label id="validationError"></label></strong><br>
 							<label>Nome: </label>
-							<input type="text" name="classificationName">
+							<input type="text" name="classificationName" required="">
 						</li>
 						<li>    
 							<label>Tipo de classificação: </label>
@@ -35,6 +36,7 @@
 							<label for="classificationType1" >Entrada</label>
 							<input name="classificationType" type="radio"  value="s" id="classificationType2" />
 							<label for="classificationType2" >Saida</label>
+
 						</li>
 						<hr>
 						<li>
@@ -57,7 +59,7 @@
 				<ul>
 					<li>
 						<label>Nome: </label>
-						<input type="text" value="" name="updateClasName">
+						<input type="text" value="" name="updateClasName"  required="required"/>
 						<input type="hidden" name="updateClasId" id="id" value="">
 					</li>
 					<li>
@@ -72,11 +74,15 @@
 					</li>
 					<hr>
 					<li>
-						<button class="btn waves-effect waves-light" type="submit">Enviar</button>
+						<button class="btn waves-effect waves-light" type="submit" id="submitButton">Enviar</button>
 					</li>
 				</ul>
 			</form>
 		</div>
+			<div class="modal-footer">
+			    <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Fechar</a>
+		    </div>
+
 	</div>
 
 

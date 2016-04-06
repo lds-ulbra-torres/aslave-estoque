@@ -61,6 +61,7 @@ $route['delete-classification/(:num)'] = 'classificationController/delete/$1';
 $route['update-classification'] = 'classificationController/update/$1';
 $route['create-people'] = 'peopleController/create';
 $route['delete-people/(:num)'] = 'peopleController/delete/$1';
+$route['people'] = 'peopleController';
 
 /* ROTAS CONTROLE DE ESTOQUE */ 
 $route['stock'] = 'StockController';

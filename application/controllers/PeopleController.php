@@ -13,23 +13,13 @@ class PeopleController extends CI_Controller {
 
 	public function index()
 	{
-
+		$data['peoples'] = $this->peopleModel->get();
+		$data['states'] = $this->peopleModel->getStates();
+		$data['cities'] = $this->peopleModel->getCities();
+		$this->template->load('template/templateMenu', 'people/peopleView', $data);
 	}
 
 	public function create(){
-		/*Nao Funciono
-		$this->form_validation->set_rules('peopleName','nome','required|alpha');
-		$this->form_validation->set_rules('peopleAdress','endereco','required');
-		$this->form_validation->set_rules('peopleNumber','numero','required');
-		$this->form_validation->set_rules('peopleNeighborhood','bairro','required');
-		$this->form_validation->set_rules('peopleCity','cidade','required');
-		$this->form_validation->set_rules('peopleState','estado','required');
-		$this->form_validation->set_rules('peopleCep','cep','required');
-		$this->form_validation->set_rules('peopleDateBirth','dataNascimento','required');
-		$this->form_validation->set_rules('peoplePhone1','telefone1','required');
-		$this->form_validation->set_rules('peoplePhone2','telefone2','required');*/
-
-	
 		$people = array(
 			'name' => $this->input->post('peopleName'),
 			'cpf' => $this->input->post('peopleCpf'),

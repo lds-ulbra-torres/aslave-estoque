@@ -18,28 +18,17 @@ class ClassificationController extends CI_Controller {
 	}
 
 	public function create(){
-		$this->form_validation->set_rules('classificationName', 'nome', 'required');	
 
-		if($this->form_validation->run()){
 			$classification = array(
 				'name' => $this->input->post('classificationName'),
 				'classification_type' => $this->input->post('classificationType')
 				);
 
-			if($this->classificationModel->create($classification)){
-			
-			}
-
-		}else{
-			echo false;
-		}
+			    $this->classificationModel->create($classification);
+			    redirect('classification');
 	}
 
 	public function update(){
-		$this->form_validation->set_rules('classificationName', 'nome', 'required');
-		
-		if($this->form_validation->run()) {
-			
 			$data = array(
 				'id' => $this->input->post('updateClasId'),
 				'name' => $this->input->post('updateClasName'),
@@ -47,10 +36,6 @@ class ClassificationController extends CI_Controller {
 				);
 			$this->classificationModel->update($data);
 			redirect('classification','refresh');
-
-		}else {
-			echo 'deu merda';
-		}
 	}
 
 	public function delete($classification){
