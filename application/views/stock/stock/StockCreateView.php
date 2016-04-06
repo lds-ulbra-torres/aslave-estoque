@@ -14,14 +14,14 @@
       		success: function(data){
       			var field = "O campo é obrigatorio";
 				if(data.indexOf(field) > -1){
-					Materialize.toast('Todos os campos são obrigatorios', 4000);
+					Materialize.toast('Todos os campos são obrigatórios', 4000);
 				}else{
-					Materialize.toast('Estoque adicionado com sucesso', 4000);
+					Materialize.toast('Entrada de estoque salva.', 4000);
 				}
       		},
       		error: function(data){
       			alert(data);
-      			Materialize.toast('Erro ao adicionar uma nova entrada de estoque', 4000);
+      			Materialize.toast('Ocorreu algum erro. Tente novamente', 4000);
       		}
       	});
       });

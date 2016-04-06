@@ -27,15 +27,15 @@
 				data: {id_group: idGroup},
 				success: function(data){
 					if(!data){
-						Materialize.toast('Erro ao deletar a categoria!', 4000);
+						Materialize.toast('Erro ao apagar a categoria!', 4000);
 					}else{
-						Materialize.toast('Categoria deletada!', 4000);
+						Materialize.toast('Categoria apagada.', 4000);
 						reloadTableGroup();
 					}
 				},
 				error: function(data){
 					console.log(data);
-					Materialize.toast('Erro ao deletar a categoria!', 4000);	
+					Materialize.toast('Erro ao apagar a categoria!', 4000);	
 				}
 			});
 		});
@@ -62,12 +62,12 @@
 		<div class="modal-content">
 			<h4>Aviso</h4>
 			<div class="row">
-				<p> Realmente quer apagar esta Categoria?</p>
+				<p>Realmente quer apagar esta categoria?</p>
 			</div>
 		</div>
 		<div class="modal-footer">
-			<a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Cancelar</a>
-			<a href="#!" id="deleteCat" class=" modal-action modal-close waves-effect waves-green btn-flat">Apagar</a>
+			<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Cancelar</a>
+			<a href="#!" id="deleteCat" class="modal-action modal-close waves-effect waves-red btn-flat">Apagar</a>
 		</div>
 	</div>	
 </div>

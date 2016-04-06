@@ -27,15 +27,15 @@
 				data: {id_product: idProdutct},
 				success: function(data){
 					if(!data){
-						Materialize.toast('Erro ao deletar o produto!', 4000);
+						Materialize.toast('Ocorreu algum erro. Tente novamente', 4000);
 					}else{
-						Materialize.toast('Produto deletado!', 4000);
+						Materialize.toast('Produto apagado.', 4000);
 						reloadTableProduct();	
 					}
 				},
 				error: function(data){
 					console.log(data);
-					Materialize.toast('Erro ao deletar a categoria!', 4000);	
+					Materialize.toast('Ocorreu algum erro. Tente novamente', 4000);	
 				}
 			});
 		});
@@ -64,7 +64,7 @@
 		<div class="modal-content">
 			<h4>Aviso</h4>
 			<div class="row">
-				<p>Realmente quer deletar este Produto?</p>
+				<p>Realmente quer apagar este produto?</p>
 			</div>
 		</div>
 		<div class="modal-footer">
