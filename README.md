@@ -10,4 +10,6 @@
 ## Atenção
 
 * Banco alterado, executar o script slave_db_teste.sql
+* Foram separadas as tabelas por Entrada, Saída e Estoque
+* Todas foram nomeadas com stock_ no inicio para ficar mais organizado
 * Iniciado os controles de entradas e saídas
