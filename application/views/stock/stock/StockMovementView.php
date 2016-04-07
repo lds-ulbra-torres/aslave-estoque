@@ -8,6 +8,7 @@
 					<td>Categoria</td>
 					<td>Preço</td>
 					<td>Quantidade</td>
+					<td>Tipo de entrada</td>
 					<td>Data de entrada</td>
 				</thead>
 				<tbody>
@@ -26,6 +27,19 @@
 								echo "<td>";
 								echo $dados['input_amount'];
 								echo "</td>";
+								switch ($dados['input_type']) {
+									case '1':
+										echo "<td>";
+										echo 'Compra';
+										echo "</td>";
+										break;
+									
+									case '2':
+										echo "<td>";
+										echo 'Doação';
+										echo "</td>";
+										break;
+								}
 								echo "<td>";
 								echo $dados['input_date'];
 								echo "</td>";

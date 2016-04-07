@@ -24,16 +24,12 @@
 			$this->load->view('stock/group/GroupView', $groups);
 			break;
 
-		case 'products':
-			$this->load->view('stock/product/ProductView', $products);
-			break;
-
 		case 'groups/create':
 			$this->load->view('stock/group/CreateGroupView');
 			break;
 
-		case 'groups/update':
-			$this->load->view('stock/group/UpdateGroupView', $id);
+		case 'products':
+			$this->load->view('stock/product/ProductView', $products, $groups);
 			break;
 
 		case 'products/create':

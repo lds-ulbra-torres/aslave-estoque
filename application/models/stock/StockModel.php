@@ -18,13 +18,11 @@ class StockModel extends CI_Model {
 	}
 
 	public function input($stock) {
-		if ($this->stockExists($stock['id_stock_product'])) {
-			$current_stock = $this->getStockById($stock['id_stock_product']);
-			$new_amount = $current_stock['amount'] + $stock['input_amount'];
+		if ($query = $this->getStockById($stock['id_stock_product'])) {
+			$new_amount = $query['amount'] + $stock['input_amount'];
 			$new_input_stock = array(
-				'id_stock_product' => $stock['id_stock_product'], 
 				'amount' => $new_amount);
-			$this->db->where('id_stock_product', $new_input_stock['id_stock_product']);
+			$this->db->where('id_stock_product', $stock['id_stock_product']);
 			$this->db->update($this->stock_table, $new_input_stock);
 			return $this->db->insert($this->input_table, $stock);
 		}
@@ -78,22 +76,8 @@ class StockModel extends CI_Model {
 		return $this->db->get($this->output_table)->result_array();
 	}
 
-	public function getStockById($id) {
-		$stock = array('id_stock_product' => $id);
-		$stock_data = $this->db->get_where($this->stock_table, $stock, 1);
-		return $stock_data->result_array(); 
-	}
-
-	public function stockExists($id_stock_product)
-	{
-		$stock = array('id_stock_product' => $id_stock_product);
-		$query = $this->db->get_where($this->stock_table, $stock, 1);
-		if ($query->num_rows() > 0) 
-			return true;
-		return false;
+	public function getStockById($id_stock_product) {
+		return $this->db->get_where($this->stock_table, array('id_stock_product' => $id_stock_product))->result_array();
 	}
 
 }
-
-/* End of file stockModel.php */
-/* Location: ./application/models/stockModel.php */

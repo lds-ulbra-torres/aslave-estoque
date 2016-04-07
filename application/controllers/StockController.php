@@ -23,17 +23,15 @@ class StockController extends CI_Controller {
 	}
 
 	public function products() {
-		//$data['groups'] = $this->GroupModel->getGroups();
+		$data['groups'] = $this->GroupModel->getGroups();
 		$data['products'] = $this->ProductModel->getProducts();
-        //$data['stocks'] = $this->StockModel->getStocks();
+        $data['stocks'] = $this->StockModel->getStocks();
 		$data['view'] = 'products';
 		$this->template->load('template/template','stock/stock/StockHomeView', $data);
 	}
 
 	public function groups() {
 		$data['groups'] = $this->GroupModel->getGroups();
-		$data['products'] = $this->ProductModel->getProducts();
-        $data['stocks'] = $this->StockModel->getStocks();
 		$data['view'] = 'groups';
         $this->template->load('template/template','stock/stock/StockHomeView', $data);
 	}
@@ -108,23 +106,18 @@ class StockController extends CI_Controller {
 	}
 
 	public function updateGroup() {
-		$this->form_validation->set_rules('name', 'nome', 'required');
+		$this->form_validation->set_rules('name_group', 'nome', 'required');
 		if ($this->form_validation->run()) {
-			$group_id = $this->uri->segment(4);
 			$group = array(
-				'id' => $group_id,
-				'name' => $this->input->post('name'));
+				'id_group' => $this->input->post('id_group'),
+				'name_group' => $this->input->post('name_group'));
 
 			if($this->GroupModel->update($group)) { 
-				$data['create_success'] = 'Categoria salva.';
-				redirect('stock/groups');
+				echo true;
 			}
 			else { 
-				$data['create_error'] = 'Ocorreu algum erro. Tente novamente';
+				echo false;
 			}
-			$data['groups'] = $this->GroupModel->getGroups();
-			$data['view'] = 'groups/update';
-        	$this->template->load('template/template','stock/stock/StockHomeView', $data);
 		}
 	}
 
@@ -164,20 +157,19 @@ class StockController extends CI_Controller {
 	}
 
 	public function updateProduct() {
-		$id = null;  //receber id do produto para alterar
-
 		$this->form_validation->set_rules('product_name', 'nome', 'required');
 		$this->form_validation->set_rules('id_group', 'grupo', 'required');
 		if ($this->form_validation->run()) {
 			$product = array(
+				'id_product' => $this->input->post('id_product'),
 				'name_product' => $this->input->post('product_name'),
 				'id_group' => $this->input->post('id_group'));
 
 			if ($this->ProductModel->update($product)){
-				$data['create_success'] = 'Produto salvo.';
+				echo true;
 			}
 			else {
-				$data['create_error'] = 'Ocorreu algum erro. Tente novamente';
+				echo false;
 			}
 		}
 	}
