@@ -1,48 +1,91 @@
-<div id="content_table" class="container">
-		<table class="striped centered">
-			<legend><h4>Movimentações de estoque</h4></legend>
-			<thead>
-				<td>Produto</td>
-				<td>Categoria</td>
-				<td>Preço</td>
-				<td>Quantidade</td>
-				<td>Total</td>
-				<td>Data de entrada</td>
-				<td>Data de saida</td>
-				<td>Ações</td>
-			</thead>
-			<tbody>
-					<?php foreach($stocks as $dados) :?>
-				<tr>
-				  <td><?= $dados['name_product'] ?></td>
-				  <td><?= $dados['name_group'] ?></td>
-				  <td><?= $dados['price'] ?></td>
-				  <td><?= $dados['amount'] ?></td>
-				  <td><?= $dados['total'] ?></td>
-				  <td><?= $dados['input'] ?></td>
-				  <td><?= $dados['output'] ?></td>
-				  <td>
-				  <a class="deleteProduct" id="<?php echo $dados['id_product']; ?>" href="#">Apagar</a></td>
-           		</tr>
-                  <?php endforeach; ?>
-					
-			</tbody>
-		</table>
-
-		<div id="stockModal" class="modal">
-		<div class="modal-content">
-			<h4>Aviso</h4>
-			<div class="row">
-				<p>Realmente quer deletar este Produto do estoque?</p>
-			</div>
-		</div>
-		<div class="modal-footer">
-			<a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Cancelar</a>
-			<a href="#!" id="deleteStock" class=" modal-action modal-close waves-effect waves-green btn-flat">Apagar</a>
+<div class="container">
+	<div class="container row">
+		<div class="col s12">
+			<table class="striped">
+				<legend><h4>Entradas de estoque</h4></legend>
+				<thead>
+					<td>Produto</td>
+					<td>Categoria</td>
+					<td>Preço</td>
+					<td>Quantidade</td>
+					<td>Tipo de entrada</td>
+					<td>Data de entrada</td>
+				</thead>
+				<tbody>
+						<?php
+							foreach($stock_in as $dados){ 
+								echo "<tr>";
+								echo "<td>";
+								echo $dados['name_product'];
+								echo "</td>";
+								echo "<td>";
+								echo $dados['name_group'];
+								echo "</td>";
+								echo "<td>";
+								echo $dados['unit_price'];
+								echo "</td>";
+								echo "<td>";
+								echo $dados['input_amount'];
+								echo "</td>";
+								switch ($dados['input_type']) {
+									case '1':
+										echo "<td>";
+										echo 'Compra';
+										echo "</td>";
+										break;
+									
+									case '2':
+										echo "<td>";
+										echo 'Doação';
+										echo "</td>";
+										break;
+								}
+								echo "<td>";
+								echo $dados['input_date'];
+								echo "</td>";
+								echo"</tr>";
+							}
+						?>
+				</tbody>
+			</table>	
 		</div>
 	</div>
 
+	<div class="container row">
+		<div class="col s12">
+			<table class="striped">
+				<legend><h4>Saídas de estoque</h4></legend>
+				<thead>
+					<td>Produto</td>
+					<td>Categoria</td>
+					<td>Preço</td>
+					<td>Quantidade</td>
+					<td>Data de saída</td>
+				</thead>
+				<tbody>
+						<?php
+							foreach($stock_out as $dados){ 
+								echo "<tr>";
+								echo "<td>";
+								echo $dados['name_product'];
+								echo "</td>";
+								echo "<td>";
+								echo $dados['name_group'];
+								echo "</td>";
+								echo "<td>";
+								echo $dados['unit_price'];
+								echo "</td>";
+								echo "<td>";
+								echo $dados['output_amount'];
+								echo "</td>";
+								echo "<td>";
+								echo $dados['output_date'];
+								echo "</td>";
+								echo"</tr>";
+							}
+						?>
+				</tbody>
+			</table>
+		</div>
+	</div>
 </div>
-
-
-

@@ -3,11 +3,10 @@
 		$("#addStock").submit(function(e){
       	e.preventDefault();
       	$.ajax({
-      		url: "<?php echo site_url('/StockController/inputStock'); ?>",
+      		url: "<?php echo site_url('/StockController/outputStock'); ?>",
       		type: "POST",
       		data: {
       			id_product: $("#id_product").val(),
-      			price_product: $("input[name=price_product]").val(),
       			amount_product: $("input[name=amount_product]").val(),
       			date_product: $("input[name=date_product]").val()
       		},
@@ -16,7 +15,7 @@
 				if(data.indexOf(field) > -1){
 					Materialize.toast('Todos os campos são obrigatórios', 4000);
 				}else{
-					Materialize.toast('Entrada de estoque salva.', 4000);
+					Materialize.toast('Saída de estoque salva.', 4000);
 				}
       		},
       		error: function(data){
@@ -27,23 +26,20 @@
       });
 	});
 </script>
-<div class="container">
-	<h4>Entrada de Estoque</h4>
-	<div class="row">
+<div class="container row">
+	<div class="col s6">
+	<h4>Saída de Estoque</h4>
 		<form method="post" id="addStock">
-			<div class="">
-				<select name="id_product" id="id_product">
-					<option name="id_product"  disabled selected>Selecione um Produto</option>
-						<?php foreach($products as $dados) : 
-							echo "<option value=".$dados['id_product'].">";
-							echo $dados['name_product'];
-							echo"</option>";
-						endforeach; ?>
-				</select>
-			</div>
-			<input placeholder="Preço" name="price_product" type="number"></input>
+			<select name="id_product" id="id_product">
+				<option name="id_product"  disabled selected>Selecione um produto</option>
+					<?php foreach($products as $dados) : 
+						echo "<option value=".$dados['id_product'].">";
+						echo $dados['name_product'];
+						echo"</option>";
+					endforeach; ?>
+			</select>
 			<input placeholder="Quantidade" name="amount_product" type="number"></input>
-			<input placeholder="Data de Entrada" name="date_product" type="date">
+			<input placeholder="Data de Saída" name="date_product" type="date">
 			<button class="btn waves-effect waves-light" type="submit">Salvar
 				<i class="material-icons right">send</i>
 			</button>

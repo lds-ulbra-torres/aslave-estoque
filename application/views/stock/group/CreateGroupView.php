@@ -9,21 +9,22 @@
 				success: function(data){
 					var field = "O campo é obrigatorio";
 					if(data.indexOf(field) > -1){
-						Materialize.toast('Todos os campos são obrigatorios', 4000);
+						Materialize.toast('Todos os campos são obrigatórios!', 4000);
 					}else{
-						Materialize.toast('Categoria de produtos adicionada com sucesso!', 4000);
+						Materialize.toast('Categoria de produtos salva.', 4000);
 					}
 				},
 				error: function(data){
 					alert(data);
-					Materialize.toast('Erro ao adicionar uma nova categoria!', 4000);
+					Materialize.toast('Ocorreu algum erro. Tente novamente', 4000);
 				}
 			});
       });
 	 });
 </script>
-<div class="container">
-	<form method="post" id="addCat">
+<div class="container row">
+	<div class="col s6">
+		<form method="post" id="addCat">
 		<h4>Cadastrar categoria</h4>
 		<input type="text" name="group_name" placeholder="Nome">
 
@@ -31,4 +32,5 @@
 			<i class="material-icons right">send</i>
 		</button>
 	</form>
+	</div>
 </div>

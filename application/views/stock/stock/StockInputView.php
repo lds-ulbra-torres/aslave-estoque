@@ -6,6 +6,7 @@
       		url: "<?php echo site_url('/StockController/inputStock'); ?>",
       		type: "POST",
       		data: {
+      			stock_type: $("#stock_type").val(),
       			id_product: $("#id_product").val(),
       			price_product: $("input[name=price_product]").val(),
       			amount_product: $("input[name=amount_product]").val(),
@@ -27,20 +28,22 @@
       });
 	});
 </script>
-<div class="container">
+<div class="container row">
+	<div class="col s6">
 	<h4>Entrada de Estoque</h4>
-	<div class="row">
 		<form method="post" id="addStock">
-			<div class="">
-				<select name="id_product" id="id_product">
-					<option name="id_product"  disabled selected>Selecione um Produto</option>
-						<?php foreach($products as $dados) : 
-							echo "<option value=".$dados['id_product'].">";
-							echo $dados['name_product'];
-							echo"</option>";
-						endforeach; ?>
-				</select>
-			</div>
+	        <select name="stock_type" id="stock_type">
+				<option selected value="1">Compra</option>
+				<option value="2">Doação</option>
+			</select>
+			<select name="id_product" id="id_product">
+				<option name="id_product"  disabled selected>Selecione um Produto</option>
+					<?php foreach($products as $dados) : 
+						echo "<option value=".$dados['id_product'].">";
+						echo $dados['name_product'];
+						echo"</option>";
+					endforeach; ?>
+			</select>
 			<input placeholder="Preço" name="price_product" type="number"></input>
 			<input placeholder="Quantidade" name="amount_product" type="number"></input>
 			<input placeholder="Data de Entrada" name="date_product" type="date">

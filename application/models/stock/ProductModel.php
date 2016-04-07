@@ -3,10 +3,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class ProductModel extends CI_Model {
 
-	var $table = 'products';
+	var $stock_table = 'stock';
+	var $table = 'stock_products';
 	var $name = 'name_product';
 	var $id = 'id_product';
-
 
 	public function __construct()
 	{
@@ -14,6 +14,7 @@ class ProductModel extends CI_Model {
 		//Do your magic here
 	}
 
+	
 	public function create($product) {
 		return $this->db->insert($this->table, $product);
 	}
@@ -24,7 +25,6 @@ class ProductModel extends CI_Model {
 	}
 
 	public function delete($product) {
-		
 		return $this->db->delete($this->table, $product);
 	}
 
@@ -36,9 +36,9 @@ class ProductModel extends CI_Model {
 
 	public function getProducts($id_group=null, $search_string=null) {
 		if ($search_string) { $this->db->like($this->name, $search_string); }
-
-		$this->db->join('product_groups', 'products.id_group = product_groups.id_group', 'inner');
-		$this->db->group_by('products.id_product');
+		$this->db->join('stock', 'stock_products.id_product = stock.id_stock_product', 'left');
+		$this->db->join('stock_product_groups', 'stock_products.id_group = stock_product_groups.id_group', 'inner');
+		$this->db->group_by('stock_products.id_product');
 		//$this->db->order_by('id', 'asc');
 
 		return $this->db->get($this->table)->result_array();
@@ -48,6 +48,11 @@ class ProductModel extends CI_Model {
 		$this->db->where($this->id, $id);
 		$group_data = $this->db->get();
 		return $group_data->result_array(); 
+	}
+
+	public function getProductByName($product_name) {
+		$query = $this->db->get_where($this->table, $product_name, 1);
+		return $query->result_array();
 	}
 
 	public function productExists($name) {
