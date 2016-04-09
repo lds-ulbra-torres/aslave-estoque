@@ -16,104 +16,98 @@
 			});
 		}
 		var idGroup;
-		$("table").on("click",".deleteCat", function(){
-			$('#cateModal').openModal();	
-			idGroup = $(this).attr("id");
-		});
-		$("table").on("click",".updateCat", function(){
-			$('#updateModal').openModal();	
+		$("table").on("click",".delete_group", function(){
+			$('#delete_group_modal').openModal();	
 			idGroup = $(this).attr("id");
 		});
 
-		$("#deleteCat").click(function(){
+		$("#delete_group").click(function(){
 			$.ajax({
 				url: "<?php echo site_url('/StockController/deleteGroup'); ?>",
 				type: "POST",
 				data: {id_group: idGroup},
 				success: function(data){
-					if(!data){
-						Materialize.toast('Erro ao apagar a categoria!', 4000);
-					}else{
-						Materialize.toast('Categoria apagada.', 4000);
-						reloadTableGroup();
-					}
+					Materialize.toast(data, 3000);
+					reloadTableGroup();
 				},
 				error: function(data){
 					console.log(data);
-					Materialize.toast('Erro ao apagar a categoria!', 4000);	
+					Materialize.toast('FATAL error', 3000);	
 				}
 			});
 		});
 
-		$("#updateCatForm").submit(function(e){
-      	e.preventDefault();
-      	$.ajax({
-      		url: "<?php echo site_url('/StockController/updateGroup'); ?>",
-      		type: "POST",
-      		data: {
-      			id_group: idGroup,
-      			name_group: $("#name_group").val()
-      		},
-      		success: function(data){
-				var field = "O campo é obrigatorio";
-				if(!data){
-					Materialize.toast('Todos os campos são obrigatórios!', 4000);
-				}else{
-					Materialize.toast('Categoria de produtos salva.', 4000);
-					$('#updateModal').closeModal();
-					reloadTableGroup();
+		$("#search_button").click(function(){
+			$.ajax({
+				url: "<?= base_url('stock/groups/');?>",
+				type: "POST",
+				data: {search_string: $("input[name=search]").val()},
+				success: function(data){
+					Materialize.toast("não é google", 2000);
+				},
+				error: function(){
+					Materialize.toast("deu pau viado", 2000);
 				}
-			},
-			error: function(data){
-				alert(data);
-				Materialize.toast('Ocorreu algum erro. Tente novamente', 4000);
-			}
-      	});
-      });
+			});
+		});
 	});
 </script>
-<div id="" class="container">
-	<table id="group" class="striped">
-		<legend><h4>Categorias</h4></legend>
-		<thead>
-			<td>Nome</td>
-			<td>Ações</td>
-		</thead>
-		<tbody>
-			<?php foreach($groups as $row) :?>
-				<tr>
-				  <td><?= $row['name_group'] ?></td>
-				  <td>
-					  <a class="updateCat" id="<?php echo $row['id_group']; ?>" href="#">Alterar</a> |
-					  <a class="deleteCat" id="<?php echo $row['id_group']; ?>" href="#">Apagar</a>
-				  </td>
-           		</tr>
-                  <?php endforeach; ?>
-        </tbody>
-	</table>
-</div>
 
-<div id="cateModal" class="modal">
-	<div class="modal-content">
-		<h4>Aviso</h4>
-		<div class="row">
-			<p>Realmente quer apagar esta categoria?</p>
+<div class="container row">
+	<h4>Categorias</h4>
+	<div class="card-panel col s12">
+		<div class="input-field col s3">
+			<input id="search" value="<?= $search_string ?>" type="text" required>
+			<label for="search"><i class="material-icons">search</i></label>
+        </div>
+        <div class="input-field col s2">
+        	<button href="#" id="search_button" class="btn grey">Buscar</button>
+        </div>
+		<div class="input-field col s4">
+			<select id="group_id">
+				<option disabled selected>Ordenar por...</option>
+				<option value="">Nome</option>
+				<option value="">Entrada</option>
+			</select>
+		</div>
+		<div class="input-field col s3">
+			<a class="btn green" id="" href="<?= base_url('stock/groups/create'); ?>">Adicionar novo</a>
 		</div>
 	</div>
-	<div class="modal-footer">
-		<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Cancelar</a>
-		<a href="#!" id="deleteCat" class="modal-action modal-close waves-effect waves-red btn-flat">Apagar</a>
-	</div>
 </div>	
-
-<div id="updateModal" class="modal">
-	<div class="modal-content">
-	<h4>Alterar categoria</h4>
-		<form method="post" id="updateCatForm">
-			<input type="text" value="" id="name_group" name="name_group" placeholder="Nome">
-			<button class="btn waves-effect waves-light" type="submit">Salvar
-				<i class="material-icons right">send</i>
-			</button>
-		</form>
+<div class="container row">
+	<div class="col s7">
+		<table id="group" class="bordered highlight">
+			<legend></legend>
+			<thead>
+				<td><strong>Nome</strong></td>
+				<td><strong>Ações</strong></td>
+			</thead>
+			<tbody>
+				<?php foreach($groups as $row) :?>
+					<tr>
+					  <td><?= $row['name_group'] ?></td>
+					  <td>
+						  <a href="<?= base_url('stock/groups/update/'.$row['id_group']); ?>">Alterar</a> |
+						  <a class="delete_group" id="<?php echo $row['id_group']; ?>" href="#">Apagar</a>
+					  </td>
+	           		</tr>
+	                  <?php endforeach; ?>
+	        </tbody>
+		</table>
 	</div>
+
+	<div id="delete_group_modal" class="modal">
+		<div class="modal-content">
+			<h4>Aviso</h4>
+			<div class="row">
+				<p>Realmente quer apagar esta categoria?</p>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Cancelar</a>
+			<a href="#!" id="delete_group" class="modal-action modal-close waves-effect waves-red btn-flat">Apagar</a>
+		</div>
+	</div>	
 </div>
+

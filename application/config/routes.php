@@ -53,24 +53,13 @@ $route['default_controller'] = 'homeController';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
-/* ROTAS FINANCEIRO */
-$route['financial'] = 'financialController';
-$route['create-classification'] = 'classificationController/create';
-$route['delete-classification/(:num)'] = 'classificationController/delete/$1';
-$route['update-classification/(:num)'] = 'classificationController/update/$1';
-$route['create-people'] = 'peopleController/create';
-$route['delete-people/(:num)'] = 'peopleController/delete/$1';
-
 /* ROTAS CONTROLE DE ESTOQUE */ 
 $route['stock'] = 'StockController';
-$route['stock/input'] = 'StockController/inputStock';
-$route['stock/output'] = 'StockController/outputStock';
 $route['stock/groups'] = 'StockController/groups';
+$route['stock/groups/create'] = 'StockController/createGroupView';
+$route['stock/groups/update/(:num)'] = 'StockController/updateGroupView/$1';
+$route['stock/groups/delete'] = 'StockController/deleteGroupView';
 $route['stock/products'] = 'StockController/products';
-$route['stock/inputstock'] = 'StockController/createStock';
-$route['stock/groups/create'] = 'StockController/createGroup';
-$route['stock/groups/update/(:num)'] = 'StockController/updateGroup/$1';
-$route['stock/groups/delete/(:num)'] = 'StockController/deleteGroup/$1';
-$route['stock/products/create'] = 'StockController/createProduct';
-$route['stock/products/update/(:num)'] = 'StockController/updateProduct/$1';
-$route['stock/products/delete/(:num)'] = 'StockController/deleteProduct/$1';
+$route['stock/products/create'] = 'StockController/createProductView';
+$route['stock/products/update/(:num)'] = 'StockController/updateProductView/$1';
+$route['stock/products/delete'] = 'StockController/deleteProductView';

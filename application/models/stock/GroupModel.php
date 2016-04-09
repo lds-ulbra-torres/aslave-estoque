@@ -28,25 +28,25 @@ class GroupModel extends CI_Model {
 
 	public function count() {
 		if ($search_string) { $this->db->like($this->name, $search_string); }
-		return $this->db->get()->num_rows();
+		return $this->db->get($this->table)->num_rows();
 	}
 
 	public function getGroups($search_string=null) {
-		if ($search_string) { $this->db->like($this->name, $search_string); }
-
-		$this->db->order_by($this->name, 'asc');
+		if ($search_string) { 
+			$this->db->like($this->name, $search_string); 
+		}
+		//$this->db->order_by($this->name, 'asc');
 		return $this->db->get($this->table)->result_array();
 	}
 
 	public function getGroupById($id) {
 		$this->db->where($this->id, $id);
-		$group_data = $this->db->get();
-		return $group_data->result_array(); 
+		return $this->db->get($this->table)->result_array();
 	}
 
-	public function groupExists($name) {
-		$group = array($this->name => $name);
-		$query = $this->db->get_where($this->table, $group, 1);
+	public function groupExists($group_name) {
+		$this->db->where($this->name, $group_name);
+		$query = $this->db->get($this->table);
 		if ($query->num_rows() > 0) 
 			return true;
 		return false;

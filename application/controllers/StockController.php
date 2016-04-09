@@ -3,88 +3,61 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class StockController extends CI_Controller {
 
-	public function __construct()
-	{
+	public function __construct() {
 		parent::__construct();
 		$this->load->model('stock/GroupModel');
 		$this->load->model('stock/ProductModel');
-		$this->load->model('stock/StockModel');
 		$this->load->library('form_validation');
 	}
 
 	public function index(){   
-		$data['groups'] = $this->GroupModel->getGroups();
-		$data['products'] = $this->ProductModel->getProducts();
-        $data['stock_in'] = $this->StockModel->getInputStocks();
-        $data['stock_out'] = $this->StockModel->getOutputStocks();
-        $data['view'] = null;
+		$data['view'] = null;
         $this->template->load('template/template','stock/stock/StockHomeView', $data);
-        
 	}
 
 	public function products() {
 		$data['groups'] = $this->GroupModel->getGroups();
 		$data['products'] = $this->ProductModel->getProducts();
-        $data['stocks'] = $this->StockModel->getStocks();
 		$data['view'] = 'products';
 		$this->template->load('template/template','stock/stock/StockHomeView', $data);
 	}
 
 	public function groups() {
+		$search_string = $this->input->post('search_string');
+		if ($search_string) {
+			$data['groups'] = $this->GroupModel->getGroups($search_string);
+			$data['view'] = 'groups';
+			$data['search_string'] = $search_string;
+	        $this->template->load('template/template','stock/stock/StockHomeView', $data);
+		}
 		$data['groups'] = $this->GroupModel->getGroups();
 		$data['view'] = 'groups';
-        $this->template->load('template/template','stock/stock/StockHomeView', $data);
-	}
-    
-	public function inputStock() {
-		$this->form_validation->set_rules('price_product', 'preço', 'required');
-		$this->form_validation->set_rules('amount_product', 'quantidade', 'required');
-		$this->form_validation->set_rules('date_product', 'data', 'required');
-		$this->form_validation->set_rules('id_product', 'produto', 'required');
-
-		if ($this->form_validation->run()) {
-			$stock = array(
-				'id_stock_product' => $this->input->post('id_product'),
-				'input_type' => $this->input->post('stock_type'),
-				'input_date' => $this->input->post('date_product'),
-				'unit_price' => $this->input->post('price_product'), 
-				'input_amount' => $this->input->post('amount_product'));
-
-			if ($this->StockModel->input($stock)){
-				$data['create_success'] = 'Estoque salvo.';
-				redirect('stock');
-			} 
-			else {
-				$data['create_error'] = 'Ocorreu algum erro. Tente novamente';
-			}
-		}
-		$data['view'] = 'stock/input';
-		$data['products'] = $this->ProductModel->getProducts();
+		$data['search_string'] = null;
         $this->template->load('template/template','stock/stock/StockHomeView', $data);
 	}
 
-	public function outputStock() {
-		$this->form_validation->set_rules('amount_product', 'quantidade', 'required');
-		$this->form_validation->set_rules('date_product', 'data', 'required');
-		$this->form_validation->set_rules('id_product', 'produto', 'required');
+	public function createGroupView() {
+		$data['view'] = 'groups/create';
+    	$this->template->load('template/template','stock/stock/StockHomeView', $data);
+	}
 
-		if ($this->form_validation->run()) {
-			$stock = array(
-				'id_stock_product' => $this->input->post('id_product'),
-				'output_date' => $this->input->post('date_product'),
-				'output_amount' => $this->input->post('amount_product'));
+	public function updateGroupView() {
+		$data['group_data'] = $this->GroupModel->getGroupById($this->uri->segment(4));
+		$data['view'] = 'groups/update';
+    	$this->template->load('template/template','stock/stock/StockHomeView', $data);
+	}
 
-			if ($this->StockModel->output($stock)){
-				$data['create_success'] = 'Estoque salvo.';
-				redirect('stock');
-			} 
-			else {
-				$data['create_error'] = 'Ocorreu algum erro. Tente novamente';
-			}
-		}
-		$data['view'] = 'stock/output';
-		$data['products'] = $this->ProductModel->getProducts();
+	public function createProductView() {
+		$data['groups'] = $this->GroupModel->getGroups();
+		$data['view'] = 'products/create';
         $this->template->load('template/template','stock/stock/StockHomeView', $data);
+	}
+
+	public function updateProductView() {
+		$data['groups'] = $this->GroupModel->getGroups();
+		$data['product_data'] = $this->ProductModel->getProductById($this->uri->segment(4));
+		$data['view'] = 'products/update';
+    	$this->template->load('template/template','stock/stock/StockHomeView', $data);
 	}
 
 	public function createGroup() {
@@ -94,44 +67,40 @@ class StockController extends CI_Controller {
             $group = array('name_group' => $this->input->post('group_name'));
 
             if ($this->GroupModel->create($group)) { 
-            	$data['create_success'] = 'Categoria salva.';
-            	redirect('stock');
-            }
-            else { 
-            	$data['create_error'] = 'Ocorreu algum erro. Tente novamente';
-            }
-        }
-        $data['view'] = 'groups/create';
-        $this->template->load('template/template','stock/stock/StockHomeView', $data);
+            	echo 'Categoria salva.';
+            } 
+            else { echo  'Ocorreu um problema interno. Tente novamente'; }
+        } 
+        else { echo 'Todos campos são obrigatórios.'; }
 	}
 
 	public function updateGroup() {
-		$this->form_validation->set_rules('name_group', 'nome', 'required');
+		$this->form_validation->set_rules('group_name', 'nome', 'required');
 		if ($this->form_validation->run()) {
 			$group = array(
-				'id_group' => $this->input->post('id_group'),
-				'name_group' => $this->input->post('name_group'));
+				'id_group' => $this->input->post('group_id'),
+				'name_group' => $this->input->post('group_name'));
 
 			if($this->GroupModel->update($group)) { 
-				echo true;
+				echo 'Categoria salva.';
 			}
-			else { 
-				echo false;
-			}
+			else { echo 'Ocorreu algum problema interno. Tente novamente'; }
 		}
+		else { echo 'Todos campos são obrigatórios.'; }
 	}
 
 	public function deleteGroup() {
 		$group = array('id_group' => $this->input->post('id_group'));
-		if($this->GroupModel->delete($group)){
-			echo true;
-		}else{
-			echo false;
+		$query = $this->db->get_where('stock_products', $group);
+		if ($query->num_rows() > 0){
+			echo 'Há produtos cadastrados com esta categoria. Não foi possível apagar';
+		} 
+		else {
+			if($this->GroupModel->delete($group)){
+				echo 'Categoria apagada.';
+			} 
+			else { echo 'Ocorreu algum problema interno. Tente novamente'; }
 		}
-	}
-
-	public function searchGroup() {
-		
 	}
 
 	public function createProduct() {
@@ -144,43 +113,36 @@ class StockController extends CI_Controller {
 				'id_group' => $this->input->post('group_id'));
 
 			if ($this->ProductModel->create($product)) { 
-				$data['create_success'] = 'Produto salvo.';
-				redirect('stock');
+				echo 'Produto salvo.';
 			}
-			else { 
-				$data['create_error'] = 'Ocorreu algum erro. Tente novamente';
-			}
+			else { echo 'Ocorreu algum problema interno. Tente novamente'; }
 		}
-		$data['groups'] = $this->GroupModel->getGroups();
-		$data['view'] = 'products/create';
-        $this->template->load('template/template','stock/stock/StockHomeView', $data);
+		else { echo 'Todos os campos são obrigatórios.'; }
 	}
 
 	public function updateProduct() {
 		$this->form_validation->set_rules('product_name', 'nome', 'required');
-		$this->form_validation->set_rules('id_group', 'grupo', 'required');
+		$this->form_validation->set_rules('group_id', 'grupo', 'required');
 		if ($this->form_validation->run()) {
 			$product = array(
-				'id_product' => $this->input->post('id_product'),
+				'id_product' => $this->input->post('product_id'),
 				'name_product' => $this->input->post('product_name'),
-				'id_group' => $this->input->post('id_group'));
+				'id_group' => $this->input->post('group_id'));
 
 			if ($this->ProductModel->update($product)){
-				echo true;
+				echo 'Produto salvo.';
 			}
-			else {
-				echo false;
-			}
+			else { echo 'Ocorreu algum problema interno. Tente novamente'; }
 		}
+		else { echo 'Todos campos são obrigatórios.'; }
 	}
 
 	public function deleteProduct() {
 		$product = array('id_product' => $this->input->post('id_product'));
 		if($this->ProductModel->delete($product)){
 			echo true;
-		}else{
-			echo false;
 		}
+		else { echo false; }
 	}
 
 	public function searchProduct() {

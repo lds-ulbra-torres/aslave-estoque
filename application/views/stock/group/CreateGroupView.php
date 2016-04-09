@@ -1,22 +1,18 @@
 <script type="text/javascript">
 	 $(document).ready(function(){
-		$("#addCat").submit(function(e){
+		$("#create_group").submit(function(e){
 			e.preventDefault();	
 			$.ajax({
 				url: "<?php echo site_url('/StockController/createGroup'); ?>",
 				type: "POST",
-				data: $("#addCat").serialize(),
+				data: $("#create_group").serialize(),
 				success: function(data){
-					var field = "O campo é obrigatorio";
-					if(data.indexOf(field) > -1){
-						Materialize.toast('Todos os campos são obrigatórios!', 4000);
-					}else{
-						Materialize.toast('Categoria de produtos salva.', 4000);
-					}
+					Materialize.toast(data, 3000);
+					$("input[name=group_name]").val("");
 				},
 				error: function(data){
-					alert(data);
-					Materialize.toast('Ocorreu algum erro. Tente novamente', 4000);
+					console.log(data);
+					Materialize.toast('FATAL error', 3000);
 				}
 			});
       });
@@ -24,11 +20,10 @@
 </script>
 <div class="container row">
 	<div class="col s6">
-		<form method="post" id="addCat">
+		<form method="post" id="create_group">
 		<h4>Cadastrar categoria</h4>
-		<input type="text" name="group_name" placeholder="Nome">
-
-		<button class="btn waves-effect waves-light" type="submit">Salvar
+		<input required="required" type="text" name="group_name" placeholder="Nome">
+		<button class="btn green" type="submit">Salvar
 			<i class="material-icons right">send</i>
 		</button>
 	</form>
