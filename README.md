@@ -4,6 +4,7 @@
 * Cadastro de grupos de produtos - OK
 * Cadastro de Produtos - OK
 * Alterações de grupos e produtos - OK
+* Validação para não apagar grupos que tenham produtos cadastrados: OK
 * Carregando campos antigos na alteração: OK
 * Filtros ainda não implementados
 * PS: Mensagem do Toast some rapidamente quando redireciona página ao alterar ou salvar,
