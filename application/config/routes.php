@@ -56,9 +56,11 @@ $route['translate_uri_dashes'] = FALSE;
 /* ROTAS FINANCEIRO */
 $route['financial'] = 'financialController';
 $route['classification'] = 'classificationController';
+$route['create-classification-form'] = 'classificationController/createForm';
 $route['create-classification'] = 'classificationController/create';
-$route['delete-classification/(:num)'] = 'classificationController/delete/$1';
-$route['update-classification'] = 'classificationController/update/$1';
+$route['delete-classification'] = 'classificationController/delete';
+$route['update-classification/(:num)'] = 'classificationController/update/$1';
+$route['update-classification-form/(:num)'] = 'classificationController/updateForm/$1';
 $route['create-people'] = 'peopleController/create';
 $route['delete-people/(:num)'] = 'peopleController/delete/$1';
 $route['people'] = 'peopleController';

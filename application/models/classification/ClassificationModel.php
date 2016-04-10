@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class ClassificationModel extends CI_Model {
 
-	public $table = "fin_classification";
+	public $table = "fin_classifications";
 
 	public function create($classification){
 		return $this->db->insert($this->table, $classification);
@@ -14,7 +14,7 @@ class ClassificationModel extends CI_Model {
 	}
 
 	public function update($classification){
-		$this->db->where('id', $classification['id']);
+		$this->db->where('id_classification', $classification['id_classification']);
 		return $this->db->update($this->table, $classification);
 	}
 

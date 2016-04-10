@@ -17,6 +17,10 @@ class ClassificationController extends CI_Controller {
 		$this->template->load('template/templateMenu', 'classification/classificationView', $data);
 	}
 
+	public function createForm(){
+		$this->template->load('template/templateMenu', 'classification/createClassificationView');
+	}
+
 	public function create(){
 
 			$classification = array(
@@ -25,12 +29,18 @@ class ClassificationController extends CI_Controller {
 				);
 
 			    $this->classificationModel->create($classification);
-			    redirect('classification');
+		    	redirect('classification');
 	}
 
-	public function update(){
+	public function updateForm($classification){
+		$data['classification'] = $classification;
+
+		$this->template->load('template/templateMenu', 'classification/updateClassificationView', $data);
+	}
+
+	public function update($id){
 			$data = array(
-				'id' => $this->input->post('updateClasId'),
+				'id_classification' => $id,
 				'name' => $this->input->post('updateClasName'),
 				'classification_type' => $this->input->post('updateClasType')
 				);
@@ -38,8 +48,8 @@ class ClassificationController extends CI_Controller {
 			redirect('classification','refresh');
 	}
 
-	public function delete($classification){
-		$data = array('id' => $classification);
+	public function delete(){
+		$data = array('id' => $this->input->post('idDeleteClass'));
 
 		$this->classificationModel->delete($data);
 		redirect('classification','refresh');

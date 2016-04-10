@@ -75,10 +75,10 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'localhost',
-	'username' => 'root',
-	'password' => 'amppsroot',
-	'database' => 'slave_db_teste',
+	'hostname' => 'slavedb_teste.mysql.dbaas.com.br',
+	'username' => 'slavedb_teste',
+	'password' => 'Peixeira',
+	'database' => 'slavedb_teste',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
