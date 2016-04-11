@@ -7,6 +7,7 @@ class StockController extends CI_Controller {
 		parent::__construct();
 		$this->load->model('stock/GroupModel');
 		$this->load->model('stock/ProductModel');
+		$this->load->model('stock/StockModel');
 		$this->load->library('form_validation');
 	}
 
@@ -23,13 +24,6 @@ class StockController extends CI_Controller {
 	}
 
 	public function groups() {
-		$search_string = $this->input->post('search_string');
-		if ($search_string) {
-			$data['groups'] = $this->GroupModel->getGroups($search_string);
-			$data['view'] = 'groups';
-			$data['search_string'] = $search_string;
-	        $this->template->load('template/template','stock/stock/StockHomeView', $data);
-		}
 		$data['groups'] = $this->GroupModel->getGroups();
 		$data['view'] = 'groups';
 		$data['search_string'] = null;
@@ -57,6 +51,18 @@ class StockController extends CI_Controller {
 		$data['groups'] = $this->GroupModel->getGroups();
 		$data['product_data'] = $this->ProductModel->getProductById($this->uri->segment(4));
 		$data['view'] = 'products/update';
+    	$this->template->load('template/template','stock/stock/StockHomeView', $data);
+	}
+
+	public function inputStockView(){
+		$data['input_stocks'] = $this->StockModel->getInputStocks();
+		$data['view'] = 'stock/input';
+    	$this->template->load('template/template','stock/stock/StockHomeView', $data);
+	}
+
+	public function createInputStockView(){
+		$data['input_has_products'] = $this->StockModel->getInputHasProducts($this->uri->segment(4));
+		$data['view'] = 'stock/input/create';
     	$this->template->load('template/template','stock/stock/StockHomeView', $data);
 	}
 
@@ -145,7 +151,31 @@ class StockController extends CI_Controller {
 		else { echo false; }
 	}
 
-	public function searchProduct() {
-		
+	public function searchPeople(){
+		$search = $this->input->post('name_people');
+		$result = $this->StockModel->getPeople($search);
+		echo json_encode($result);
+	}
+
+	public function searchProductStock(){
+		$search = $this->input->post('name_product');
+		$result = $this->StockModel->getProductSearch($search);
+		echo json_encode($result);
+	}
+
+	public function createInputStock() {
+		$this->form_validation->set_rules('id_people', 'Fornecedor', 'required');
+		$this->form_validation->set_rules('date_people', 'Data', 'required');
+		if ($this->form_validation->run()) {
+			$input_stock = array(
+				'id_fornecedor' => $this->input->post('id_people'), 
+				'input_date' => $this->input->post('date_people'),
+				'input_type' => $this->input->post('stock_type'));
+			if ($query = $this->StockModel->create($input_stock, 'stock_input')) {
+				echo $query;
+			}
+			else { echo 'Ocorreu um erro interno. Tente novamente'; }
+		} 
+		else { echo 'Todos campos são obrigatórios.'; }
 	}
 }

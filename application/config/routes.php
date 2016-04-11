@@ -63,3 +63,7 @@ $route['stock/products'] = 'StockController/products';
 $route['stock/products/create'] = 'StockController/createProductView';
 $route['stock/products/update/(:num)'] = 'StockController/updateProductView/$1';
 $route['stock/products/delete'] = 'StockController/deleteProductView';
+$route['stock/input'] = 'StockController/inputStockView';
+$route['stock/input/create/(:num)'] = 'StockController/CreateInputStockView/$1';
+$route['stock/output'] = '';
+$route['stock/output/create'] = '';

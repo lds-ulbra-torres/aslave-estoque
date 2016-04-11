@@ -30,5 +30,13 @@
 		case 'products/update':
 			$this->load->view('stock/product/UpdateProductView', $groups);
 			break;
+
+		case 'stock/input':
+			$this->load->view('stock/stock/InputStockView', $input_stocks);
+			break;
+
+		case 'stock/input/create':
+			$this->load->view('stock/stock/CreateInputStockView');
+			break;
 	}
 ?>
