@@ -20,15 +20,15 @@
 				<input id="idDelete" name="idDeleteClass" type="hidden" value="">
 		</div>
 			<div class="modal-footer">
-				<button  class="modal-trigger marginl waves-effect waves-light btn" type="submit">Sim</button>
-			    <a href="#!" class="modal-action modal-close waves-effect white-text waves-green btn-flat red ">Não</a>
+				<button  class="modal-trigger marginl waves-effect waves-light btn red" type="submit">Sim</button>
+			    <a href="#!" class="modal-trigger marginl waves-effect waves-light btn">Não</a>
 		    </div>
 		</form>
 	</div>
 
 
 	<!-- MOSTRAR DADOS DO DB CLASSIFICAÇÃO -->
-	<div>
+	<div class="container">
 		<h3 align="center">Classificações</h3>
 		<table class="striped">
 			<thead>

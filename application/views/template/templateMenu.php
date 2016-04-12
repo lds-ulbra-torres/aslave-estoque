@@ -22,7 +22,7 @@
 
         <li class=""><a href="<?= base_url() ?>"  class="blue-text">HOME</a></li>
         <li class=""><a href="stock" class="blue-text">ESTOQUE</a></li>
-        <li class=""><a href="financial" class="blue-text">FINANCEIRO</a></li>
+        <li class=""><a href="<?= base_url('financial') ?>" class="blue-text">FINANCEIRO</a></li>
 
       </ul>
 

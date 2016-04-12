@@ -23,13 +23,13 @@ class ClassificationController extends CI_Controller {
 
 	public function create(){
 
-			$classification = array(
-				'name' => $this->input->post('classificationName'),
-				'classification_type' => $this->input->post('classificationType')
-				);
+		$classification = array(
+			'name' => $this->input->post('classificationName'),
+			'classification_type' => $this->input->post('classificationType')
+			);
 
-			    $this->classificationModel->create($classification);
-		    	redirect('classification');
+		$this->classificationModel->create($classification);
+		redirect('classification');
 	}
 
 	public function updateForm($classification){
@@ -39,22 +39,37 @@ class ClassificationController extends CI_Controller {
 	}
 
 	public function update($id){
-			$data = array(
-				'id_classification' => $id,
-				'name' => $this->input->post('updateClasName'),
-				'classification_type' => $this->input->post('updateClasType')
-				);
-			$this->classificationModel->update($data);
-			redirect('classification','refresh');
+		$data = array(
+			'id_classification' => $id,
+			'name' => $this->input->post('updateClasName'),
+			'classification_type' => $this->input->post('updateClasType')
+			);
+		$this->classificationModel->update($data);
+		redirect('classification','refresh');
 	}
 
 	public function delete(){
-		$data = array('id' => $this->input->post('idDeleteClass'));
+		$data = array('id_classification' => $this->input->post('idDeleteClass'));
 
-		$this->classificationModel->delete($data);
-		redirect('classification','refresh');
+		if($this->classificationModel->delete($data) == 0){
+			redirect('classification','refresh');
+		}else{
+			echo "<script>alert('A classificação está cadastrada em uma movimentação.')</script>";
+		}
+		
 	}
-}
 
+	public function searchClassification(){
+		$options ="";
+        $type = $this->input->post('type');
+		$classifications = $this->classificationModel->getPerType($type);
+		foreach ($classifications as $classification) {			
+			?>
+			<option value="<?= $classification['id_classification'] ?>"><?= $classification['name'] ?> </option>
+			<?php
+		}
+	}
+	
+}
 /* End of file classificationController.php */
 /* Location: ./application/controllers/classificationController.php */

@@ -22,7 +22,10 @@ class ClassificationModel extends CI_Model {
 		return $this->db->get($this->table)->result_array();
 	}
 
-
+	public function getPerType($type){
+		$this->db->like('classification_type', $type);
+		return $this->db->get($this->table)->result_array();
+	}
 }
 
 /* End of file classificationModel.php */

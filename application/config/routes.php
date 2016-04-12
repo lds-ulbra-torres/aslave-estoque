@@ -61,9 +61,18 @@ $route['create-classification'] = 'classificationController/create';
 $route['delete-classification'] = 'classificationController/delete';
 $route['update-classification/(:num)'] = 'classificationController/update/$1';
 $route['update-classification-form/(:num)'] = 'classificationController/updateForm/$1';
+$route['financial-movimentation'] = 'movimentationController';
+$route['create-movimentation-form'] = 'movimentationController/createMovimentationForm';
+$route['create-movimentation'] = 'movimentationController/createMovimentation';
+
+
+/* ROTAS PESSOAS */
+$route['people'] = 'peopleController';
+$route['people-create-form'] = 'peopleController/peopleCreateView';
 $route['create-people'] = 'peopleController/create';
 $route['delete-people/(:num)'] = 'peopleController/delete/$1';
-$route['people'] = 'peopleController';
+$route['update-people/(:num)'] = 'peopleController/update/$1';
+
 
 /* ROTAS CONTROLE DE ESTOQUE */ 
 $route['stock'] = 'StockController';
@@ -72,3 +81,6 @@ $route['create-group'] = 'stock/stockController/createGroup';
 $route['create-product'] = 'stock/stockController/createProduct';
 $route['update-group'] = 'stock/stockController/updateGroup';
 $route['update-product'] = 'stock/stockController/updateProduct';
+
+/* ROTAS DO SEARCH */
+$route['templateSearch'] = 'searchController';
