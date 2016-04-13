@@ -1,6 +1,7 @@
 <script type="text/javascript">
 	 $(document).ready(function(){
 		$("#create_group").submit(function(e){
+			$("#create_group_btn").attr("disabled", true);
 			e.preventDefault();	
 			$.ajax({
 				url: "<?php echo site_url('/StockController/createGroup'); ?>",
@@ -9,10 +10,12 @@
 				success: function(data){
 					Materialize.toast(data, 3000);
 					$("input[name=group_name]").val("");
+					$("#create_group_btn").attr("disabled", false);
 				},
 				error: function(data){
 					console.log(data);
 					Materialize.toast('FATAL error', 3000);
+					$("#create_group_btn").attr("disabled", false);
 				}
 			});
       });
@@ -23,7 +26,7 @@
 		<form method="post" id="create_group">
 		<h4>Cadastrar categoria</h4>
 		<input required="required" type="text" name="group_name" placeholder="Nome">
-		<button class="btn green" type="submit">Salvar
+		<button class="btn green" id="create_group_btn" type="submit">Salvar
 			<i class="material-icons right">send</i>
 		</button>
 	</form>

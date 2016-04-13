@@ -48,6 +48,7 @@
 		});
 
 		$("#sendPeople").click(function(){
+			$(this).attr("disabled", true);
 			$.ajax({
 				url: "<?php echo site_url('/StockController/createInputStock')?>",
 				type: "POST",
@@ -57,7 +58,15 @@
 					stock_type: $("#stock_type").val()
 				},
 				success: function(data){
-					 window.location.href = "<?php echo site_url('/stock/input/create')?>" + "/" + data;
+					if(data == 'Todos campos são obrigatórios.'){
+						Materialize.toast('Todos campos são obrigatórios.', 4000);
+						$("#sendPeople").attr("disabled", false);
+					}else if(data == 'Ocorreu um erro interno. Tente novamente'){
+						Materialize.toast('Ocorreu um erro interno. Tente novamente', 4000);
+						$("#sendPeople").attr("disabled", false);
+					}else{
+						window.location.href = "<?php echo site_url('/stock/input/create')?>" + "/" + data;
+					}
 				},
 				error: function(data){
 					console.log(data);

@@ -1,41 +1,47 @@
 
 <script type="text/javascript">
-	 $(document).ready(function(){
-	 	$("input[name=group_name]").val("<?php foreach ($group_data as $name){echo $name['name_group'];} ?>");
+	$(document).ready(function(){
+		$("input[name=group_name]").val("<?php foreach ($group_data as $name){echo $name['name_group'];} ?>");
 
 		$("#update_form").submit(function(e){
-      	e.preventDefault();
-	      	$.ajax({
-	      		url: "<?php echo site_url('/StockController/updateGroup'); ?>",
-	      		type: "POST",
-	      		data: {
-	      			group_id: "<?= $this->uri->segment(4) ?>",
-	      			group_name: $("input[name=group_name]").val(),
-	      		},
-	      		success: function(data){
-	      			window.setTimeout(redirecionar, 2000);
-					function redirecionar() {
-					  document.location.href = "<?= base_url('stock/groups'); ?>";
+			$("#update_group_btn").attr("disabled", true);
+			e.preventDefault();
+			$.ajax({
+				url: "<?php echo site_url('/StockController/updateGroup'); ?>",
+				type: "POST",
+				data: {
+					group_id: "<?= $this->uri->segment(4) ?>",
+					group_name: $("input[name=group_name]").val(),
+				},
+				success: function(data){
+					if(data == 'Categoria salva.'){
+						window.setTimeout(redirecionar, 1500);
+						Materialize.toast(data, 1500);
+					}else{
+						Materialize.toast(data, 1500);
+						$("#update_group_btn").attr("disabled", false);
 					}
-					Materialize.toast(data, 2000);
-					console.log(data);
+					function redirecionar() {
+						document.location.href = "<?= base_url('stock/groups'); ?>";
+					}
 				},
 				error: function(data){
 					console.log(data);
 					Materialize.toast('FATAL error', 4000);
+					$("#update_group_btn").attr("disabled", false);
 				}
-	      	});
-      	});
+			});
+		});
 	});
 </script>
 <div class="container row">
 	<div class="col s6">
 		<form method="post" id="update_form">
-		<h4>Alterar categoria</h4>
-		<input type="text" value="" name="group_name" placeholder="Nome">
-		<button class="btn green" type="submit">Salvar
-			<i class="material-icons right">send</i>
-		</button>
-	</form>
+			<h4>Alterar categoria</h4>
+			<input type="text" value="" name="group_name" placeholder="Nome">
+			<button class="btn green" id="update_group_btn" type="submit">Salvar
+				<i class="material-icons right">send</i>
+			</button>
+		</form>
 	</div>
 </div>
