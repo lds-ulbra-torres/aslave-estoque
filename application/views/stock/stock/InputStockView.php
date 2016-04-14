@@ -74,6 +74,29 @@
 				}
 			});
 		});
+		var idStock;
+		$("table").on("click", ".delete_stock_btn", function(){
+			$('#delete_stock_modal').openModal();	
+			idStock = $(this).attr("id");
+		});
+		$("#delete_stock").click(function(){
+			alert(idStock);
+			/*
+			funcao para deletar o stock....
+			$.ajax({
+				url: "<?php echo site_url('/StockController/'); ?>",
+				type: "POST",
+				data: {id_group: idGroup},
+				success: function(data){
+					Materialize.toast(data, 3000);
+					reloadTableGroup();
+				},
+				error: function(data){
+					console.log(data);
+					Materialize.toast('FATAL error', 3000);	
+				}
+			});*/
+		});
 	});
 </script>
 <div class="container row">
@@ -140,11 +163,23 @@
 						<td>Test</td>
 						<td>
 							<a href="#">Alterar</a> |
-							<a href="#">Apagar</a>
+							<a class="delete_stock_btn" id="<?= $row['id_stock']; ?>" href="#">Apagar</a>
 						</td>
 					</tr>
 				<?php endforeach; ?>
 			</tbody>
 		</table>
+	</div>
+	<div id="delete_stock_modal" class="modal">
+		<div class="modal-content">
+			<h4>Aviso</h4>
+			<div class="row">
+				<p>Realmente quer apagar esta entrada de estoque?</p>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Cancelar</a>
+			<a href="#!" id="delete_stock" class="modal-action modal-close waves-effect waves-red btn-flat">Apagar</a>
+		</div>
 	</div>
 </div>
