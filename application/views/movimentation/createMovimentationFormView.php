@@ -1,4 +1,3 @@
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
 		$("#type").change(function(){
@@ -33,14 +32,18 @@
 		
 
 		<label for="people">Pessoa:</label>
-		<input required type="text" name="people">
+		<select class="browser-default" required name="people"> 
+		<?php foreach($peoples as $people) : ?>
+			<option value="<?= $people['id_people'] ?>"><?= $people['name'] ?></option>
+		<?php endforeach ?>
+		</select>
 
 		<label for="numDoc">Numero do documento:</label>
 		<input type="text" name="numDoc">
 
 		<label for="classification" >Classificação:</label>
 		<select required class="browser-default" name="classification" id="classification">
-			<option value="">Carregando...</option>
+			<option value=""> Carregando...</option>
 		</select>
 
 		<label for="date">Data atual:</label>
@@ -50,7 +53,7 @@
 		<input required type="text" name="movimentationDate">
 
 		<label for="value">Valor:</label>
-		<input required type="number" name="value">
+		<input required type="text" id="value" name="value">
 
 		<label for="historic">Histórico</label>
 		<input required type="text" name="historic">

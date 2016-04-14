@@ -4,14 +4,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class MovimentationModel extends CI_Model {
 	private $table = 'financial_releases';
 
-	public function createMovimentation($movimentation){
+	public function create($movimentation){
 		return $this->db->insert($this->table, $movimentation);
 	}
 
-	public function getMovimentations(){
-		return $this->db->get($this->table)->result_array();
+	public function get(){
+		$this->db->from('financial_releases');
+		$this->db->join('people', 'people.id_people = financial_releases.id_people');
+		return $this->db->get()->result_array();
+	}	
+
+	public function delete(){
+		return $this->db->delete();
 	}
-	
 
 }
 

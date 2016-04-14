@@ -12,7 +12,7 @@ class MovimentationController extends CI_Controller {
 
 	public function index()
 	{
-		$data['movimentations'] = $this->movimentationModel->getMovimentations();
+		$data['movimentations'] = $this->movimentationModel->get();	
 		$this->template->load('template/templateMenu', 'movimentation/movimentationView', $data);
 	}
 
@@ -47,7 +47,7 @@ class MovimentationController extends CI_Controller {
 				'historic' => $this->input->post('historic')
 				);
 
-			$this->movimentationModel->createMovimentation($data);
+			$this->movimentationModel->create($data);
 			redirect('financial-movimentation','refresh');
 		}else{
 
