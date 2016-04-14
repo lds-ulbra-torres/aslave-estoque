@@ -56,6 +56,9 @@
 					id_people: $("#people li").attr("id"),
 					date_people: $("input[name=date]").val(),
 					stock_type: $("#stock_type").val()
+
+
+
 				},
 				success: function(data){
 					if(data == 'Todos campos são obrigatórios.'){
@@ -119,7 +122,7 @@
 	<div class="modal-content row">
 		<h4>Nova entrada</h4>
 		<div class="input-field col s3">
-			<input name="people" type="text" required placeholder="Fornecedor">
+			<input name="people" type="text" autocomplete="off" required placeholder="Fornecedor">
 		</div>
 		<div class="input-field col s3">
 			<select name="stock_type" id="stock_type">

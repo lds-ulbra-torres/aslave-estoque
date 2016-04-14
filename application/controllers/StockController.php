@@ -168,7 +168,7 @@ class StockController extends CI_Controller {
 		$this->form_validation->set_rules('date_people', 'Data', 'required');
 		if ($this->form_validation->run()) {
 			$input_stock = array(
-				'id_fornecedor' => $this->input->post('id_people'), 
+				'id_people' => $this->input->post('id_people'), 
 				'input_date' => $this->input->post('date_people'),
 				'input_type' => $this->input->post('stock_type'));
 			if ($query = $this->StockModel->create($input_stock, 'stock_input')) {

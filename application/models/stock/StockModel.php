@@ -22,7 +22,7 @@ class StockModel extends CI_Model {
 		return $this->db->insert($table, $stock_products);
 	}
 	public function getInputStocks() {
-		$this->db->join('people', 'stock_input.id_fornecedor = people.id_people', 'inner');
+		$this->db->join('people', 'stock_input.id_people = people.id_people', 'inner');
 		return $this->db->get($this->input)->result_array();
 	}
 

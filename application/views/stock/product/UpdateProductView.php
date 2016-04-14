@@ -1,6 +1,5 @@
 <script type="text/javascript">
 	$(document).ready(function(){
-		$("input[name=product_name]").val("<?php foreach ($product_data as $name){echo $name['name_product'];} ?>");
 		$("#update_form").submit(function(e){
 			$("#update_product_btn").attr("disabled", true);
 			e.preventDefault();
@@ -37,15 +36,18 @@
 	<div class="col s6">
 		<form method="post" id="update_form">
 			<h4>Alterar produto</h4>
-			<input required="required" placeholder="Nome" name="product_name" type="text"></input>
+			<?php foreach ($product_data as $name){ 
+			?>
+			<input required="required" placeholder="Nome" value="<?php echo $name['name_product']; ?>" name="product_name" type="text"></input>
 			<select id="group_id">
-				<option disabled selected>Selecione uma Categoria</option>
-				<?php foreach($groups as $row) :
-				echo "<option value=".$row['id_group'].">";
-				echo $row['name_group'];
-				echo "</option>";
-				endforeach; ?>
+				<?php foreach($groups as $row){
+					$id_product = $name['id_group']; 
+				?>
+					<option <?php if($id_product == $row['id_group']){ ?> selected  <?php } ?>  value="<?php echo $row['id_group']; ?>"> <?php echo $row['name_group']; ?></option>
+				<?php } ?>
+
 			</select>
+			<?php } ?>
 			<button class="btn green" id="update_product_btn" type="submit">Salvar
 				<i class="material-icons right">send</i>
 			</button>

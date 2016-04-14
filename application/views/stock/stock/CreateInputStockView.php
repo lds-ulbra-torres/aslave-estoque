@@ -156,7 +156,7 @@
 		<div class="modal-content row">
 			<h4>Adicionar produto</h4>
 			<div class="input-field col s4">	
-				<input name="product_name" type="text" placeholder="Produto">
+				<input name="product_name" autocomplete="off" type="text" placeholder="Produto">
 			</div>
 			<div class="input-field col s2">
 				<input name="amount" required="required" type="number" placeholder="Quantia">
