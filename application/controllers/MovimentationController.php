@@ -53,6 +53,16 @@ class MovimentationController extends CI_Controller {
 
 		}
 	}
+
+	public function deleteMovimentation(){
+		$data = array(
+			'id_financial_release' => $this->input->post('DeleteMov')
+			);
+		
+		if($this->movimentationModel->delete($data) > 0){
+			redirect('financial-movimentation','refresh');
+		}
+	}
 }
 
 /* End of file MovimentationController.php */

@@ -135,7 +135,7 @@ class PeopleController extends CI_Controller {
 		redirect('people','refresh');
 	}
 
-	public function searchLocalidade($type)
+	public function searchLocalidade()
 	{
 		$options = "";
 		

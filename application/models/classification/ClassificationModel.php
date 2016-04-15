@@ -1,6 +1,8 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+
+
 class ClassificationModel extends CI_Model {
 
 	public $table = "fin_classifications";

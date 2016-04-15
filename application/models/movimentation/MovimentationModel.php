@@ -14,8 +14,8 @@ class MovimentationModel extends CI_Model {
 		return $this->db->get()->result_array();
 	}	
 
-	public function delete(){
-		return $this->db->delete();
+	public function delete($movimentation){
+		return $this->db->delete($this->table, $movimentation);
 	}
 
 }

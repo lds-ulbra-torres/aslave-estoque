@@ -3,7 +3,7 @@
 	$(document).ready(function(){
 		$(".deleteMovModal").click(function(){
 			$('#deleteMovModal').openModal();
-			document.getElementById('idDelete').value=$(this).attr('id');
+			document.getElementById('idDeleteMov').value=$(this).attr('id');
 		});
 	});
 </script>
@@ -28,17 +28,11 @@
 					<td><?= $movimentation['date_financial_release'] ?></td>
 					<td><?= $movimentation['name'] ?></td>
 					<td>R$ <?= $movimentation['value'] ?></td>
-					<?php 
-					if($movimentation['type_mov'] == 'e'){
-						$movimentation['type_mov'] = "Entrada";
-					}else{
-						$movimentation['type_mov'] = "Saida";
-					}
-					?>
 					<td><?= $movimentation['type_mov'] ?></td>
 					<td>
-						<a href="#" class="modal-trigger waves-effect waves-light btn">Alterar</a>
-						<a href="#deleteMovModal" id="<?= $movimentation['id_financial_release'] ?>" class="modal-trigger waves-effect waves-light btn deleteMovModal">Deletar</a>
+						<a href="#">Alterar</a>
+						|
+						<a href="#deleteMovModal" id="<?= $movimentation['id_financial_release'] ?>" class="deleteMovModal">Deletar</a>
 					</td>
 				</tr>
 			<?php endforeach ?>
@@ -49,12 +43,12 @@
 	<div id="deleteMovModal" class="modal modal-fixed-footer">
 		<div class="modal-content valign-wrapper">
 		<h3 class="center-align valign">Deseja mesmo deletar?</h3>
-			<form action="delete-classification" method="POST">
-				<input id="idDelete" name="idDeleteMov" type="hidden" value="">
+			<form action="delete-movimentation" method="POST">
+				<input id="idDeleteMov" name="DeleteMov" type="hidden" value="">
 		</div>
 			<div class="modal-footer">
-				<button  class="modal-trigger marginl waves-effect waves-light btn red" type="submit">Sim</button>
-			    <a href="#!" class="modal-trigger marginl waves-effect waves-light btn">Não</a>
+				<button  class="modal-trigger marginl waves-effect waves-light btn green" type="submit">Sim</button>
+			    <a href="#!" class="modal-trigger marginl waves-light btn">Não</a>
 		    </div>
 		</form>
 	</div>

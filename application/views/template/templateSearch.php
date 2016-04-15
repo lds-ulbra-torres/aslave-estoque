@@ -34,7 +34,7 @@
               try{
                 var items=[];   
                 $.each(obj, function(i,val){                      
-                  items.push($("<tr><td>" + val.name + " <a href='#' class='eventClick'><button class='right btn ' name ='peopleButtonName' id =" + val.id_people + ">SELECIONAR</button></a></td></tr>"));
+                  items.push($('<tr><td>' + val.name + '<button class="right btn" name ="'+ val.id_people +'" id="batata">SELECIONAR</button></a></td></tr>'));
                 }); 
                 $('#finalResult').append.apply($('#finalResult'), items);
               }catch(e) {   
@@ -62,7 +62,7 @@
 <body>
 
 
-
+  <input type="text" id="teste">
 
   <!-- Modal Trigger -->
   <a class="waves-effect waves-light  modal-trigger openSearchModal"  href="#SearchModal">
@@ -97,7 +97,7 @@
       <table class="striped hightlight">
         <thead>
           <tr>
-
+            
           </tr>
         </thead>
         <tr>
@@ -120,12 +120,12 @@
     $(document).ready(function(){
       $(".openSearchModal").click(function(){
         $('#SearchModal').openModal();
-      });
+      })
     });
-
-
-  $(".eventClick").click(function() {
-    alert("OI");
-  });
+    
+    $(document).on('click','#batata', function(){
+        document.getElementById('teste').value=$(this).attr('name');
+        $('#SearchModal').closeModal();
+    });
   </script>
   </html>

@@ -51,12 +51,14 @@ class ClassificationController extends CI_Controller {
 	public function delete(){
 		$data = array('id_classification' => $this->input->post('idDeleteClass'));
 
-		if($this->classificationModel->delete($data)){
+		var_dump($this->classificationModel->delete($data));
+		/*
+		if(> 0){
 			redirect('classification','refresh');
 		}else{
 			echo "deu ruim";
 		}
-		
+		*/
 	}
 
 	public function searchClassification(){
