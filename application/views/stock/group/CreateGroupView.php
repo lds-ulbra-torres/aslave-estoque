@@ -21,8 +21,9 @@
       });
 	 });
 </script>
-<div class="container row">
+<div class="row">
 	<div class="col s6">
+	<a href="<?=base_url('StockController/groups') ?>">< Voltar para categorias</a>
 		<form method="post" id="create_group">
 		<h4>Cadastrar categoria</h4>
 		<input required="required" type="text" name="group_name" placeholder="Nome">

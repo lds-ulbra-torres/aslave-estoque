@@ -28,34 +28,38 @@
 				data: {id_product: idProduct},
 				success: function(data){
 					if(!data){
-						Materialize.toast('Ocorreu algum erro. Tente novamente', 4000);
+						Materialize.toast(data, 4000);
 					}else{
-						Materialize.toast('Produto apagado.', 4000);
+						Materialize.toast(data, 4000);
 						reloadTableProduct();	
 					}
 				},
 				error: function(data){
 					console.log(data);
-					Materialize.toast('Ocorreu algum erro. Tente novamente', 4000);	
+					Materialize.toast('Erro do ajax', 4000);	
 				}
 			});
 		});
 	});
 </script>
 
-<div class="container row">
+<div class="row">
 	<h4>Produtos</h4>
-	<div class="card-panel col s12">
+	<div class="card-panel col s11">
 		<div class="input-field col s3">
-			<input id="search" type="text" required>
-			<label for="search"><i class="material-icons">search</i></label>
+			<a class="green btn" id="" href="<?= base_url('stock/products/create'); ?>">Adicionar novo</a>
+		</div>
+		<div class="input-field col s3">
+        	<input type="text" placeholder=" Buscar produto..." required>
         </div>
         <div class="input-field col s2">
-        	<a href="#" class="btn grey">Buscar</a>
+        	<button href="#" id="search_button" class="btn grey">
+        		<i class="material-icons">search</i>
+        	</button>
         </div>
-		<div class="input-field col s4">
+		<div class="input-field col s3">
 			<select id="group_id">
-				<option disabled selected>Filtrar por categorias</option>
+				<option disabled selected> Filtrar por categorias</option>
 				<?php foreach($groups as $row) :
 					echo "<option value=".$row['id_group'].">";
 					echo $row['name_group'];
@@ -63,13 +67,10 @@
 				endforeach; ?>
 			</select>
 		</div>
-		<div class="input-field col s3">
-			<a class="green btn" id="" href="<?= base_url('stock/products/create'); ?>">Adicionar novo</a>
-		</div>
 	</div>
 </div>	
-<div class="container row">
-	<div class="col s10">
+<div class="row">
+	<div class="col s11">
 		<table id="product" class="bordered highlight">
 			<thead>
 				<td><strong>Nome</strong></td>
@@ -91,8 +92,20 @@
 	            <?php endforeach; ?>
 	        </tbody>
 		</table>
+		<div class="pagination">
+			<ul class="pagination right-align">
+				<li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+				<li class="active grey"><a href="#!">1</a></li>
+				<li class="waves-effect"><a href="#!">2</a></li>
+				<li class="waves-effect"><a href="#!">3</a></li>
+				<li class="waves-effect"><a href="#!">4</a></li>
+				<li class="waves-effect"><a href="#!">5</a></li>
+				<li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+			</ul>
+		</div>
 	</div>	
 </div>
+
 
 <div id="delete_product_modal" class="modal">
 	<div class="modal-content">

@@ -146,9 +146,9 @@ class StockController extends CI_Controller {
 	public function deleteProduct() {
 		$product = array('id_product' => $this->input->post('id_product'));
 		if($this->ProductModel->delete($product)){
-			echo true;
+			echo 'Produto apagado. ';
 		}
-		else { echo false; }
+		else { echo 'Ocorreu algum erro. Tente novamente'; }
 	}
 
 	public function searchPeople(){

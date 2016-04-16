@@ -53,30 +53,31 @@
 	});
 </script>
 
-<div class="container row">
+<div class="row">
 	<h4>Categorias</h4>
-	<div class="card-panel col s12">
+	<div class="card-panel col s11">
 		<div class="input-field col s3">
-			<input id="search" value="<?= $search_string ?>" type="text" required>
-			<label for="search"><i class="material-icons">search</i></label>
-        </div>
-        <div class="input-field col s2">
-        	<button href="#" id="search_button" class="btn grey">Buscar</button>
-        </div>
-		<div class="input-field col s4">
-			<select id="group_id">
-				<option disabled selected>Ordenar por...</option>
-				<option value="">Nome</option>
-				<option value="">Entrada</option>
-			</select>
+			<a class="btn green" id="" href="<?= base_url('stock/groups/create'); ?>">Adicionar nova</a>
 		</div>
 		<div class="input-field col s3">
-			<a class="btn green" id="" href="<?= base_url('stock/groups/create'); ?>">Adicionar novo</a>
+			<input value="" placeholder=" Buscar categoria..." type="text" required>
+        </div>
+        <div class="input-field col s2">
+        	<button href="#" id="search_button" class="btn grey">
+        		<i class="material-icons">search</i>
+        	</button>
+        </div>
+		<div class="input-field col s3">
+			<select id="group_id">
+				<option disabled selected> Ordenar por...</option>
+				<option value="">Ascendente</option>
+				<option value="">Descendente</option>
+			</select>
 		</div>
 	</div>
 </div>	
-<div class="container row">
-	<div class="col s7">
+<div class="row">
+	<div class="col s9">
 		<table id="group" class="bordered highlight">
 			<legend></legend>
 			<thead>
@@ -95,6 +96,17 @@
 	                  <?php endforeach; ?>
 	        </tbody>
 		</table>
+		<div class="pagination">
+			<ul class="pagination right-align">
+				<li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+				<li class="active grey"><a href="#!">1</a></li>
+				<li class="waves-effect"><a href="#!">2</a></li>
+				<li class="waves-effect"><a href="#!">3</a></li>
+				<li class="waves-effect"><a href="#!">4</a></li>
+				<li class="waves-effect"><a href="#!">5</a></li>
+				<li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+			</ul>
+		</div>
 	</div>
 
 	<div id="delete_group_modal" class="modal">

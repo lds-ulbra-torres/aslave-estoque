@@ -24,8 +24,9 @@
 		});
 	});
 </script>
-<div class="container row">
+<div class="row">
 	<div class="col s6">
+	<a href="<?=base_url('StockController/products') ?>">< Voltar para produtos</a>
 		<form method="post" id="create_product">
 			<h4>Cadastrar produto</h4>
 			<input required="required" placeholder="Nome" name="product_name" type="text"></input>

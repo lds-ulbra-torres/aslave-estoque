@@ -102,19 +102,20 @@
 		});
 	});
 </script>
-<div class="container row">
+<div class="row">
 	<h4>Entradas de Estoque</h4>
-	<div class="card-panel col s12">
+	<div class="card-panel col s11">
 		<div class="input-field col s3">
-			<input id="search" type="text" required>
-			<label for="search"><i class="material-icons">search</i></label>
-		</div>
-		<div class="input-field col s2">
-			<a href="#" class="btn grey">Buscar</a>
-		</div>
-		<div class="input-field col s3 offset-s3">
 			<a class="green btn" id="add_people_btn" href="#add_people">Adicionar novo</a>
 		</div>
+		<div class="input-field col s3">
+        	<input type="text" placeholder=" Buscar entradas..." required>
+        </div>
+        <div class="input-field col s2">
+        	<button href="#" id="search_button" class="btn grey">
+        		<i class="material-icons">search</i>
+        	</button>
+        </div>
 	</div>
 </div>
 
@@ -147,8 +148,8 @@
 	</div>
 </div>
 
-<div class="container row">
-	<div class="col s12">
+<div class="row">
+	<div class="col s11">
 		<table class="bordered highlight">
 			<thead>
 				<td><strong>Fornecedor</strong></td>

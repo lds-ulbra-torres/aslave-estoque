@@ -34,7 +34,7 @@
 		});
 	});
 </script>
-<div class="container row">
+<div class="row">
 	<div class="col s6">
 		<form method="post" id="update_form">
 			<h4>Alterar categoria</h4>

@@ -118,11 +118,9 @@
 		});
 	});
 </script>
-<div class="container row">
+<div class="row">
 	<h4>Adicionar produtos</h4>
-
-	
-	<div class="col s12">
+	<div class="col s8">
 		<div class="right-align">
 			<button id="add_product_btn" class="btn green">Adicionar</button>
 		</div>
