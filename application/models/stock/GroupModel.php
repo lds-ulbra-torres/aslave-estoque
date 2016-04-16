@@ -27,7 +27,6 @@ class GroupModel extends CI_Model {
 	}
 
 	public function count() {
-		if ($search_string) { $this->db->like($this->name, $search_string); }
 		return $this->db->get($this->table)->num_rows();
 	}
 
@@ -44,13 +43,6 @@ class GroupModel extends CI_Model {
 		return $this->db->get($this->table)->result_array();
 	}
 
-	public function groupExists($group_name) {
-		$this->db->where($this->name, $group_name);
-		$query = $this->db->get($this->table);
-		if ($query->num_rows() > 0) 
-			return true;
-		return false;
-	}
 
 }
 

@@ -28,7 +28,6 @@ class ProductModel extends CI_Model {
 	}
 
 	public function count() {
-		if ($search_string) { $this->db->like($this->name, $search_string); }
 		return $this->db->get($this->table)->num_rows();
 	}
 
@@ -50,11 +49,11 @@ class ProductModel extends CI_Model {
 		return $this->db->get($this->table)->result_array();
 	}
 
-	public function productExists($product_name) {
-		$this->db->where($this->name, $product_name);
-		$query = $this->db->get($this->table);
-		if ($query->num_rows() > 0) 
+	public function findProductByForeign($group_id) {
+		$query = $this->db->get_where($this->table, $group_id, 1);
+		if ($query->num_rows() > 0){
 			return true;
+		} 
 		return false;
 	}
 

@@ -32,7 +32,7 @@
 				},
 				error: function(data){
 					console.log(data);
-					Materialize.toast('FATAL error', 3000);	
+					Materialize.toast('Erro interno.', 3000);	
 				}
 			});
 		});

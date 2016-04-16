@@ -46,7 +46,7 @@
     <li><a href="<?= base_url('stock/products'); ?>">Produtos</a></li>
     <li><a href="<?= base_url('stock/groups'); ?>">Categorias</a></li>
     <li class="divider"></li>
-    <li><a href="<?= base_url('stock/input'); ?>">Entradas</a></li>
+    <li><a href="<?= base_url('stock/entries'); ?>">Entradas</a></li>
     <li><a href="<?= base_url('stock'); ?>">Saídas</a></li>
     <li class="divider"></li>
     <li><a href="<?= base_url('stock'); ?>">Visão Geral</a></li>
