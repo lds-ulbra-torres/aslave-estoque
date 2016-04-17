@@ -123,36 +123,51 @@
 	});
 </script>
 <div class="row">
-	<div class="col s9">
+	<div class="">
 		<h4>Nova entrada</h4>
-		<div class="input-field col s4">
-			<input name="people" type="text" autocomplete="off" required placeholder="Fornecedor">
-			<div id="loadPeople" class="col s9"></div>
-			<div id="people" class="collection col s9"></div>
+		<div class="card-panel col s8">
+			<div class="input-field col s5">
+				<input name="people" type="text" autocomplete="off" required placeholder="Fornecedor">
+				<div id="loadPeople" class="col s3"></div>
+				<div id="people" class="collection col s3"></div>
+			</div>
+			<div class="input-field col s3">
+				<select name="stock_type" id="stock_type">
+					<option selected value="1">Compra</option>
+					<option value="2">Doação</option>
+				</select>
+			</div>
+			<div class="input-field col s3">
+				<input placeholder="Data" name="date" type="date" required>
+			</div>
 		</div>
-		<div class="input-field col s2">
-			<select name="stock_type" id="stock_type">
-				<option selected value="1">Compra</option>
-				<option value="2">Doação</option>
-			</select>
-		</div>
-		<div class="input-field col s3">
-			<input placeholder="Data" name="date" type="date" required>
+		<div class="container right-align col s3">
+			<button id="" class="btn green btn-large" disabled>Finalizar entrada</button>
 		</div>
 
 	</div>
-
-	<div class="col s8">
-		<div class="left-align">
+	<div class="card-panel col s10">
+		<div class="input-field col s4">
 			<button id="add_product_btn" class="btn green">Adicionar produto</button>
 		</div>
+		<p class="input-field col s3">
+			<a class="btn-flat grey" disabled>Total: R$ <?= $this->cart->total(); ?></a>
+		</p>
+		<div class="input-field col s2">
+			<?= form_submit('', 'Atualizar', array('class' => 'btn')); ?>
+		</div>
+		<div class="input-field col s3">
+			<a class="btn red" href="<?= base_url('StockController/cleanAll')?>">Remover todos</a>
+		</div>
+	</div>
+	<div class="col s10">
 		<table id="input_stock_product" class="bordered highlight">
 			<thead>
 				<td><strong>Nome</strong></td>
 				<td><strong>Quantidade</strong></td>
 				<td><strong>Valor unitário</strong></td>
 				<td><strong>Valor total</strong></td>
-				<td><strong>Açoes</strong></td>
+				<td><strong>Ações</strong></td>
 			</thead>
 			<tbody>
 				<?php $i = 1; ?>
@@ -165,24 +180,26 @@
 								array(
 									'name' => $i.'[qty]', 
 									'value' => $row['qty'], 
-									'maxlength' => '3', 
+									'maxlength' => '4', 
 									'size' => '5', 
 									'class' => 'col s6')); ?>
 						</td>
-						<td>R$ <?= $row['price'] ?></td>
-						<td>R$ <?= $row['subtotal'] ?></td>
 						<td>
-							<a class="delete_product_stock_btn" id="<?= $row['id']; ?>" href="#">Remover</a>
+							<?php echo form_input(
+								array(
+									'name' => $i.'[price]', 
+									'value' => $row['price'], 
+									'maxlength' => '10', 
+									'size' => '5',
+									'step' => '0.01',
+									'min'  => '0.01', 
+									'class' => 'col s6')); ?>
 						</td>
+						<td>R$ <?= $row['subtotal'] ?></td>
+						<td><a class="remove_product" id="<?= $row['id']; ?>" href="#">Remover</a></td>
 					</tr>
 				<?php $i++; ?>
 				<?php endforeach; ?>
-				<tr>
-					<td><a href="<?= base_url('StockController/cleanAll')?>">Remover todos</a></td>
-					<td><?= form_submit('', 'Atualizar'); ?></td>
-					<td></td>
-					<td><strong>Total: </strong> R$ <?= $this->cart->total(); ?></td>
-				</tr>
 			</tbody>
 		</table>
 	</div>
