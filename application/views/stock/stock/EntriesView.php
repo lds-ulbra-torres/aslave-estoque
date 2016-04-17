@@ -7,7 +7,7 @@ $(document).ready(function(){
 	<h4>Entradas de Estoque</h4>
 	<div class="card-panel col s11">
 		<div class="input-field col s3">
-			<a class="green btn" href="<?=base_url('stock/entries/create') ?>">Adicionar novo</a>
+			<a class="green btn" href="<?=base_url('stock/entries/create') ?>">Adicionar nova</a>
 		</div>
 		<div class="input-field col s3">
         	<input type="text" placeholder=" Buscar entradas..." required>
@@ -27,6 +27,7 @@ $(document).ready(function(){
 				<td><strong>Fornecedor</strong></td>
 				<td><strong>Data</strong></td>
 				<td><strong>Valor total</strong></td>
+				<td><strong>Tipo</strong></td>
 				<td><strong>Ações</strong></td>
 			</thead>
 			<tbody>
@@ -37,6 +38,15 @@ $(document).ready(function(){
 						</td>
 						<td><?= $row['input_date'] ?></td>
 						<td>Test</td>
+						<td><?php switch ($row['input_type']) {
+							case '1':
+								echo 'Compra';
+								break;
+							
+							case '2':
+								echo 'Doação';
+								break;
+						} ?></td>
 						<td>
 							<a href="#">Alterar</a> |
 							<a class="delete_stock_btn" id="<?= $row['id_stock']; ?>" href="#">Apagar</a>

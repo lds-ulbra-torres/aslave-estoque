@@ -9,6 +9,7 @@ class StockController extends CI_Controller {
 		$this->load->model('stock/ProductModel');
 		$this->load->model('stock/StockModel');
 		$this->load->library('form_validation');
+		$this->load->library('cart');
 	}
 
 	public function index(){   
@@ -148,6 +149,50 @@ class StockController extends CI_Controller {
 			echo 'Produto apagado. ';
 		}
 		else { echo 'Ocorreu algum erro. Tente novamente'; }
+	}
+
+	public function addProductHasEntry() {			
+		$id_produto = $this->input->post("id_product");
+		$nome_produto = $this->input->post('product_name');
+		$quantidade = $this->input->post("amount");
+		$preco = $this->input->post("unit_price");		
+		
+		$data = array(
+           'id'      => $id_produto,
+           'qty'     => $quantidade,
+           'price'   => $preco,
+           'name'    => $nome_produto,
+           'options' => null
+        );
+
+		if ($this->cart->insert($data)) {
+			echo 'Inserido.';
+		} else {
+			echo "Não foi possível inserir. <pre>";
+			print_r($data);
+			echo "</pre>";				
+		}
+	}
+
+	public function updateList() {
+		$conteudo_postado = $this->input->post();
+	
+		foreach($conteudo_postado as $conteudo) {
+			$dados[] = array(
+				"rowid" => $conteudo['rowid'],
+				"qty" => $conteudo['qty']
+			);
+				
+		}
+		$this->cart->update($dados);
+	}
+
+	public function cleanAll() {
+		$this->cart->destroy();
+	}
+
+	public function createEntry() {
+		
 	}
 
 	public function searchPeople(){
