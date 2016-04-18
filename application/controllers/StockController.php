@@ -151,7 +151,7 @@ class StockController extends CI_Controller {
 		else { echo 'Ocorreu algum erro. Tente novamente'; }
 	}
 
-	public function addProductHasEntry() {			
+	/*public function addProductHasEntry() {			
 		$id_produto = $this->input->post("id_product");
 		$nome_produto = $this->input->post('product_name');
 		$quantidade = $this->input->post("amount");
@@ -193,7 +193,7 @@ class StockController extends CI_Controller {
 
 	public function createEntry() {
 		
-	}
+	}*/
 
 	public function searchPeople(){
 		$search = $this->input->post('name_people');
@@ -205,6 +205,49 @@ class StockController extends CI_Controller {
 		$search = $this->input->post('name_product');
 		$result = $this->StockModel->getProductSearch($search);
 		echo json_encode($result);
+	}
+	
+	public function createInputStock(){
+		$this->form_validation->set_rules('date', 'data', 'required');
+		$this->form_validation->set_rules('type', 'tipo', 'required');
+		$this->form_validation->set_rules('id_people', 'fornecedor', 'required');
+		if ($this->form_validation->run()) {
+			$people = array(
+				'input_date' => $this->input->post('date'),
+				'input_type' => $this->input->post('type'),
+				'id_people' => $this->input->post('id_people'));
+			$query = $this->StockModel->createInputStockPeople($people);
+			if($query){
+				$id = $query;
+				$check = false;
+				$product = json_decode($this->input->post('products'));
+
+				foreach ($product as $products) {
+					$product_array = array(
+						'id_product' => $products->id_product,
+						'id_stock' => $id,
+						'unit_price' => $products->price,
+						'amount' => $products->amount);
+					if($this->StockModel->createInputStockProduct($product_array)){
+						$check = true;
+					}else{
+						$check = false;
+					}
+				}
+				if(!$check){
+					echo "Erro ao adicionar os produtos";
+				}else{
+					echo $id;
+				}
+
+			}else{
+				echo "Erro ao adicionar a pessoa";
+			}
+		}else{
+			echo "Há campos do forncedor que não foram preenchidos!";
+		}
+
+
 	}
 
 

@@ -18,9 +18,9 @@ class StockModel extends CI_Model {
 		$this->db->insert($table, $stock);
 		return $this->db->insert_id();
 	}
-	public function createInputStockProduct($stock_products, $table){
+	/*public function createInputStockProduct($stock_products, $table){
 		return $this->db->insert($table, $stock_products);
-	}
+	}*/
 	public function getInputStocks() {
 		$this->db->join('people', 'stock_input.id_people = people.id_people', 'inner');
 		return $this->db->get($this->input)->result_array();
@@ -50,6 +50,13 @@ class StockModel extends CI_Model {
 	}
 	public function deleteProductInputStockModel($product){
 		return $this->db->delete($this->input_has_products, $product);
+	}
+	public function createInputStockPeople($peopleData){
+		$this->db->insert($this->input, $peopleData);
+		return $this->db->insert_id();
+	}
+	public function createInputStockProduct($produtctData){
+		return $this->db->insert($this->input_has_products, $produtctData);
 	}
 
 }
