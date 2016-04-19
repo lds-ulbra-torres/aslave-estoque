@@ -3,7 +3,7 @@
 	$(document).ready(function(){
 		var total = 0
 		$(".total").each(function(){
-			total += Number($(this).text().replace(/[^0-9]/g,''));
+			total += Number($(this).text().replace(/[^0-9.,]/g,''));
 			
 		});
 		$("#totalHeader").text("R$ "+total);

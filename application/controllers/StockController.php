@@ -191,6 +191,7 @@ class StockController extends CI_Controller {
 						'unit_price' => $products->price,
 						'amount' => $products->amount);
 					if ($this->StockModel->createInputStockProduct($product_array)) {
+						
 						$check = true;
 					}
 					else { $check = false; }
