@@ -10,13 +10,30 @@ $(document).ready(function(){
 			<a class="green btn" href="<?=base_url('stock/entries/create') ?>">Adicionar nova</a>
 		</div>
 		<div class="input-field col s3">
-        	<input type="text" placeholder=" Buscar entradas..." required>
+        	<input type="text" placeholder=" Fornecedor..." required>
         </div>
         <div class="input-field col s2">
         	<button href="#" id="search_button" class="btn grey">
         		<i class="material-icons">search</i>
         	</button>
         </div>
+        <div class="input-field col s3">
+			<select id="group_id">
+				<option disabled selected> Filtrar fornecedor...</option>
+				<?php foreach($input_stocks as $row) :
+					echo "<option value=".$row['id_people'].">";
+					echo $row['name'];
+					echo "</option>";
+				endforeach; ?>
+			</select>
+		</div>
+		<div class="input-field col s1">
+			<select id="group_id">
+				<option disabled selected> Tipos...</option>
+				<option value="1"> Compras</option>
+				<option value="2"> Doações</option>
+			</select>
+		</div>
 	</div>
 </div>
 
@@ -27,16 +44,14 @@ $(document).ready(function(){
 				<td><strong>Fornecedor</strong></td>
 				<td><strong>Data</strong></td>
 				<td><strong>Valor total</strong></td>
-				<td><strong>Tipo</strong></td>
+				<td><strong>Tipo de fornecimento</strong></td>
 				<td><strong>Ações</strong></td>
 			</thead>
 			<tbody>
 				<?php foreach($input_stocks as $row) :?>
 					<tr>
-						<td>
-							<a href="<?= base_url('stock/input/create/'.$row['id_stock']); ?>"><?= $row['name']; ?></a>
-						</td>
-						<td><?= $row['input_date'] ?></td>
+						<td><a href="<?= base_url('stock/entries/'.$row['id_stock']); ?>"><?= $row['name'] ?></a></td>
+						<td><?= date('d/m/Y', strtotime($row['input_date'])); ?></td>
 						<td>Test</td>
 						<td><?php switch ($row['input_type']) {
 							case '1':
@@ -48,7 +63,6 @@ $(document).ready(function(){
 								break;
 						} ?></td>
 						<td>
-							<a href="#">Alterar</a> |
 							<a class="delete_stock_btn" id="<?= $row['id_stock']; ?>" href="#">Apagar</a>
 						</td>
 					</tr>

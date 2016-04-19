@@ -9,7 +9,7 @@ class StockController extends CI_Controller {
 		$this->load->model('stock/ProductModel');
 		$this->load->model('stock/StockModel');
 		$this->load->library('form_validation');
-		$this->load->library('cart');
+		$this->load->helper('auxiliares');
 	}
 
 	public function index(){   
@@ -62,8 +62,14 @@ class StockController extends CI_Controller {
 	}
 
 	public function createEntryView(){
-		$data['input_has_products'] = $this->StockModel->getInputHasProducts($this->uri->segment(4));
 		$data['view'] = 'stock/entries/create';
+		$this->template->load('template/template','stock/stock/HomeView', $data);
+	}
+
+	public function detailedEntryView() {
+		$id_stock = $this->uri->segment(3);
+		$data['view'] = 'stock/entries/detailed';
+		$data['entry_data'] = $this->StockModel->getDetailedEntry($id_stock);
 		$this->template->load('template/template','stock/stock/HomeView', $data);
 	}
 
@@ -151,63 +157,19 @@ class StockController extends CI_Controller {
 		else { echo 'Ocorreu algum erro. Tente novamente'; }
 	}
 
-	/*public function addProductHasEntry() {			
-		$id_produto = $this->input->post("id_product");
-		$nome_produto = $this->input->post('product_name');
-		$quantidade = $this->input->post("amount");
-		$preco = $this->input->post("unit_price");		
-		
-		$data = array(
-           'id'      => $id_produto,
-           'qty'     => $quantidade,
-           'price'   => $preco,
-           'name'    => $nome_produto,
-           'options' => null
-        );
-
-		if ($this->cart->insert($data)) {
-			echo 'Inserido.';
-		} else {
-			echo "Não foi possível inserir. <pre>";
-			print_r($data);
-			echo "</pre>";				
-		}
-	}
-
-	public function updateList() {
-		$conteudo_postado = $this->input->post();
-	
-		foreach($conteudo_postado as $conteudo) {
-			$dados[] = array(
-				"rowid" => $conteudo['rowid'],
-				"qty" => $conteudo['qty']
-			);
-				
-		}
-		$this->cart->update($dados);
-	}
-
-	public function cleanAll() {
-		$this->cart->destroy();
-	}
-
-	public function createEntry() {
-		
-	}*/
-
 	public function searchPeople(){
 		$search = $this->input->post('name_people');
 		$result = $this->StockModel->getPeople($search);
 		echo json_encode($result);
 	}
 
-	public function searchProductStock(){
+	public function searchProductStock() {
 		$search = $this->input->post('name_product');
 		$result = $this->StockModel->getProductSearch($search);
 		echo json_encode($result);
 	}
 	
-	public function createInputStock(){
+	public function createInputStock() {
 		$this->form_validation->set_rules('date', 'data', 'required');
 		$this->form_validation->set_rules('type', 'tipo', 'required');
 		$this->form_validation->set_rules('id_people', 'fornecedor', 'required');
@@ -217,7 +179,7 @@ class StockController extends CI_Controller {
 				'input_type' => $this->input->post('type'),
 				'id_people' => $this->input->post('id_people'));
 			$query = $this->StockModel->createInputStockPeople($people);
-			if($query){
+			if ($query) {
 				$id = $query;
 				$check = false;
 				$product = json_decode($this->input->post('products'));
@@ -228,27 +190,19 @@ class StockController extends CI_Controller {
 						'id_stock' => $id,
 						'unit_price' => $products->price,
 						'amount' => $products->amount);
-					if($this->StockModel->createInputStockProduct($product_array)){
+					if ($this->StockModel->createInputStockProduct($product_array)) {
 						$check = true;
-					}else{
-						$check = false;
 					}
+					else { $check = false; }
 				}
-				if(!$check){
-					echo "Erro ao adicionar os produtos";
-				}else{
-					echo $id;
+				if (!$check) {
+					echo "Erro ao salvar os produtos.";
 				}
-
-			}else{
-				echo "Erro ao adicionar a pessoa";
+				else { echo $id; }
 			}
-		}else{
-			echo "Há campos do forncedor que não foram preenchidos!";
+			else { echo "Erro ao salvar o fornecedor. "; }
 		}
-
-
+		else { echo "É necessário informar todos os dados."; }
 	}
-
 
 }

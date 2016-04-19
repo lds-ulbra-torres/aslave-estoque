@@ -95,8 +95,8 @@
 
 			cols += '<td class="tdProductId" id='+ $("#product option").attr("id") +'>'+ $("#product option").text() +'</td>';
 			cols += '<td class="tdProductAmount">'+ $("input[name=amount]").val() +'</td>';
-			cols += '<td class="tdProductPrice">'+ $("input[name=price]").val() +'</td>';
-			cols += '<td class="tdProductTotal">'+ $("input[name=price]").val() * $("input[name=amount]").val() +'</td>';
+			cols += '<td class="tdProductPrice">'+'R$ '+ $("input[name=price]").val() +'</td>';
+			cols += '<td class="tdProductTotal">'+'R$ '+ $("input[name=price]").val() * $("input[name=amount]").val() +'</td>';
 			cols += '<td>';
 			cols += '<a href="#" class="removeProduct">Remover</a>';
 			cols += '</td>';
@@ -146,55 +146,52 @@
 	});
 </script>
 <div class="row">
-	<div class="col s9">
+	<div class="">
 		<h4>Nova entrada</h4>
-		<div class="input-field col s4">
-			<input name="people" type="text" autocomplete="off" required placeholder="Fornecedor">
+		<div class="card-panel col s8">
+			<div class="input-field col s5">
+				<input name="people" type="text" autocomplete="off" required placeholder="Fornecedor">
+				<div id="loadPeople" class="col s12"></div>
+				<div id="people" class="collection col s12"></div>
+			</div>
+			<div class="input-field col s3">
+				<select name="stock_type" id="stock_type">
+					<option selected value="1">Compra</option>
+					<option value="2">Doação</option>
+				</select>
+			</div>
+			<div class="input-field col s3">
+				<input placeholder="Data" name="date" type="date" required>
+			</div>
 		</div>
-		<div class="input-field col s2">
-			<select name="stock_type" id="stock_type">
-				<option selected value="1">Compra</option>
-				<option value="2">Doação</option>
-			</select>
+		<div class="container right-align col s3">
+			<button id="add_input_stock_btn" type="submit" class="green btn-large">Finalizar entrada<i class="material-icons right">send</i></button>
 		</div>
-		<div class="input-field col s3">
-			<input placeholder="Data" name="date" type="date" required>
-		</div>
+	</div>
 
-		<div id="loadPeople" class="col s9">
+	<div class="card-panel col s8">
+		<div class="col s4">
+			<p><a id="add_product_btn" class="btn green">Adicionar produto</a></p>
 		</div>
-		<div id="people" class="col s9">
+		<div class="right-align col s8">
+			<p class="btn grey" disabled>Total: R$ <?php //TOTAL AQUI ?></p>
 		</div>
 	</div>
 
 	<div class="col s8">
-		<div class="left-align">
-			<button id="add_product_btn" class="btn green">Adicionar produto</button>
-		</div>
 		<table  class="bordered highlight">
 			<thead>
 				<td><strong>Nome</strong></td>
 				<td><strong>Quantidade</strong></td>
 				<td><strong>Valor unitário</strong></td>
 				<td><strong>Valor total</strong></td>
-				<td><strong>Açoes</strong></td>
+				<td><strong>Ações</strong></td>
 			</thead>
 			<tbody id="input_stock_product">
-				<?php foreach($input_has_products as $row) :?>
-					<tr>
-						<td><?= $row['name_product'] ?></td>
-						<td><?= $row['amount'] ?></td>
-						<td><?= $row['unit_price'] ?></td>
-						<td><?= $row['amount']*$row['unit_price'] ?></td>
-						<td>
-							<a class="delete_product_stock_btn" id="<?= $row['id_product']; ?>" href="#">Remover</a>
-						</td>
-					</tr>
-				<?php endforeach; ?>
+
 			</tbody>
 		</table>
 	</div>
-	<button id="add_input_stock_btn" class="btn green">Salvar<i class="material-icons right">send</i> </button>
 </div>
 
 <div id="add_product_modal" class="modal">
@@ -212,12 +209,8 @@
 			</div>
 
 			<div id="products" class="col s12">
-				<div id="loadProduct" class="col s9">
-
-				</div>
-				<div id="product" class="col s9">
-
-				</div>
+				<div id="loadProduct" class="col s6"></div>
+				<div id="product" class="collection col s6"></div>
 			</div>
 		</div>
 		<div class="modal-footer">

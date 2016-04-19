@@ -8,29 +8,21 @@ class StockModel extends CI_Model {
 	var $output = 'stock_output';
 	var $stock = 'stock';
 
-	public function __construct()
-	{
+	public function __construct() {
 		parent::__construct();
-		//Do your magic here
 	}
 
-	public function create($stock, $table) {
-		$this->db->insert($table, $stock);
-		return $this->db->insert_id();
-	}
-	/*public function createInputStockProduct($stock_products, $table){
-		return $this->db->insert($table, $stock_products);
-	}*/
 	public function getInputStocks() {
 		$this->db->join('people', 'stock_input.id_people = people.id_people', 'inner');
 		return $this->db->get($this->input)->result_array();
 	}
 
-	public function getInputHasProducts($id_stock) {
-		$this->db->where('stock_input_products.id_stock', $id_stock);
-		$this->db->join('stock_input', 'stock_input_products.id_stock = stock_input.id_stock', 'inner');
+	public function getDetailedEntry($id_stock) {
+		$this->db->where('stock_input.id_stock', $id_stock);
+		$this->db->join('stock_input_products', 'stock_input.id_stock = stock_input_products.id_stock', 'inner');
 		$this->db->join('stock_products', 'stock_input_products.id_product = stock_products.id_product', 'inner');
-		return $this->db->get($this->input_has_products)->result_array();
+		$this->db->join('people', 'stock_input.id_people = people.id_people', 'inner');
+		return $this->db->get($this->input)->result_array();
 	}
 
 	public function getPeople($searchString) {
@@ -55,8 +47,8 @@ class StockModel extends CI_Model {
 		$this->db->insert($this->input, $peopleData);
 		return $this->db->insert_id();
 	}
-	public function createInputStockProduct($produtctData){
-		return $this->db->insert($this->input_has_products, $produtctData);
+	public function createInputStockProduct($productData){
+		return $this->db->insert($this->input_has_products, $productData);
 	}
 
 }

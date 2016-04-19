@@ -26,10 +26,12 @@
 	<a href="<?=base_url('StockController/groups') ?>">< Voltar para categorias</a>
 		<form method="post" id="create_group">
 		<h4>Cadastrar categoria</h4>
-		<input required="required" type="text" name="group_name" placeholder="Nome">
-		<button class="btn green" id="create_group_btn" type="submit">Salvar
-			<i class="material-icons right">send</i>
-		</button>
+		<div class="card-panel">
+			<input required="required" type="text" name="group_name" placeholder="Nome">
+			<button class="btn green" id="create_group_btn" type="submit">Salvar
+				<i class="material-icons right">send</i>
+			</button>
+		</div>
 	</form>
 	</div>
 </div>

@@ -48,6 +48,10 @@
 			case 'stock/entries/create':
 				$this->load->view('stock/stock/CreateEntryView');
 				break;
+
+			case 'stock/entries/detailed':
+				$this->load->view('stock/stock/DetailedEntryView');
+				break;
 		}?>
 	</div>
 </div>

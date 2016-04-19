@@ -29,8 +29,8 @@
 	<a href="<?=base_url('StockController/products') ?>">< Voltar para produtos</a>
 		<form method="post" id="create_product">
 			<h4>Cadastrar produto</h4>
-			<input required="required" placeholder="Nome" name="product_name" type="text"></input>
-			<div class="">
+			<div class="card-panel">
+				<input required="required" placeholder="Nome" name="product_name" type="text"></input>
 				<select id="group_id">
 					<option disabled selected value="1">Selecione uma Categoria</option>
 					<?php foreach($groups as $row) :

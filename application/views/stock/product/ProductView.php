@@ -83,7 +83,7 @@
 					<tr>
 					  <td><?= $row['name_product'] ?></td>
 					  <td><?= $row['name_group'] ?></td>
-					  <td></td>
+					  <td><?= $row['amount'] ?></td>
 					  <td>
 						  <a href="<?= base_url('stock/products/update/'.$row['id_product']); ?>">Alterar</a> |
 						  <a class="delete_product" id="<?php echo $row['id_product']; ?>" href="#">Apagar</a>
