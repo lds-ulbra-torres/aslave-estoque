@@ -74,7 +74,7 @@
 						}		
 					},
 					error: function(data){
-						alert("Ocorreu algum erro ao carregar os Produto");
+						alert("Ocorreu algum erro ao carregar os Produtos");
 					}
 				});
 			}else{
@@ -86,30 +86,51 @@
 			$("#product").html($(this));
 			$('#loadProduct').empty();
 		});
+		var total = 0;
 		$("#add_product_input_stock_btn").click(function(e){
 			e.preventDefault();
-			$("#add_product_modal").closeModal();
+			var id = $("#product option").attr("id");
+			var check = false;
+			$("tbody td").each(function(i){
+				if( id == $(this).attr("id")){
+					check = true;
+					Materialize.toast("Este produto já foi importado para a tabela", 4000);
+				}
+			});
+			if(!check){
+				$("#add_product_modal").closeModal();
+				
+				var newRow = $("<tr class='productRow'>");
+				var cols = "";
+
+				cols += '<td class="tdProductId" id='+ $("#product option").attr("id") +'>'+ $("#product option").text() +'</td>';
+				cols += '<td class="tdProductAmount">'+ $("input[name=amount]").val() +'</td>';
+				cols += '<td class="tdProductPrice">'+'R$ '+ $("input[name=price]").val() +'</td>';
+				cols += '<td class="tdProductTotal">'+'R$ '+ $("input[name=price]").val() * $("input[name=amount]").val() +'</td>';
+				cols += '<td>';
+				cols += '<a href="#" class="removeProduct">Remover</a>';
+				cols += '</td>';
+
+				newRow.append(cols);
+				$("#input_stock_product").append(newRow);
+				
+				total = total + ($("input[name=price]").val() * $("input[name=amount]").val());	
+				
+				$("#total").html("Total: R$" +total);
+				$("input[name=amount]").val("");
+				$("input[name=price]").val("");
+				$("input[name=product_name]").val("");
+				$('#loadProduct').empty();
+				
+			}
 			
-			var newRow = $("<tr class='productRow'>");
-			var cols = "";
-
-			cols += '<td class="tdProductId" id='+ $("#product option").attr("id") +'>'+ $("#product option").text() +'</td>';
-			cols += '<td class="tdProductAmount">'+ $("input[name=amount]").val() +'</td>';
-			cols += '<td class="tdProductPrice">'+'R$ '+ $("input[name=price]").val() +'</td>';
-			cols += '<td class="tdProductTotal">'+'R$ '+ $("input[name=price]").val() * $("input[name=amount]").val() +'</td>';
-			cols += '<td>';
-			cols += '<a href="#" class="removeProduct">Remover</a>';
-			cols += '</td>';
-
-			newRow.append(cols);
-			$("#input_stock_product").append(newRow);
-			$("input[name=amount]").val("");
-			$("input[name=price]").val("");
-			$("input[name=product_name]").val("");
-			$('#loadProduct').empty();
 		});
 		$("#input_stock_product").on("click", ".removeProduct", function(e){
 			e.preventDefault();
+			var $this = $(this);
+			var valueRemove = $this.parents("tr").find(".tdProductTotal").text().replace(/[^0-9]/g,'');
+			total = total - valueRemove;
+			$("#total").html("Total: R$" +total);
 			$(this).closest('tr').remove();
 		});
 		$("#add_input_stock_btn").click(function(e){
@@ -174,7 +195,7 @@
 			<p><a id="add_product_btn" class="btn green">Adicionar produto</a></p>
 		</div>
 		<div class="right-align col s8">
-			<p class="btn grey" disabled>Total: R$ <?php //TOTAL AQUI ?></p>
+			<p id="total" class="btn grey" disabled>Total: R$ </p>
 		</div>
 	</div>
 
