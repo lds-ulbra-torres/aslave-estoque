@@ -3,6 +3,8 @@
 <head>
   <title>Slave</title>
   <meta charset="UTF-8">
+  
+  
 
   <link rel="stylesheet" type="text/css" href="<?= base_url ('assets/css/materialize.css')?>">
   <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -11,8 +13,7 @@
   <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 
-
-
+  <script type="text/javascript" src="http://www.technicalkeeda.com/js/javascripts/plugin/json2.js"></script>
 </head>
 <body>
 
@@ -67,6 +68,8 @@
 </body>
 <script type="text/javascript" src="<?= base_url('assets/js/materialize.js')?>"></script>
 <script>
-  $(".button-collapse").sideNav();
+  $(document).ready(function(){
+    $(".button-collapse").sideNav();
+  });
 </script>
 </html>

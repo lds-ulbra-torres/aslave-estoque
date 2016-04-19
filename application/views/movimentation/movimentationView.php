@@ -18,7 +18,7 @@
 				<tr>
 					<td><strong>Data:</strong></td>
 					<td><strong>Pessoa:</strong></td>
-					<td><strong>Valor: </strong></td>
+					<td><strong>Valor:</strong></td>
 					<td><strong>Tipo:</strong></td>
 				</tr>
 			</thead>
@@ -27,7 +27,11 @@
 				<tr>
 					<td><?= $movimentation['date_financial_release'] ?></td>
 					<td><?= $movimentation['name'] ?></td>
-					<td>R$ <?= $movimentation['value'] ?></td>
+					<?php if($movimentation['type_mov'] == 's'){ ?>
+						<td><span style="color:red;" >R$ <?= "-".$movimentation['value'] ?></span></td>
+					<?php }else{ ?>
+						<td>R$ <?= $movimentation['value'] ?></td>
+					<?php } ?>
 					<td><?= $movimentation['type_mov'] ?></td>
 					<td>
 						<a href="#">Alterar</a>

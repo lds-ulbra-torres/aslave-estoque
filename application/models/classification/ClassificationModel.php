@@ -11,6 +11,15 @@ class ClassificationModel extends CI_Model {
 		return $this->db->insert($this->table, $classification);
 	}
 
+	public function getItemByForeign($classification){
+
+		$query = $this->db->get_where('financial_releases', $classification, 1);
+		if ($query->num_rows() > 0) {
+			return true;
+		}
+		return false;
+	}
+
 	public function delete($classification){
 		return $this->db->delete($this->table, $classification);
 	}

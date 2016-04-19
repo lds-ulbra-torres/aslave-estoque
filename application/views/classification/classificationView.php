@@ -50,14 +50,14 @@
 						</td>
 						<td>
 							<a href="update-classification-form/<?= $classification['id_classification'] ?>">
-								<button class="modal-trigger waves-effect waves-light btn" >Alterar</button></a>
-
-								<a id="<?= $classification['id_classification'] ?>" class="openDeleteClassModal" href="#deleteClassModal">
-									<button  class="btn waves-effect waves-light">Deletar</button></a>
-								</td>
-							</tr>
-						<?php endforeach ?>
-					</tbody>
-				</table>
-			</div>
-		</div>
+								Alterar</a>
+							|
+							<a id="<?= $classification['id_classification'] ?>" class="openDeleteClassModal" ref="#deleteClassModal">
+							Deletar</a>
+						</td>
+					</tr>
+				<?php endforeach ?>
+			</tbody>
+		</table>
+	</div>
+</div>

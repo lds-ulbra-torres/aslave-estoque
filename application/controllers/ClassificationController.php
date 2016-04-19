@@ -51,14 +51,19 @@ class ClassificationController extends CI_Controller {
 	public function delete(){
 		$data = array('id_classification' => $this->input->post('idDeleteClass'));
 
-		var_dump($this->classificationModel->delete($data));
-		/*
-		if(> 0){
-			redirect('classification','refresh');
+		if(!$this->classificationModel->getItemByForeign($data)){
+
+			if($this->classificationModel->delete($data)){
+				redirect('classification','refresh');
+			}else{
+				echo "deu ruim";
+			}
 		}else{
-			echo "deu ruim";
+			echo "<script>alert('A classificação está sendo utilizada.')</script>";
+			redirect('classification','refresh');
 		}
-		*/
+		
+		
 	}
 
 	public function searchClassification(){
