@@ -162,7 +162,16 @@ class StockController extends CI_Controller {
 		$result = $this->StockModel->getPeople($search);
 		echo json_encode($result);
 	}
-
+	public function searchGroup(){
+		$this->form_validation->set_rules('search_string', 'grupo', 'required');
+		if($this->form_validation->run()){
+				$group = $this->input->post('search_string');
+			$result = $this->GroupModel->search($group);
+			echo json_encode($result);	
+		}else{
+			echo "O campo de busca esta vazio";
+		}
+	}
 	public function searchProductStock() {
 		$search = $this->input->post('name_product');
 		$result = $this->StockModel->getProductSearch($search);

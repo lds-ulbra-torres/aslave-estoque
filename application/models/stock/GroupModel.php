@@ -43,7 +43,15 @@ class GroupModel extends CI_Model {
 		return $this->db->get($this->table)->result_array();
 	}
 
+	public function search($group){
+		$this->db->select("id_group, name_group");
+		$whereCondition = array('name_group' => $group);
+		$this->db->like($whereCondition);
+		$this->db->from($this->table);
+		$query = $this->db->get();
+		return $query->result();
 
+	}
 }
 
 /* End of file groupsModel.php */
