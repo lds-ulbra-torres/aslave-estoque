@@ -131,7 +131,7 @@
 				var $this = $(this);
 				var valueRemove = $this.parents("tr").find(".tdProductTotal").text().replace(/[^0-9.,]/g,'');
 				total = total - valueRemove;
-				$("#total").html("Total: R$" +total);
+				$("#total").html("Total: R$ "+ total);
 				$(this).closest('tr').remove();
 			});
 			$("#add_input_stock_btn").click(function(e){

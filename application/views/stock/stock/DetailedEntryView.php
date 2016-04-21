@@ -6,10 +6,11 @@
 			total += Number($(this).text().replace(/[^0-9.,]/g,''));
 			
 		});
-		$("#totalHeader").text("R$ "+total);
+		$("#totalHeader").text("R$ "+ total);
 	});
 </script>
 <div class="row">
+<?php //var_dump($entry_data) ?>
 	<h4>Detalhes de entrada</h4>
 	<div class="card-panel col s10">
 		<table>
@@ -21,11 +22,11 @@
 				<td><strong>Tipo de fornecimento</strong></td>
 			</thead>
 			<tbody>
-				<td><?= $entry_data[0]['name'] ?></td>
-				<td><?= $entry_data[0]['cpf_cnpj'] ?></td>
-				<td><?= date('d/m/Y', strtotime($entry_data[0]['input_date'])); ?></td>
-				<td id="totalHeader">test</td>
-				<td><?php switch ($entry_data[0]['input_type']) {
+				<td><?= $entry_data['people'][0]['name'] ?></td>
+				<td><?= $entry_data['people'][0]['cpf_cnpj'] ?></td>
+				<td><?= date('d/m/Y', strtotime($entry_data['entry'][0]['input_date'])); ?></td>
+				<td id="totalHeader">R$ 0,00</td>
+				<td><?php switch ($entry_data['entry'][0]['input_type']) {
 					case '1':
 					echo 'Compra';
 					break;
@@ -47,11 +48,11 @@
 					<td><strong>Total</strong></td>
 				</thead>
 				<tbody>
-					<?php foreach ($entry_data as $prod) { ?>
+					<?php foreach ($entry_data['entry'] as $prod) { ?>
 					<tr>
 						<td><?= $prod['name_product'] ?></td>
-						<td>R$ <?= $prod['unit_price'] ?></td>
-						<td><?= $prod['amount'] ?></td>
+						<td>R$ <?= $prod['unit_price_input'] ?></td>
+						<td><?= $prod['amount_input'] ?></td>
 						<td class="total">R$ <?= $prod['unit_price']*$prod['amount'] ?></td>
 					</tr>
 					<?php } ?>

@@ -36,12 +36,14 @@
 </script>
 <div class="row">
 	<div class="col s6">
+	<h4>Alterar categoria</h4>
 		<form method="post" id="update_form">
-			<h4>Alterar categoria</h4>
-			<input type="text" value="" name="group_name" placeholder="Nome">
-			<button class="btn green" id="update_group_btn" type="submit">Salvar
-				<i class="material-icons right">send</i>
-			</button>
+			<div class="card-panel">
+				<input type="text" value="" name="group_name" placeholder="Nome">
+				<button class="btn green" id="update_group_btn" type="submit">Salvar
+					<i class="material-icons right">send</i>
+				</button>
+			</div>
 		</form>
 	</div>
 </div>

@@ -21,8 +21,14 @@ class StockModel extends CI_Model {
 		$this->db->where('stock_input.id_stock', $id_stock);
 		$this->db->join('stock_input_products', 'stock_input.id_stock = stock_input_products.id_stock', 'inner');
 		$this->db->join('stock_products', 'stock_input_products.id_product = stock_products.id_product', 'inner');
-		$this->db->join('people', 'stock_input.id_people = people.id_people', 'inner');
-		return $this->db->get($this->input)->result_array();
+		$entry = $this->db->get($this->input)->result_array();
+
+		$people = $this->db->get_where('people', array('id_people' => $entry[0]['id_people']))->result_array();
+
+		return array(
+			'entry' => $entry, 
+			'people' => $people);
+		
 	}
 
 	public function getPeople($searchString) {
