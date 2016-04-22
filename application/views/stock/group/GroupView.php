@@ -1,3 +1,4 @@
+<script type="text/javascript" src="http://www.technicalkeeda.com/js/javascripts/plugin/json2.js"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
 		function reloadTableGroup(){
@@ -7,7 +8,6 @@
 				data: $("table"),
 				success: function(data){
 					$("#group").html($(data).find("table"));
-					console.log($(data).find("table"));
 				},
 				error: function(){
 					console.log(data);
@@ -39,14 +39,32 @@
 
 		$("#search_button").click(function(){
 			$.ajax({
-				url: "<?= base_url('stock/groups/');?>",
+				url: "<?php echo site_url('/StockController/searchGroup'); ?>",
 				type: "POST",
 				data: {search_string: $("input[name=search]").val()},
 				success: function(data){
-					Materialize.toast("não é google", 2000);
+					if(data == 'O campo de busca esta vazio'){
+						Materialize.toast(data, 4000);
+					}
+					var obj = JSON.parse(data);
+					if(!obj.length>0){
+						Materialize.toast("Nenhuma categoria encontrada", 4000);
+					}else{
+						try{
+							$('#group > tbody').html("");
+							$("#pagination").html("");
+							var items=[]; 	
+							$.each(obj, function(i,val){											
+								items.push($("<tr><td>" + val.name_group + "</td><td><a href='<?= base_url('stock/groups/update/');?>/"+ val.id_group +"'>Alterar</a> | <a id="+ val.id_group +" href='#' class='delete_group'>Apagar</a>"));
+							});	
+							$('#group > tbody').append.apply($('#group > tbody'), items);
+						}catch(e) {		
+							alert('Ocorreu algum erro ao carregar os Fornecedores!');
+						}			
+					}	
 				},
 				error: function(){
-					Materialize.toast("deu pau viado", 2000);
+					Materialize.toast("Ocorreu algum erro", 2000);
 				}
 			});
 		});
@@ -60,13 +78,13 @@
 			<a class="btn green" id="" href="<?= base_url('stock/groups/create'); ?>">Adicionar nova</a>
 		</div>
 		<div class="input-field col s3">
-			<input value="" placeholder=" Buscar categoria..." type="text" required>
-        </div>
-        <div class="input-field col s2">
-        	<button href="#" id="search_button" class="btn grey">
-        		<i class="material-icons">search</i>
-        	</button>
-        </div>
+			<input value="" name="search" placeholder=" Buscar categoria..." type="text" required>
+		</div>
+		<div class="input-field col s2">
+			<button href="#" id="search_button" class="btn grey">
+				<i class="material-icons">search</i>
+			</button>
+		</div>
 		<div class="input-field col s3">
 			<select id="group_id">
 				<option disabled selected> Ordenar por...</option>
@@ -87,16 +105,16 @@
 			<tbody>
 				<?php foreach($groups as $row) :?>
 					<tr>
-					  <td><?= $row['name_group'] ?></td>
-					  <td>
-						  <a href="<?= base_url('stock/groups/update/'.$row['id_group']); ?>">Alterar</a> |
-						  <a class="delete_group" id="<?php echo $row['id_group']; ?>" href="#">Apagar</a>
-					  </td>
-	           		</tr>
-	                  <?php endforeach; ?>
-	        </tbody>
+						<td><?= $row['name_group'] ?></td>
+						<td>
+							<a href="<?= base_url('stock/groups/update/'.$row['id_group']); ?>">Alterar</a> |
+							<a class="delete_group" id="<?php echo $row['id_group']; ?>" href="#">Apagar</a>
+						</td>
+					</tr>
+				<?php endforeach; ?>
+			</tbody>
 		</table>
-		<div class="pagination">
+		<div id="pagination" class="pagination">
 			<ul class="pagination right-align">
 				<li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
 				<li class="active grey"><a href="#!">1</a></li>
