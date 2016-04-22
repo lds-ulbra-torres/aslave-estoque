@@ -1,4 +1,3 @@
-<script type="text/javascript" src="http://www.technicalkeeda.com/js/javascripts/plugin/json2.js"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
 		function reloadTableGroup(){
@@ -59,7 +58,7 @@
 							});	
 							$('#group > tbody').append.apply($('#group > tbody'), items);
 						}catch(e) {		
-							alert('Ocorreu algum erro ao carregar os Fornecedores!');
+							alert('Ocorreu algum erro ao carregar as Categorias!');
 						}			
 					}	
 				},

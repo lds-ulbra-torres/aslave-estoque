@@ -165,54 +165,75 @@ class StockController extends CI_Controller {
 	public function searchGroup(){
 		$this->form_validation->set_rules('search_string', 'grupo', 'required');
 		if($this->form_validation->run()){
-				$group = $this->input->post('search_string');
+			$group = $this->input->post('search_string');
 			$result = $this->GroupModel->search($group);
 			echo json_encode($result);	
 		}else{
 			echo "O campo de busca esta vazio";
 		}
 	}
-	public function searchProductStock() {
-		$search = $this->input->post('name_product');
-		$result = $this->StockModel->getProductSearch($search);
-		echo json_encode($result);
-	}
-	
-	public function createInputStock() {
-		$this->form_validation->set_rules('date', 'data', 'required');
-		$this->form_validation->set_rules('type', 'tipo', 'required');
-		$this->form_validation->set_rules('id_people', 'fornecedor', 'required');
-		if ($this->form_validation->run()) {
-			$people = array(
-				'input_date' => $this->input->post('date'),
-				'input_type' => $this->input->post('type'),
-				'id_people' => $this->input->post('id_people'));
-			$query = $this->StockModel->createInputStockPeople($people);
-			if ($query) {
-				$id = $query;
-				$check = false;
-				$product = json_decode($this->input->post('products'));
-
-				foreach ($product as $products) {
-					$product_array = array(
-						'id_product' => $products->id_product,
-						'id_stock' => $id,
-						'unit_price_input' => $products->price,
-						'amount_input' => $products->amount);
-					if ($this->StockModel->createInputStockProduct($product_array)) {
-						
-						$check = true;
-					}
-					else { $check = false; }
-				}
-				if (!$check) {
-					echo "Erro ao salvar os produtos.";
-				}
-				else { echo $id; }
-			}
-			else { echo "Erro ao salvar o fornecedor. "; }
+	public function searchProduct(){
+		$this->form_validation->set_rules('search_string', 'produto', 'required');
+		if($this->form_validation->run()){
+			$product = $this->input->post('search_string');
+			$result = $this->ProductModel->search($product);
+			echo json_encode($result);	
+		}else{
+			echo "O campo de busca esta vazio";
 		}
-		else { echo "É necessário informar todos os dados."; }
 	}
+	public function searchProductByGroup(){
+		$this->form_validation->set_rules('id_group', 'grupo', 'required');
+		if($this->form_validation->run()){
+			$group = $this->input->post('id_group');
+			$result = $this->ProductModel->searchByGroup($group);
+			echo json_encode($result);	
+		}else{
+			echo "Você esta tentando sabotar site?";
+		}
+	}
+
+public function searchProductStock() {
+	$search = $this->input->post('name_product');
+	$result = $this->StockModel->getProductSearch($search);
+	echo json_encode($result);
+}
+
+public function createInputStock() {
+	$this->form_validation->set_rules('date', 'data', 'required');
+	$this->form_validation->set_rules('type', 'tipo', 'required');
+	$this->form_validation->set_rules('id_people', 'fornecedor', 'required');
+	if ($this->form_validation->run()) {
+		$people = array(
+			'input_date' => $this->input->post('date'),
+			'input_type' => $this->input->post('type'),
+			'id_people' => $this->input->post('id_people'));
+		$query = $this->StockModel->createInputStockPeople($people);
+		if ($query) {
+			$id = $query;
+			$check = false;
+			$product = json_decode($this->input->post('products'));
+
+			foreach ($product as $products) {
+				$product_array = array(
+					'id_product' => $products->id_product,
+					'id_stock' => $id,
+					'unit_price_input' => $products->price,
+					'amount_input' => $products->amount);
+				if ($this->StockModel->createInputStockProduct($product_array)) {
+
+					$check = true;
+				}
+				else { $check = false; }
+			}
+			if (!$check) {
+				echo "Erro ao salvar os produtos.";
+			}
+			else { echo $id; }
+		}
+		else { echo "Erro ao salvar o fornecedor. "; }
+	}
+	else { echo "É necessário informar todos os dados."; }
+}
 
 }
