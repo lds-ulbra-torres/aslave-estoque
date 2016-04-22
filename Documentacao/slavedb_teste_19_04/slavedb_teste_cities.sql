@@ -25,14 +25,16 @@ DROP TABLE IF EXISTS `cities`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `cities` (
-  `id_cities` int(4) unsigned NOT NULL AUTO_INCREMENT,
+  `id_cities` int(4) NOT NULL AUTO_INCREMENT,
   `id_states` int(2) unsigned NOT NULL,
-  `uf` varchar(4) NOT NULL DEFAULT '',
-  `name` varchar(50) NOT NULL DEFAULT '',
+  `uf` varchar(4) CHARACTER SET latin1 NOT NULL,
+  `name` varchar(50) CHARACTER SET latin1 NOT NULL DEFAULT '',
+  PRIMARY KEY (`id_cities`),
   UNIQUE KEY `id` (`id_cities`),
   KEY `id_2` (`id_cities`),
-   CONSTRAINT `id_states` FOREIGN KEY (`id_states`) REFERENCES `states` (`id_states`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-) ENGINE=MyISAM AUTO_INCREMENT=9715 DEFAULT CHARSET=latin1;
+  KEY `fk_cities_states1_idx` (`id_states`),
+  CONSTRAINT `fk_cities_states` FOREIGN KEY (`id_states`) REFERENCES `states` (`id_states`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=9715 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -54,4 +56,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-04-07 16:34:13
+-- Dump completed on 2016-04-22 19:45:04
