@@ -9,7 +9,6 @@ class StockController extends CI_Controller {
 		$this->load->model('stock/ProductModel');
 		$this->load->model('stock/StockModel');
 		$this->load->library('form_validation');
-		$this->load->helper('auxiliares');
 	}
 
 	public function index(){   
@@ -17,13 +16,7 @@ class StockController extends CI_Controller {
 		$this->template->load('template/template','stock/stock/HomeView', $data);
 	}
 
-	public function products() {
-		$data['groups'] = $this->GroupModel->getGroups();
-		$data['products'] = $this->ProductModel->getProducts();
-		$data['view'] = 'products';
-		$this->template->load('template/template','stock/stock/HomeView', $data);
-	}
-
+/* CATEGORIAS */
 	public function groups() {
 		$data['groups'] = $this->GroupModel->getGroups();
 		$data['view'] = 'groups';
@@ -39,37 +32,6 @@ class StockController extends CI_Controller {
 	public function updateGroupView() {
 		$data['group_data'] = $this->GroupModel->getGroupById($this->uri->segment(4));
 		$data['view'] = 'groups/update';
-		$this->template->load('template/template','stock/stock/HomeView', $data);
-	}
-
-	public function createProductView() {
-		$data['groups'] = $this->GroupModel->getGroups();
-		$data['view'] = 'products/create';
-		$this->template->load('template/template','stock/stock/HomeView', $data);
-	}
-
-	public function updateProductView() {
-		$data['groups'] = $this->GroupModel->getGroups();
-		$data['product_data'] = $this->ProductModel->getProductById($this->uri->segment(4));
-		$data['view'] = 'products/update';
-		$this->template->load('template/template','stock/stock/HomeView', $data);
-	}
-
-	public function entriesView(){
-		$data['input_stocks'] = $this->StockModel->getInputStocks();
-		$data['view'] = 'stock/entries';
-		$this->template->load('template/template','stock/stock/HomeView', $data);
-	}
-
-	public function createEntryView(){
-		$data['view'] = 'stock/entries/create';
-		$this->template->load('template/template','stock/stock/HomeView', $data);
-	}
-
-	public function detailedEntryView() {
-		$id_stock = $this->uri->segment(3);
-		$data['view'] = 'stock/entries/detailed';
-		$data['entry_data'] = $this->StockModel->getDetailedEntry($id_stock);
 		$this->template->load('template/template','stock/stock/HomeView', $data);
 	}
 
@@ -115,6 +77,27 @@ class StockController extends CI_Controller {
 		}
 	}
 
+/* PRODUTOS */
+	public function products() {
+		$data['groups'] = $this->GroupModel->getGroups();
+		$data['products'] = $this->ProductModel->getProducts();
+		$data['view'] = 'products';
+		$this->template->load('template/template','stock/stock/HomeView', $data);
+	}
+
+	public function createProductView() {
+		$data['groups'] = $this->GroupModel->getGroups();
+		$data['view'] = 'products/create';
+		$this->template->load('template/template','stock/stock/HomeView', $data);
+	}
+
+	public function updateProductView() {
+		$data['groups'] = $this->GroupModel->getGroups();
+		$data['product_data'] = $this->ProductModel->getProductById($this->uri->segment(4));
+		$data['view'] = 'products/update';
+		$this->template->load('template/template','stock/stock/HomeView', $data);
+	}
+
 	public function createProduct() {
 		$this->form_validation->set_rules('product_name', 'nome', 'required');
 		$this->form_validation->set_rules('group_id', 'categoria', 'required');
@@ -157,6 +140,7 @@ class StockController extends CI_Controller {
 		else { echo 'Ocorreu algum erro. Tente novamente'; }
 	}
 
+/* FILTROS */
 	public function searchPeople(){
 		$search = $this->input->post('name_people');
 		$result = $this->StockModel->getPeople($search);
@@ -193,47 +177,119 @@ class StockController extends CI_Controller {
 		}
 	}
 
-public function searchProductStock() {
-	$search = $this->input->post('name_product');
-	$result = $this->StockModel->getProductSearch($search);
-	echo json_encode($result);
-}
-
-public function createInputStock() {
-	$this->form_validation->set_rules('date', 'data', 'required');
-	$this->form_validation->set_rules('type', 'tipo', 'required');
-	$this->form_validation->set_rules('id_people', 'fornecedor', 'required');
-	if ($this->form_validation->run()) {
-		$people = array(
-			'input_date' => $this->input->post('date'),
-			'input_type' => $this->input->post('type'),
-			'id_people' => $this->input->post('id_people'));
-		$query = $this->StockModel->createInputStockPeople($people);
-		if ($query) {
-			$id = $query;
-			$check = false;
-			$product = json_decode($this->input->post('products'));
-
-			foreach ($product as $products) {
-				$product_array = array(
-					'id_product' => $products->id_product,
-					'id_stock' => $id,
-					'unit_price_input' => $products->price,
-					'amount_input' => $products->amount);
-				if ($this->StockModel->createInputStockProduct($product_array)) {
-
-					$check = true;
-				}
-				else { $check = false; }
-			}
-			if (!$check) {
-				echo "Erro ao salvar os produtos.";
-			}
-			else { echo $id; }
-		}
-		else { echo "Erro ao salvar o fornecedor. "; }
+	public function searchProductStock() {
+		$search = $this->input->post('name_product');
+		$result = $this->StockModel->getProductSearch($search);
+		echo json_encode($result);
 	}
-	else { echo "É necessário informar todos os dados."; }
-}
+
+/* ENTRADAS DE ESTOQUE */
+	public function entriesView(){
+		$data['input_stocks'] = $this->StockModel->getInputStocks();
+		$data['view'] = 'stock/entries';
+		$this->template->load('template/template','stock/stock/HomeView', $data);
+	}
+
+	public function createEntryView(){
+		$data['view'] = 'stock/entries/create';
+		$this->template->load('template/template','stock/stock/HomeView', $data);
+	}
+
+	public function detailedEntryView() {
+		$id_stock = $this->uri->segment(3);
+		$data['view'] = 'stock/entries/detailed';
+		$data['entry_data'] = $this->StockModel->getDetailedEntry($id_stock);
+		$this->template->load('template/template','stock/stock/HomeView', $data);
+	}
+
+	public function createInputStock() {
+		$this->form_validation->set_rules('date', 'data', 'required');
+		$this->form_validation->set_rules('type', 'tipo', 'required');
+		$this->form_validation->set_rules('id_people', 'fornecedor', 'required');
+		if ($this->form_validation->run()) {
+			$people = array(
+				'input_date' => $this->input->post('date'),
+				'input_type' => $this->input->post('type'),
+				'id_people' => $this->input->post('id_people'));
+			$query = $this->StockModel->createInputStockPeople($people);
+			if ($query) {
+				$id = $query;
+				$check = false;
+				$product = json_decode($this->input->post('products'));
+
+				foreach ($product as $products) {
+					$product_array = array(
+						'id_product' => $products->id_product,
+//descomentar aqui quando tiver o campo no banco 'descript' => $products->descript,
+						'id_stock' => $id,
+						'unit_price_input' => $products->price,
+						'amount_input' => $products->amount);
+					if ($this->StockModel->createInputStockProduct($product_array)) {
+
+						$check = true;
+					}
+					else { $check = false; }
+				}
+				if (!$check) {
+					echo "Erro ao salvar os produtos.";
+				}
+				else { echo $id; }
+			}
+			else { echo "Erro ao salvar o fornecedor."; }
+		}
+		else { echo "Todos os campos são obrigatórios."; }
+	}
+
+/* SAÍDAS DE ESTOQUE */
+	public function outputsView(){
+		$data['output_stocks'] = $this->StockModel->getOutputStocks();
+		$data['view'] = 'stock/outputs';
+		$this->template->load('template/template','stock/stock/HomeView', $data);
+	}
+
+	public function createOutputView() {
+		$data['view'] = 'stock/outputs/create';
+		$this->template->load('template/template','stock/stock/HomeView', $data);
+	}
+
+	public function detailedOutputView() {
+		$id_stock = $this->uri->segment(3);
+		$data['view'] = 'stock/outputs/detailed';
+		$data['output_data'] = $this->StockModel->getDetailedOutput($id_stock);
+		$this->template->load('template/template','stock/stock/HomeView', $data);
+	}
+
+	public function createOutputStock() {
+		$this->form_validation->set_rules('date', 'data', 'required');
+		$this->form_validation->set_rules('id_people', 'fornecedor', 'required');
+		if ($this->form_validation->run()) {
+			$people = array(
+				'output_date' => $this->input->post('date'),
+//descrição, descomentar quando tiver no banco 'descript' => $this->input->post('descript'),
+				'id_people' => $this->input->post('id_people'));
+			if ($id = $this->StockModel->createOutputStockPeople($people)) {
+				$check = false;
+				$product = json_decode($this->input->post('products'));
+
+				foreach ($product as $products) {
+					$product_array = array(
+						'id_product' => $products->id_product,
+						'id_stock' => $id,
+						'unit_price_output' => $products->price,
+						'amount_output' => $products->amount);
+					if ($this->StockModel->createOutputStockProduct($product_array)) {
+						$check = true;
+					}
+					else { $check = false; }
+				}
+				if (!$check) {
+					echo "Erro ao salvar os produtos.";
+				}
+				else { echo $id; }
+			}
+			else { echo "Erro ao salvar o fornecedor."; }
+		}
+		else { echo "Todos os campos são obrigatórios."; }
+	}
 
 }

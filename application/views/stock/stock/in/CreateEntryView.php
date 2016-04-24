@@ -83,6 +83,7 @@
 			});
 			$("#loadProduct").on("click", "option", function(){
 				$("input[name=product_name]").val("");
+				$("input[name=descript]").val("");
 				$("#product").html($(this));
 				$('#loadProduct').empty();
 			});
@@ -104,6 +105,7 @@
 					var cols = "";
 
 					cols += '<td class="tdProductId" id='+ $("#product option").attr("id") +'>'+ $("#product option").text() +'</td>';
+					cols += '<td class="tdProductDescript">'+ $("input[name=descript]").val() +'</td>';
 					cols += '<td class="tdProductAmount">'+ $("input[name=amount]").val() +'</td>';
 					cols += '<td class="tdProductPrice">'+'R$ '+ $("input[name=price]").val() +'</td>';
 					cols += '<td class="tdProductTotal">'+'R$ '+ ($("input[name=price]").val() * $("input[name=amount]").val()).toFixed(2) +'</td>';
@@ -117,6 +119,7 @@
 					total = total + ($("input[name=price]").val() * $("input[name=amount]").val());	
 					
 					$("#total").html("Total: R$" +total.toFixed(2));
+					$("input[name=descript]").val("");
 					$("input[name=amount]").val("");
 					$("input[name=price]").val("");
 					$("input[name=product_name]").val("");
@@ -141,6 +144,7 @@
 				$(".productRow").each(function(i){
 					var pData = { 
 						id_product: $(this).find(".tdProductId").attr("id"),
+						descript:  $(this).find(".tdProductDescript").text(),
 						amount:  $(this).find(".tdProductAmount").text(),
 						price: Number($(this).find(".tdProductPrice").text().replace(/[^0-9.,]/g,''))
 					};
@@ -176,9 +180,7 @@
 			<h4>Nova entrada</h4>
 			<div class="card-panel col s8">
 				<div class="input-field col s5">
-					<input name="people" type="text" autocomplete="off" required placeholder="Fornecedor">
-					<div id="loadPeople" class="col s12"></div>
-					<div id="people" class="collection col s12"></div>
+					<input name="people" type="text" autocomplete="off" maxlength="45" required placeholder="Fornecedor">
 				</div>
 				<div class="input-field col s3">
 					<select name="stock_type" id="stock_type">
@@ -189,13 +191,17 @@
 				<div class="input-field col s3">
 					<input placeholder="Data" name="date" type="date" required>
 				</div>
+				<div class="">
+					<a href="#" id="loadPeople" class="col s12"></a>
+					<h5 id="people" class="col s12"></h5>
+				</div>
 			</div>
 			<div class="container right-align col s3">
 				<button id="add_input_stock_btn" type="submit" class="green btn-large">Finalizar entrada<i class="material-icons right">send</i></button>
 			</div>
 		</div>
 
-		<div class="card-panel col s8">
+		<div class="card-panel col s10">
 			<div class="col s4">
 				<p><a id="add_product_btn" class="btn green">Adicionar produto</a></p>
 			</div>
@@ -204,10 +210,11 @@
 			</div>
 		</div>
 
-		<div class="col s8">
+		<div class="col s10 collection">
 			<table  class="bordered highlight">
 				<thead>
-					<td><strong>Nome</strong></td>
+					<td><strong>Categoria</strong></td>
+					<td><strong>Descrição</strong></td>
 					<td><strong>Quantidade</strong></td>
 					<td><strong>Valor unitário</strong></td>
 					<td><strong>Valor total</strong></td>
@@ -225,7 +232,10 @@
 			<div class="modal-content row">
 				<h4>Adicionar produto</h4>
 				<div class="input-field col s4">	
-					<input name="product_name" autocomplete="off" type="text" placeholder="Produto">
+					<input name="product_name" autocomplete="off" type="text" maxlength="45" placeholder="Produto">
+				</div>
+				<div class="input-field col s4">	
+					<input name="descript" autocomplete="off" type="text" maxlength="45" placeholder="Marca, modelo, tamanho...">
 				</div>
 				<div class="input-field col s2">
 					<input name="amount" required="required" type="number" placeholder="Quantia">
@@ -235,8 +245,8 @@
 				</div>
 
 				<div id="products" class="col s12">
-					<div id="loadProduct" class="col s6"></div>
-					<div id="product" class="collection col s6"></div>
+					<a href="#" id="loadProduct" class="col s6"></a>
+					<h5 id="product" class="col s6"></h5>
 				</div>
 			</div>
 			<div class="modal-footer">

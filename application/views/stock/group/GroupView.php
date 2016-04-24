@@ -94,7 +94,7 @@
 	</div>
 </div>	
 <div class="row">
-	<div class="col s9">
+	<div class="col s9 collection">
 		<table id="group" class="bordered highlight">
 			<legend></legend>
 			<thead>
@@ -113,7 +113,7 @@
 				<?php endforeach; ?>
 			</tbody>
 		</table>
-		<div id="pagination" class="pagination">
+		<!-- <div id="pagination" class="pagination">
 			<ul class="pagination right-align">
 				<li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
 				<li class="active grey"><a href="#!">1</a></li>
@@ -123,7 +123,7 @@
 				<li class="waves-effect"><a href="#!">5</a></li>
 				<li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
 			</ul>
-		</div>
+		</div> -->
 	</div>
 
 	<div id="delete_group_modal" class="modal">

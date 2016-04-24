@@ -5,6 +5,7 @@ class StockModel extends CI_Model {
 
 	var $input = 'stock_input';
 	var $input_has_products = 'stock_input_products';
+	var $output_has_products = 'stock_output_products';
 	var $output = 'stock_output';
 	var $stock = 'stock';
 
@@ -17,11 +18,30 @@ class StockModel extends CI_Model {
 		return $this->db->get($this->input)->result_array();
 	}
 
+	public function getOutputStocks() {
+		$this->db->join('people', 'stock_output.id_people = people.id_people', 'inner');
+		return $this->db->get($this->output)->result_array();
+	}
+
 	public function getDetailedEntry($id_stock) {
 		$this->db->where('stock_input.id_stock', $id_stock);
 		$this->db->join('stock_input_products', 'stock_input.id_stock = stock_input_products.id_stock', 'inner');
 		$this->db->join('stock_products', 'stock_input_products.id_product = stock_products.id_product', 'inner');
 		$entry = $this->db->get($this->input)->result_array();
+
+		$people = $this->db->get_where('people', array('id_people' => $entry[0]['id_people']))->result_array();
+
+		return array(
+			'entry' => $entry, 
+			'people' => $people);
+		
+	}
+
+	public function getDetailedOutput($id_stock) {
+		$this->db->where('stock_output.id_stock', $id_stock);
+		$this->db->join('stock_output_products', 'stock_output.id_stock = stock_output_products.id_stock', 'inner');
+		$this->db->join('stock_products', 'stock_output_products.id_product = stock_products.id_product', 'inner');
+		$entry = $this->db->get($this->output)->result_array();
 
 		$people = $this->db->get_where('people', array('id_people' => $entry[0]['id_people']))->result_array();
 
@@ -46,6 +66,7 @@ class StockModel extends CI_Model {
 		$query = $this->db->get();
 		return $query->result();
 	}
+/* ESTOQUE DE ENTRADA */
 	public function deleteProductInputStockModel($product){
 		return $this->db->delete($this->input_has_products, $product);
 	}
@@ -55,6 +76,16 @@ class StockModel extends CI_Model {
 	}
 	public function createInputStockProduct($productData){
 		return $this->db->insert($this->input_has_products, $productData);
+	}
+	
+/* ESTOQUE DE SAÍDA */
+	public function createOutputStockPeople($people){
+		$this->db->insert($this->output, $people);
+		return $this->db->insert_id();
+	}
+
+	public function createOutputStockProduct($product){
+		return $this->db->insert($this->output_has_products, $product);
 	}
 
 }

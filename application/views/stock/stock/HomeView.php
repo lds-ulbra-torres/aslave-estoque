@@ -11,9 +11,8 @@
 		<a href="<?=base_url('stock/products'); ?>" class="collection-item">Produtos</a>
 		<a href="<?=base_url('stock/groups'); ?>" class="collection-item">Categorias</a>
 		<a href="<?=base_url('stock/entries'); ?>" class="collection-item">Entradas de estoque</a>
-		<a href="<?=base_url('stock'); ?>" class="collection-item">Saídas de estoque</a>
+		<a href="<?=base_url('stock/outputs'); ?>" class="collection-item">Saídas de estoque</a>
 		<a href="<?=base_url('stock'); ?>" class="collection-item">Visão geral</a>
-		<a href="<?=base_url('stock'); ?>" class="collection-item">Estoque detalhado</a>
 	</div>
 	<div class="col s10">
 		<?php switch ($view){
@@ -42,15 +41,27 @@
 				break;
 
 			case 'stock/entries':
-				$this->load->view('stock/stock/EntriesView', $input_stocks);
+				$this->load->view('stock/stock/in/EntriesView', $input_stocks);
 				break;
 
 			case 'stock/entries/create':
-				$this->load->view('stock/stock/CreateEntryView');
+				$this->load->view('stock/stock/in/CreateEntryView');
 				break;
 
 			case 'stock/entries/detailed':
-				$this->load->view('stock/stock/DetailedEntryView');
+				$this->load->view('stock/stock/in/DetailedEntryView');
+				break;
+
+			case 'stock/outputs':
+				$this->load->view('stock/stock/out/OutputsView', $output_stocks);
+				break;
+
+			case 'stock/outputs/create':
+				$this->load->view('stock/stock/out/CreateOutputView');
+				break;
+
+			case 'stock/outputs/detailed':
+				$this->load->view('stock/stock/out/DetailedOutputView');
 				break;
 		}?>
 	</div>

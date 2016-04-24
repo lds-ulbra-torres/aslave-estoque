@@ -38,7 +38,7 @@ $(document).ready(function(){
 </div>
 
 <div class="row">
-	<div class="col s11">
+	<div class="col s11 collection">
 		<table class="bordered highlight">
 			<thead>
 				<td><strong>Fornecedor</strong></td>
@@ -52,7 +52,7 @@ $(document).ready(function(){
 					<tr>
 						<td><a href="<?= base_url('stock/entries/'.$row['id_stock']); ?>"><?= $row['name'] ?></a></td>
 						<td><?= date('d/m/Y', strtotime($row['input_date'])); ?></td>
-						<td>Test</td>
+						<td><?='R$ ' . number_format($row['sum_value'], 2, ',', '.');?></td>
 						<td><?php switch ($row['input_type']) {
 							case '1':
 								echo 'Compra';

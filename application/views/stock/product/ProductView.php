@@ -90,7 +90,7 @@
 							$("#pagination").html("");
 							var items=[]; 	
 							$.each(obj, function(i,val){											
-								items.push($("<tr><td>" + val.name_product + "</td><td>"+$('#group_id option:selected').text()+"</td><td>n sei o nome da coluna</td><td><a href='<?= base_url('stock/products/update/');?>/"+ val.id_product +"'>Alterar</a> | <a id="+ val.id_product +" href='#' class='delete_product'>Apagar</a></td>"));
+								items.push($("<tr><td>" + val.name_product + "</td><td>"+$('#group_id option:selected').text()+"</td><td>"+ val.amount +"</td><td><a href='<?= base_url('stock/products/update/');?>/"+ val.id_product +"'>Alterar</a> | <a id="+ val.id_product +" href='#' class='delete_product'>Apagar</a></td>"));
 							});	
 							$('#product > tbody').append.apply($('#product > tbody'), items);
 						}catch(e) {		
@@ -133,7 +133,7 @@
 	</div>
 </div>	
 <div class="row">
-	<div class="col s11">
+	<div class="col s11 collection">
 		<table id="product" class="bordered highlight">
 			<thead>
 				<td><strong>Nome</strong></td>
@@ -155,7 +155,7 @@
 				<?php endforeach; ?>
 			</tbody>
 		</table>
-		<div id="pagination" class="pagination">
+		<!-- <div id="pagination" class="pagination">
 			<ul class="pagination right-align">
 				<li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
 				<li class="active grey"><a href="#!">1</a></li>
@@ -165,7 +165,7 @@
 				<li class="waves-effect"><a href="#!">5</a></li>
 				<li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
 			</ul>
-		</div>
+		</div> -->
 	</div>	
 </div>
 

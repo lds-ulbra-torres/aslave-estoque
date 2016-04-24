@@ -27,11 +27,11 @@
 		<form method="post" id="create_group">
 		<h4>Cadastrar categoria</h4>
 		<div class="card-panel">
-			<input required="required" type="text" name="group_name" placeholder="Nome">
-			<button class="btn green" id="create_group_btn" type="submit">Salvar
-				<i class="material-icons right">send</i>
-			</button>
+			<input required="required" type="text" name="group_name" maxlength="45" placeholder="Nome">
 		</div>
+		<button class="btn green" id="create_group_btn" type="submit">Salvar
+			<i class="material-icons right">send</i>
+		</button>
 	</form>
 	</div>
 </div>

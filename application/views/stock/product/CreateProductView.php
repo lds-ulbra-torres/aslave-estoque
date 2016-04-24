@@ -30,7 +30,7 @@
 		<form method="post" id="create_product">
 			<h4>Cadastrar produto</h4>
 			<div class="card-panel">
-				<input required="required" placeholder="Nome" name="product_name" type="text"></input>
+				<input required="required" placeholder="Nome" name="product_name" maxlength="45" type="text"></input>
 				<select id="group_id">
 					<option disabled selected value="1">Selecione uma Categoria</option>
 					<?php foreach($groups as $row) :
