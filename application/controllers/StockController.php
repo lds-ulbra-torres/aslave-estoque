@@ -270,22 +270,19 @@ class StockController extends CI_Controller {
 			if ($id = $this->StockModel->createOutputStockPeople($people)) {
 				$check = false;
 				$product = json_decode($this->input->post('products'));
-
+				$product_array = array();
 				foreach ($product as $products) {
-					$product_array = array(
+					$row = array(
 						'id_product' => $products->id_product,
 						'id_stock' => $id,
 						'unit_price_output' => $products->price,
 						'amount_output' => $products->amount);
-					if ($this->StockModel->createOutputStockProduct($product_array)) {
-						$check = true;
-					}
-					else { $check = false; }
+					array_push($product_array, $row);
 				}
-				if (!$check) {
-					echo "Erro ao salvar os produtos.";
+				if ($this->StockModel->createOutputStockProduct($product_array)) {
+						echo $id;
 				}
-				else { echo $id; }
+				else { echo "Erro ao salvar os produtos."; }
 			}
 			else { echo "Erro ao salvar o fornecedor."; }
 		}

@@ -84,8 +84,8 @@ class StockModel extends CI_Model {
 		return $this->db->insert_id();
 	}
 
-	public function createOutputStockProduct($product){
-		return $this->db->insert($this->output_has_products, $product);
+	public function createOutputStockProduct($product_array){
+		return $this->db->insert_batch($this->output_has_products, $product_array);
 	}
 
 }
