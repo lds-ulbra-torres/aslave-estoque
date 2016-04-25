@@ -41,12 +41,12 @@ class StockModel extends CI_Model {
 		$this->db->where('stock_output.id_stock', $id_stock);
 		$this->db->join('stock_output_products', 'stock_output.id_stock = stock_output_products.id_stock', 'inner');
 		$this->db->join('stock_products', 'stock_output_products.id_product = stock_products.id_product', 'inner');
-		$entry = $this->db->get($this->output)->result_array();
+		$output = $this->db->get($this->output)->result_array();
 
-		$people = $this->db->get_where('people', array('id_people' => $entry[0]['id_people']))->result_array();
+		$people = $this->db->get_where('people', array('id_people' => $output[0]['id_people']))->result_array();
 
 		return array(
-			'entry' => $entry, 
+			'output' => $output, 
 			'people' => $people);
 		
 	}
@@ -74,8 +74,8 @@ class StockModel extends CI_Model {
 		$this->db->insert($this->input, $peopleData);
 		return $this->db->insert_id();
 	}
-	public function createInputStockProduct($productData){
-		return $this->db->insert($this->input_has_products, $productData);
+	public function createInputStockProduct($product_array){
+		return $this->db->insert_batch($this->input_has_products, $product_array);
 	}
 	
 /* ESTOQUE DE SAÍDA */

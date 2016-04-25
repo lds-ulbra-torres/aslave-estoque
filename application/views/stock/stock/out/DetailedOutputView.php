@@ -1,14 +1,4 @@
 <a href="<?=base_url('stock/outputs') ?>">< Voltar para saídas</a>
-<script type="text/javascript">
-	$(document).ready(function(){
-		var total = 0
-		$(".total").each(function(){
-			total += Number($(this).text().replace(/[^0-9.,]/g,''));
-			
-		});
-		$("#totalHeader").text("R$ "+ total);
-	});
-</script>
 <div class="row">
 <?php //var_dump($output_data) ?>
 	<h4>Detalhes de saída</h4>
@@ -23,13 +13,13 @@
 			</ul>
 			<ul class="col s3 collection">
 				<li class="collection-item">
-					<h6>Data de saída</h6>
-					<strong><?= date('d/m/Y', strtotime($output_data['entry'][0]['output_date'])); ?></strong>
+					<strong>Data de saída</strong>
+					<strong class="chip"><?= date('d/m/Y', strtotime($output_data['output'][0]['output_date'])); ?></strong>
 				</li>
 
 				<li class="collection-item">
-					<strong>Total da nota</strong>
-					<td id="totalHeader">R$ 0,00</td>
+					<strong>Total da nota: </strong>
+					<strong class="chip"><?='R$ ' . number_format($output_data['output'][0]['sum_value'], 2, ',', '.');?></strong>
 				</li>
 				
 			</ul>
@@ -46,7 +36,7 @@
 					<td><strong>Total</strong></td>
 				</thead>
 				<tbody>
-					<?php foreach ($output_data['entry'] as $prod) { ?>
+					<?php foreach ($output_data['output'] as $prod) { ?>
 					<tr>
 						<td><?= $prod['name_product'] ?></td>
 						<td><?='desc';//$prod['descript'] ?></td>

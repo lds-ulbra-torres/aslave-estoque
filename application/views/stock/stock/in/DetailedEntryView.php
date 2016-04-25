@@ -36,13 +36,13 @@
 			</ul>
 			<ul class="col s3 collection">
 				<li class="collection-item">
-					<h6>Data de entrada</h6>
-					<strong><?= date('d/m/Y', strtotime($entry_data['entry'][0]['input_date'])); ?></strong>
+					<strong>Data de entrada</strong>
+					<strong class="chip"><?= date('d/m/Y', strtotime($entry_data['entry'][0]['input_date'])); ?></strong>
 				</li>
 
 				<li class="collection-item">
-					<strong>Total da nota</strong>
-					<td id="totalHeader">R$ 0,00</td>
+					<strong>Total da nota: </strong>
+					<strong class="chip"><?='R$ ' . number_format($entry_data['entry'][0]['sum_value'], 2, ',', '.');?></strong>
 				</li>
 				
 			</ul>

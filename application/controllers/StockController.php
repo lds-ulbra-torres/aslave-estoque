@@ -210,32 +210,33 @@ class StockController extends CI_Controller {
 			$people = array(
 				'input_date' => $this->input->post('date'),
 				'input_type' => $this->input->post('type'),
-				'id_people' => $this->input->post('id_people'));
-			$query = $this->StockModel->createInputStockPeople($people);
-			if ($query) {
-				$id = $query;
-				$check = false;
-				$product = json_decode($this->input->post('products'));
+				'id_people' => $this->input->post('id_people'),
+				'sum_value' => $this->input->post('sum_value'));
 
-				foreach ($product as $products) {
-					$product_array = array(
-						'id_product' => $products->id_product,
-//descomentar aqui quando tiver o campo no banco 'descript' => $products->descript,
-						'id_stock' => $id,
-						'unit_price_input' => $products->price,
-						'amount_input' => $products->amount);
-					if ($this->StockModel->createInputStockProduct($product_array)) {
-
-						$check = true;
+			$product = json_decode($this->input->post('products'));
+			if (sizeof($product) > 0) {
+				$query = $this->StockModel->createInputStockPeople($people);
+				if ($query) {
+					$id = $query;
+					$check = false;
+					$product_array = array();
+					foreach ($product as $products) {
+						$row = array(
+							'id_product' => $products->id_product,
+							'id_stock' => $id,
+//descomentar quando tiver  o campo no banco 'descript' => $products->descript,
+							'unit_price_input' => $products->price,
+							'amount_input' => $products->amount);
+						array_push($product_array, $row);
 					}
-					else { $check = false; }
+					if ($this->StockModel->createInputStockProduct($product_array)) {
+							echo $id;
+					}
+					else { echo "Erro ao salvar os produtos."; }
 				}
-				if (!$check) {
-					echo "Erro ao salvar os produtos.";
-				}
-				else { echo $id; }
+				else { echo "Erro ao salvar o fornecedor."; }
 			}
-			else { echo "Erro ao salvar o fornecedor."; }
+			else { echo "Nenhum produto adicionado."; }
 		}
 		else { echo "Todos os campos são obrigatórios."; }
 	}
@@ -266,25 +267,29 @@ class StockController extends CI_Controller {
 			$people = array(
 				'output_date' => $this->input->post('date'),
 //descrição, descomentar quando tiver no banco 'descript' => $this->input->post('descript'),
+				'sum_value' => $this->input->post('sum_value'),
 				'id_people' => $this->input->post('id_people'));
-			if ($id = $this->StockModel->createOutputStockPeople($people)) {
-				$check = false;
-				$product = json_decode($this->input->post('products'));
-				$product_array = array();
-				foreach ($product as $products) {
-					$row = array(
-						'id_product' => $products->id_product,
-						'id_stock' => $id,
-						'unit_price_output' => $products->price,
-						'amount_output' => $products->amount);
-					array_push($product_array, $row);
+			$product = json_decode($this->input->post('products'));
+			if (sizeof($product) > 0) {
+				if ($id = $this->StockModel->createOutputStockPeople($people)) {
+					$check = false;
+					$product_array = array();
+					foreach ($product as $products) {
+						$row = array(
+							'id_product' => $products->id_product,
+							'id_stock' => $id,
+							'unit_price_output' => $products->price,
+							'amount_output' => $products->amount);
+						array_push($product_array, $row);
+					}
+					if ($this->StockModel->createOutputStockProduct($product_array)) {
+							echo $id;
+					}
+					else { echo "Erro ao salvar os produtos."; }
 				}
-				if ($this->StockModel->createOutputStockProduct($product_array)) {
-						echo $id;
-				}
-				else { echo "Erro ao salvar os produtos."; }
-			}
-			else { echo "Erro ao salvar o fornecedor."; }
+				else { echo "Erro ao salvar o fornecedor."; }
+			} 
+			else { echo "Nenhum produto adicionado."; }
 		}
 		else { echo "Todos os campos são obrigatórios."; }
 	}

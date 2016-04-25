@@ -6,7 +6,6 @@
 	</style>
 	<script type="text/javascript">
 		$(document).ready(function(){
-
 			$("#add_product_btn").click(function(){
 				$('#add_product_modal').openModal();	
 			});
@@ -134,11 +133,12 @@
 				var $this = $(this);
 				var valueRemove = $this.parents("tr").find(".tdProductTotal").text().replace(/[^0-9.,]/g,'');
 				total = total - valueRemove;
-				$("#total").html("Total: R$ "+ total);
+				$("#total").html("Total: R$ "+ total.toFixed(2));
 				$(this).closest('tr').remove();
 			});
 			$("#add_input_stock_btn").click(function(e){
 				e.preventDefault();
+				$("#add_input_stock_btn").attr("disabled", true);
 				
 				var productsData = [];
 				$(".productRow").each(function(i){
@@ -158,18 +158,23 @@
 						id_people: $("#people option").attr("id"),
 						type: $("#stock_type").val(),
 						date: $("input[name=date]").val(),
+						sum_value: total,
 						products: JSON.stringify(productsData)
 					},
 					success: function(data){
 						if($.isNumeric(data)){
+							$("#add_input_stock_btn").attr("disabled", false); 
 							document.location.href = "<?= base_url('stock/entries/'); ?>/" + data;
-						}else{
+						}
+						else{
 							Materialize.toast(data, 4000);
+							$("#add_input_stock_btn").attr("disabled", false); 
 						}
 					},
 					error: function(data){
 						console.log(data);
 						Materialize.toast('Erro ao adicionar uma nova entrada de estoque!', 4000);
+						$("#add_input_stock_btn").attr("disabled", false); 
 					}
 				});
 			});
@@ -211,7 +216,7 @@
 		</div>
 
 		<div class="col s10 collection">
-			<table  class="bordered highlight">
+			<table  class="bordered highlight" id="input_products">
 				<thead>
 					<td><strong>Categoria</strong></td>
 					<td><strong>Descrição</strong></td>

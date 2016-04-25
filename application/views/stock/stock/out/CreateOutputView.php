@@ -137,8 +137,9 @@
 			$("#total").html("Total: R$ "+ total);
 			$(this).closest('tr').remove();
 		});
-		$("#add_input_stock_btn").click(function(e){
+		$("#add_output_stock_btn").click(function(e){
 			e.preventDefault();
+			$("#add_output_stock_btn").attr("disabled", true);
 			
 			var productsData = [];
 			$(".productRow").each(function(i){
@@ -158,18 +159,23 @@
 					id_people: $("#people option").attr("id"),
 					descript: $("input[name=descript]").val(),
 					date: $("input[name=date]").val(),
+					sum_value: total,
 					products: JSON.stringify(productsData)
 				},
-				success: function(data){
-					if($.isNumeric(data)){
+				success: function(data) {
+					if ($.isNumeric(data)) {
+						$("#add_output_stock_btn").attr("disabled", false); 
 						document.location.href = "<?= base_url('stock/outputs/'); ?>/" + data;
-					}else{
+					}
+					else {
 						Materialize.toast(data, 4000);
+						$("#add_output_stock_btn").attr("disabled", false); 
 					}
 				},
 				error: function(data){
 					console.log(data);
 					Materialize.toast('Erro ao adicionar uma nova saída de estoque!', 4000);
+					$("#add_output_stock_btn").attr("disabled", false); 
 				}
 			});
 		});
@@ -195,7 +201,7 @@
 			</div>
 		</div>
 		<div class="container right-align col s3">
-			<button id="add_input_stock_btn" type="submit" class="green btn-large">Finalizar saída<i class="material-icons right">send</i></button>
+			<button id="add_output_stock_btn" type="submit" class="green btn-large">Finalizar saída<i class="material-icons right">send</i></button>
 		</div>
 	</div>
 
@@ -226,7 +232,7 @@
 </div>
 
 <div id="add_product_modal" class="modal">
-	<form id="">
+	<form>
 		<div class="modal-content row">
 			<h4>Adicionar produto</h4>
 			<div class="input-field col s4">	
@@ -246,7 +252,7 @@
 		</div>
 		<div class="modal-footer">
 			<a href="#" class="btn-flat modal-action modal-close">Cancelar</a>
-			<button id="add_product_output_btn" class="btn green">Adicionar<i class="material-icons right">send</i> </button>
+			<button id="add_product_output_btn" type="submit" class="btn green">Adicionar<i class="material-icons right">send</i> </button>
 		</div>
 	</form>
 </div>
