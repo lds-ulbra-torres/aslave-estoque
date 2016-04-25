@@ -14,6 +14,13 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 
   <script type="text/javascript" src="http://www.technicalkeeda.com/js/javascripts/plugin/json2.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>
+  
+  <script type="text/javascript">
+  $(document).ready(function(){
+    $(".button-collapse").sideNav();
+  });
+</script>
 </head>
 <body>
 
@@ -66,10 +73,4 @@
   </div>
 
 </body>
-<script type="text/javascript" src="<?= base_url('assets/js/materialize.js')?>"></script>
-<script>
-  $(document).ready(function(){
-    $(".button-collapse").sideNav();
-  });
-</script>
 </html>
