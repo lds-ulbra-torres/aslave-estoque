@@ -144,7 +144,6 @@
 				$(".productRow").each(function(i){
 					var pData = { 
 						id_product: $(this).find(".tdProductId").attr("id"),
-						descript:  $(this).find(".tdProductDescript").text(),
 						amount:  $(this).find(".tdProductAmount").text(),
 						price: Number($(this).find(".tdProductPrice").text().replace(/[^0-9.,]/g,''))
 					};
@@ -219,7 +218,6 @@
 			<table  class="bordered highlight" id="input_products">
 				<thead>
 					<td><strong>Categoria</strong></td>
-					<td><strong>Descrição</strong></td>
 					<td><strong>Quantidade</strong></td>
 					<td><strong>Valor unitário</strong></td>
 					<td><strong>Valor total</strong></td>
@@ -238,9 +236,6 @@
 				<h4>Adicionar produto</h4>
 				<div class="input-field col s4">	
 					<input name="product_name" autocomplete="off" type="text" maxlength="45" placeholder="Produto">
-				</div>
-				<div class="input-field col s4">	
-					<input name="descript" autocomplete="off" type="text" maxlength="45" placeholder="Marca, modelo, tamanho...">
 				</div>
 				<div class="input-field col s2">
 					<input name="amount" required="required" type="number" placeholder="Quantia">

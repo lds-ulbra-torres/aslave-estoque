@@ -67,10 +67,10 @@ class ProductModel extends CI_Model {
 
 	}
 	public function searchByGroup($id_group){
-		$this->db->select("id_group, name_product, id_product");
+		$this->db->select("id_group, name_product, id_product, amount");
 		$whereCondition = array('id_group' => $id_group);
 		$this->db->where($whereCondition);
-		return $this->db->get($this->table)->result();
+		return $this->db->get($this->table)->result_array();
 	}
 
 }

@@ -224,7 +224,6 @@ class StockController extends CI_Controller {
 						$row = array(
 							'id_product' => $products->id_product,
 							'id_stock' => $id,
-//descomentar quando tiver  o campo no banco 'descript' => $products->descript,
 							'unit_price_input' => $products->price,
 							'amount_input' => $products->amount);
 						array_push($product_array, $row);

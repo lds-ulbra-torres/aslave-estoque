@@ -63,6 +63,9 @@
 			case 'stock/outputs/detailed':
 				$this->load->view('stock/stock/out/DetailedOutputView');
 				break;
+
+			default:
+				$this->load->view('stock/stock/StartView');
 		}?>
 	</div>
 </div>

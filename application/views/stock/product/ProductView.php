@@ -59,7 +59,7 @@
 							$("#pagination").html("");
 							var items=[]; 	
 							$.each(obj, function(i,val){											
-								items.push($("<tr><td>" + val.name_product + "</td><td>"+val.name_group+"</td><td>n sei o nome da coluna</td><td><a href='<?= base_url('stock/products/update/');?>/"+ val.id_product +"'>Alterar</a> | <a id="+ val.id_product +" href='#' class='delete_product'>Apagar</a></td>"));
+								items.push($("<tr><td>" + val.name_product + "</td><td>"+val.name_group+"</td><td>"+val.amount+"</td><td><a href='<?= base_url('stock/products/update/');?>/"+ val.id_product +"'>Alterar</a> | <a id="+ val.id_product +" href='#' class='delete_product'>Apagar</a></td>"));
 							});	
 							$('#product > tbody').append.apply($('#product > tbody'), items);
 						}catch(e) {		
