@@ -1,45 +1,93 @@
 <script type="text/javascript">
-$(document).ready(function(){ 
-	function reloadTableProduct(){
-		$.ajax({
-			url: "<?= base_url('stock/entries/');?>",
-			type: "POST",
-			data: $("table"),
-			success: function(data){
-				$("#product").html($(data).find("table"));
-				console.log($(data).find("table"));
-			},
-			error: function(){
-				console.log(data);
-				Materialize.toast('Erro ao recarregar a tabela, atualize a pagina!', 4000);	
-			}
+	$(document).ready(function(){
+		$("#search_button").click(function(){
+			$.ajax({
+				url: "<?php echo site_url('/StockController/searchStockInputByPeople'); ?>",
+				type: "POST",
+				data: {search_string: $("input[name=search]").val()},
+				success: function(data){
+					if(data == 'O campo de busca esta vazio'){
+						Materialize.toast(data, 4000);
+					}
+					var obj = JSON.parse(data);
+					if(!obj.length>0){
+						Materialize.toast("Nenhuma entrada encontrada", 4000);
+					}else{
+						try{
+							$('#input > tbody').html("");
+							$("#pagination").html("");
+							var items=[]; 	
+							$.each(obj, function(i,val){
+								if(val.input_type == "1"){val.input_type = "Compra";}else{val.input_type = "Doação";}											
+								items.push($("<tr><td><a href='<?= base_url('stock/entries/'); ?>/"+val.id_stock+"'>"+val.name+"</a></td><td>"+val.input_date+"</td><td>"+val.sum_value+"</td><td class='input_type_search'>"+val.input_type+"</td><td><a id="+ val.id_stock +" href='#' class='delete_stock_btn'>Apagar</a></td></tr>"));
+							});	
+							$('#input > tbody').append.apply($('#input > tbody'), items);
+							/*alert("foi");
+							if($(".input_type_search").text() == '1'){
+								alert($(this).text());
+								$(this).text("Compra");
+							}else{
+								$(this).text("Doação");
+							}*/
+						}catch(e) {		
+							alert('Ocorreu algum erro ao carregar as entradas de estoque!');
+						}			
+					}
+				},
+				error: function(){
+					Materialize.toast("Ocorreu algum erro", 2000);
+				}
+			});
 		});
-	}
-	var id_stock;
-	$("table").on("click",".delete_stock_btn", function(){
-		$('#delete_stock_modal').openModal();	
-		id_stock = $(this).attr("id");
-	});
-	$("#delete_stock").on("click", function(){
-		$("#delete_stock").attr("disabled", true);
-		$.ajax({
-			url: "<?php echo site_url('/StockController/deleteInputStock'); ?>",
-			type: "POST",
-			data: {id_stock: id_stock},
-			success: function(data){
-				$("#delete_stock").attr("disabled", false);
-				reloadTableProduct();
-				Materialize.toast(data, 3000);
-			},
-			error: function(data){
-				$("#delete_stock").attr("disabled", false);
-				console.log(data);
-				Materialize.toast('Ação não permitida.', 3000);	
+		$("#input").on("click", "#search_button", function(){
+			alert("foi");
+			if($(".input_type_search").text() == '1'){
+				alert($(this).text());
+				$(this).text("Compra");
+			}else{
+				$(this).text("Doação");
 			}
+		}); 
+		function reloadTableProduct(){
+			$.ajax({
+				url: "<?= base_url('stock/entries/');?>",
+				type: "POST",
+				data: $("table"),
+				success: function(data){
+					$("#product").html($(data).find("table"));
+					console.log($(data).find("table"));
+				},
+				error: function(){
+					console.log(data);
+					Materialize.toast('Erro ao recarregar a tabela, atualize a pagina!', 4000);	
+				}
+			});
+		}
+		var id_stock;
+		$("table").on("click",".delete_stock_btn", function(){
+			$('#delete_stock_modal').openModal();	
+			id_stock = $(this).attr("id");
 		});
+		$("#delete_stock").on("click", function(){
+			$("#delete_stock").attr("disabled", true);
+			$.ajax({
+				url: "<?php echo site_url('/StockController/deleteInputStock'); ?>",
+				type: "POST",
+				data: {id_stock: id_stock},
+				success: function(data){
+					$("#delete_stock").attr("disabled", false);
+					reloadTableProduct();
+					Materialize.toast(data, 3000);
+				},
+				error: function(data){
+					$("#delete_stock").attr("disabled", false);
+					console.log(data);
+					Materialize.toast('Ação não permitida.', 3000);	
+				}
+			});
+		});
+
 	});
-	
-});
 </script>
 <div class="row">
 	<h4>Entradas de Estoque</h4>
@@ -48,20 +96,20 @@ $(document).ready(function(){
 			<a class="green btn" href="<?=base_url('stock/entries/create') ?>">Adicionar nova</a>
 		</div>
 		<div class="input-field col s3">
-        	<input type="text" placeholder=" Fornecedor..." required>
-        </div>
-        <div class="input-field col s2">
-        	<button href="#" id="search_button" class="btn grey">
-        		<i class="material-icons">search</i>
-        	</button>
-        </div>
-        <div class="input-field col s3">
+			<input type="text" name="search" placeholder=" Fornecedor..." required>
+		</div>
+		<div class="input-field col s2">
+			<button href="#" id="search_button" class="btn grey">
+				<i class="material-icons">search</i>
+			</button>
+		</div>
+		<div class="input-field col s3">
 			<select id="group_id">
 				<option disabled selected> Filtrar fornecedor...</option>
 				<?php foreach($input_stocks as $row) :
-					echo "<option value=".$row['id_people'].">";
-					echo $row['name'];
-					echo "</option>";
+				echo "<option value=".$row['id_people'].">";
+				echo $row['name'];
+				echo "</option>";
 				endforeach; ?>
 			</select>
 		</div>
@@ -77,7 +125,7 @@ $(document).ready(function(){
 
 <div class="row">
 	<div class="col s11 collection">
-		<table id="product" class="bordered highlight">
+		<table id="input" class="bordered highlight">
 			<thead>
 				<td><strong>Fornecedor</strong></td>
 				<td><strong>Data</strong></td>
@@ -93,12 +141,12 @@ $(document).ready(function(){
 						<td><?='R$ ' . number_format($row['sum_value'], 2, ',', '.');?></td>
 						<td><?php switch ($row['input_type']) {
 							case '1':
-								echo 'Compra';
-								break;
+							echo 'Compra';
+							break;
 							
 							case '2':
-								echo 'Doação';
-								break;
+							echo 'Doação';
+							break;
 						} ?></td>
 						<td>
 							<a class="delete_stock_btn" id="<?= $row['id_stock']; ?>" href="#">Apagar</a>

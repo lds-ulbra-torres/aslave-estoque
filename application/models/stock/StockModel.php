@@ -56,7 +56,7 @@ class StockModel extends CI_Model {
 		return $query->result();
 	}
 
-	public function findStockByForeign($product_id) {
+	public function findStockByForeign($product_id){
 		$query = $this->db->get_where($this->input_has_products, $product_id, 1);
 		if ($query->num_rows() > 0){
 			return true;
@@ -92,6 +92,15 @@ class StockModel extends CI_Model {
 	}
 	public function deleteOutputStock($id_stock){
 		return $this->db->delete($this->output, $id_stock);
+	}
+	public function searchInputByPeople($people){
+		$this->db->join('people', 'stock_input.id_people = people.id_people', 'inner');
+		$whereCondition = array('name' => $people);
+		$this->db->like($whereCondition);
+		$this->db->from($this->input);
+		$query = $this->db->get();
+		return $query->result();
+
 	}
 
 }

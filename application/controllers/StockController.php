@@ -16,7 +16,7 @@ class StockController extends CI_Controller {
 		$this->template->load('template/template','stock/stock/HomeView', $data);
 	}
 
-/* CATEGORIAS */
+	/* CATEGORIAS */
 	public function groups() {
 		$data['groups'] = $this->GroupModel->getGroups();
 		$data['view'] = 'groups';
@@ -77,7 +77,7 @@ class StockController extends CI_Controller {
 		}
 	}
 
-/* PRODUTOS */
+	/* PRODUTOS */
 	public function products() {
 		$data['groups'] = $this->GroupModel->getGroups();
 		$data['products'] = $this->ProductModel->getProducts();
@@ -145,7 +145,7 @@ class StockController extends CI_Controller {
 		}
 	}
 
-/* FILTROS */
+	/* FILTROS */
 	public function searchPeople(){
 		$search = $this->input->post('name_people');
 		$result = $this->StockModel->getPeople($search);
@@ -188,7 +188,7 @@ class StockController extends CI_Controller {
 		echo json_encode($result);
 	}
 
-/* ENTRADAS DE ESTOQUE */
+	/* ENTRADAS DE ESTOQUE */
 	public function entriesView(){
 		$data['input_stocks'] = $this->StockModel->getInputStocks();
 		$data['view'] = 'stock/entries';
@@ -234,7 +234,7 @@ class StockController extends CI_Controller {
 						array_push($product_array, $row);
 					}
 					if ($this->StockModel->createInputStockProduct($product_array)) {
-							echo $id;
+						echo $id;
 					}
 					else { echo "Erro ao salvar os produtos."; }
 				}
@@ -255,8 +255,17 @@ class StockController extends CI_Controller {
 		}
 		else { echo "Erro ao apagar esta entrada. "; }
 	}
-
-/* SAÍDAS DE ESTOQUE */
+	public function searchStockInputByPeople(){
+		$this->form_validation->set_rules('search_string', 'pessoa', 'required');
+		if($this->form_validation->run()){
+			$people = $this->input->post('search_string');
+			$result = $this->StockModel->searchInputByPeople($people);
+			echo json_encode($result);	
+		}else{
+			echo "O campo de busca esta vazio";
+		}
+	}
+	/* SAÍDAS DE ESTOQUE */
 	public function outputsView(){
 		$data['output_stocks'] = $this->StockModel->getOutputStocks();
 		$data['view'] = 'stock/outputs';
@@ -298,7 +307,7 @@ class StockController extends CI_Controller {
 						array_push($product_array, $row);
 					}
 					if ($this->StockModel->createOutputStockProduct($product_array)) {
-							echo $id;
+						echo $id;
 					}
 					else { echo "Erro ao salvar os produtos."; }
 				}
