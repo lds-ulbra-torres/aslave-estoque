@@ -134,10 +134,15 @@ class StockController extends CI_Controller {
 
 	public function deleteProduct() {
 		$product = array('id_product' => $this->input->post('id_product'));
-		if($this->ProductModel->delete($product)){
-			echo 'Produto apagado. ';
+		if ($this->StockModel->findStockByForeign($product)){
+			echo 'Este produto está sendo usado.';
+		} 
+		else {
+			if($this->ProductModel->delete($product)){
+				echo 'Produto apagado.';
+			} 
+			else { echo 'Ocorreu algum problema interno. Tente novamente'; }
 		}
-		else { echo 'Ocorreu algum erro. Tente novamente'; }
 	}
 
 /* FILTROS */
@@ -240,6 +245,17 @@ class StockController extends CI_Controller {
 		else { echo "Todos os campos são obrigatórios."; }
 	}
 
+	public function deleteInputStock() {
+		$id_stock = array('id_stock' => $this->input->post('id_stock'));
+		if ($this->StockModel->deleteInputStockProduct($id_stock)) {
+			if ($this->StockModel->deleteInputStock($id_stock)) {
+				echo "Entrada de estoque apagada.";
+			}
+			else { echo "Erro ao apagar esta entrada. "; }
+		}
+		else { echo "Erro ao apagar esta entrada. "; }
+	}
+
 /* SAÍDAS DE ESTOQUE */
 	public function outputsView(){
 		$data['output_stocks'] = $this->StockModel->getOutputStocks();
@@ -291,6 +307,17 @@ class StockController extends CI_Controller {
 			else { echo "Nenhum produto adicionado."; }
 		}
 		else { echo "Todos os campos são obrigatórios."; }
+	}
+
+	public function deleteOutputStock() {
+		$id_stock = array('id_stock' => $this->input->post('id_stock'));
+		if ($this->StockModel->deleteOutputStockProduct($id_stock)) {
+			if ($this->StockModel->deleteOutputStock($id_stock)) {
+				echo "Saída de estoque apagada.";
+			}
+			else { echo "Erro ao apagar esta saída. "; }
+		}
+		else { echo "Erro ao apagar esta saída. "; }
 	}
 
 }

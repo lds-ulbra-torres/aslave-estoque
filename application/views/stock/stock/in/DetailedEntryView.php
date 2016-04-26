@@ -53,7 +53,6 @@
 			<table class="bordered highlight">
 				<thead>
 					<td><strong>Produto</strong></td>
-					<td><strong>Descrição</strong></td>
 					<td><strong>Valor unitário</strong></td>
 					<td><strong>Quantidade</strong></td>
 					<td><strong>Total</strong></td>
@@ -62,7 +61,6 @@
 					<?php foreach ($entry_data['entry'] as $prod) { ?>
 					<tr>
 						<td><?= $prod['name_product'] ?></td>
-						<td><?='desc';//$prod['descript'] ?></td>
 						<td><?='R$ ' . number_format($prod['unit_price_input'], 2, ',', '.');?></td>
 						<td><?= $prod['amount_input'] ?></td>
 						<td class="total" hidden><?= $prod['unit_price_input']*$prod['amount_input'] ?></td>

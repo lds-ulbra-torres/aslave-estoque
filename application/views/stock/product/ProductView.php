@@ -36,7 +36,7 @@
 				},
 				error: function(data){
 					console.log(data);
-					Materialize.toast('Erro do ajax', 4000);	
+					Materialize.toast('Ação não permitida.', 4000);	
 				}
 			});
 		});
