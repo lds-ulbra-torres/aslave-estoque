@@ -104,7 +104,6 @@
 					var cols = "";
 
 					cols += '<td class="tdProductId" id='+ $("#product option").attr("id") +'>'+ $("#product option").text() +'</td>';
-					cols += '<td class="tdProductDescript">'+ $("input[name=descript]").val() +'</td>';
 					cols += '<td class="tdProductAmount">'+ $("input[name=amount]").val() +'</td>';
 					cols += '<td class="tdProductPrice">'+'R$ '+ $("input[name=price]").val() +'</td>';
 					cols += '<td class="tdProductTotal">'+'R$ '+ ($("input[name=price]").val() * $("input[name=amount]").val()).toFixed(2) +'</td>';
@@ -118,7 +117,6 @@
 					total = total + ($("input[name=price]").val() * $("input[name=amount]").val());	
 					
 					$("#total").html("Total: R$" +total.toFixed(2));
-					$("input[name=descript]").val("");
 					$("input[name=amount]").val("");
 					$("input[name=price]").val("");
 					$("input[name=product_name]").val("");

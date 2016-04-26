@@ -63,7 +63,7 @@
 							try{
 								var items=[]; 	
 								$.each(obj, function(i,val){											
-									items.push($("<option id="+ val.id_product +">"+ val.name_product +"</option>"));
+									items.push($("<option name="+val.unit_price+" id="+ val.id_product +">"+ val.name_product +"</option>"));
 								});	
 								$('#loadProduct').append.apply($('#loadProduct'), items);
 							}catch(e) {		
@@ -83,8 +83,8 @@
 		});
 		$("#loadProduct").on("click", "option", function(){
 			$("input[name=product_name]").val("");
-			$("input[name=descript]").val("");
 			$("#product").html($(this));
+			$("#price_product").html("Valor: "+$(this).attr("name"));
 			$('#loadProduct').empty();
 		});
 		var total = 0;
@@ -105,10 +105,9 @@
 				var cols = "";
 
 				cols += '<td class="tdProductId" id='+ $("#product option").attr("id") +'>'+ $("#product option").text() +'</td>';
-				cols += '<td class="tdProductDescript">'+ $("input[name=descript]").val() +'</td>';
 				cols += '<td class="tdProductAmount">'+ $("input[name=amount]").val() +'</td>';
-				cols += '<td class="tdProductPrice">'+'R$ '+ $("input[name=price]").val() +'</td>';
-				cols += '<td class="tdProductTotal">'+'R$ '+ ($("input[name=price]").val() * $("input[name=amount]").val()).toFixed(2) +'</td>';
+				cols += '<td class="tdProductPrice">'+'R$ '+ $("#product option").attr("name") +'</td>';
+				cols += '<td class="tdProductTotal">'+'R$ '+ ($("#product option").attr("name") * $("input[name=amount]").val()).toFixed(2) +'</td>';
 				cols += '<td>';
 				cols += '<a href="#" class="removeProduct">Remover</a>';
 				cols += '</td>';
@@ -116,14 +115,14 @@
 				newRow.append(cols);
 				$("#output_stock_product").append(newRow);
 				
-				total = total + ($("input[name=price]").val() * $("input[name=amount]").val());	
+				total = total + ($("#product option").attr("name") * $("input[name=amount]").val());
 				
 				$("#total").html("Total: R$" +total.toFixed(2));
-				$("input[name=descript]").val("");
 				$("input[name=amount]").val("");
-				$("input[name=price]").val("");
+				$("#price_product").empty();
 				$("input[name=product_name]").val("");
 				$('#loadProduct').empty();
+				$('#product').empty();
 				
 			}
 			
@@ -218,7 +217,6 @@
 		<table  class="bordered highlight">
 			<thead>
 				<td><strong>Categoria</strong></td>
-				<td><strong>Descrição</strong></td>
 				<td><strong>Quantidade</strong></td>
 				<td><strong>Valor unitário</strong></td>
 				<td><strong>Valor total</strong></td>
@@ -242,7 +240,7 @@
 				<input name="amount" required="required" type="number" placeholder="Quantia">
 			</div>
 			<div class="input-field col s2">
-				<input name="price" required="required" type="number" placeholder="Preço" step="0.01" min="0.01">
+				<p class="chip" id="price_product"></p>
 			</div>
 
 			<div id="products" class="col s12">

@@ -11,6 +11,11 @@
 				<h6><strong>CPF/CNPJ: </strong> <?= $output_data['people'][0]['cpf_cnpj'] ?></h6>
 
 			</ul>
+			<ul class="col s3">
+				<li>
+					<p></p>
+				</li>
+			</ul>
 			<ul class="col s3 collection">
 				<li class="collection-item">
 					<strong>Data de saída</strong>
@@ -30,7 +35,6 @@
 			<table class="bordered highlight">
 				<thead>
 					<td><strong>Produto</strong></td>
-					<td><strong>Descrição</strong></td>
 					<td><strong>Valor unitário</strong></td>
 					<td><strong>Quantidade</strong></td>
 					<td><strong>Total</strong></td>
@@ -39,7 +43,6 @@
 					<?php foreach ($output_data['output'] as $prod) { ?>
 					<tr>
 						<td><?= $prod['name_product'] ?></td>
-						<td><?='desc';//$prod['descript'] ?></td>
 						<td><?='R$ ' . number_format($prod['unit_price_output'], 2, ',', '.');?></td>
 						<td><?= $prod['amount_output'] ?></td>
 						<td class="total" hidden><?= $prod['unit_price_output']*$prod['amount_output'] ?></td>

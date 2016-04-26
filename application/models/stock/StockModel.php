@@ -48,7 +48,7 @@ class StockModel extends CI_Model {
 		return $query->result();
 	}
 	public function getProductSearch($searchString) {
-		$this->db->select("id_product, name_product");
+		$this->db->select("id_product, name_product, unit_price");
 		$whereCondition = array('name_product' =>$searchString);
 		$this->db->like($whereCondition);
 		$this->db->from('stock_products');

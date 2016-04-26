@@ -79,7 +79,8 @@ $(document).ready(function(){
 	<div class="col s11 collection">
 		<table id="product" class="bordered highlight">
 			<thead>
-				<td><strong>Fornecedor</strong></td>
+				<td><strong>Entidade</strong></td>
+				<td><strong>Descrição</strong></td>
 				<td><strong>Data</strong></td>
 				<td><strong>Valor total</strong></td>
 				<td><strong>Ações</strong></td>
@@ -88,6 +89,7 @@ $(document).ready(function(){
 				<?php foreach($output_stocks as $row) :?>
 					<tr>
 						<td><a href="<?= base_url('stock/outputs/'.$row['id_stock']); ?>"><?= $row['name'] ?></a></td>
+						<td>desc</td>
 						<td><?= date('d/m/Y', strtotime($row['output_date'])); ?></td>
 						<td><?='R$ ' . number_format($row['sum_value'], 2, ',', '.');?></td>
 						<td>
