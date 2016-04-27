@@ -39,14 +39,14 @@
 					}
 				});
 			}else{
-				$('#loadPeople').empty();
+				$('#loadPeople').html(" ");
 			}
 		});
 
 		$("#loadPeople").on("click", "option", function(){
 			$("input[name=people]").val("");
 			$("#people").html($(this));
-			$('#loadPeople').empty();
+			$('#loadPeople').html(" ");
 		});
 
 		$("input[name=product_name]").keyup(function(){
