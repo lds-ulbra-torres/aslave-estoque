@@ -187,7 +187,36 @@ class StockController extends CI_Controller {
 		$result = $this->StockModel->getProductSearch($search);
 		echo json_encode($result);
 	}
-
+	public function searchStockInputByPeople(){
+		$this->form_validation->set_rules('search_string', 'pessoa', 'required');
+		if($this->form_validation->run()){
+			$people = $this->input->post('search_string');
+			$result = $this->StockModel->searchInputByPeople($people);
+			echo json_encode($result);	
+		}else{
+			echo "O campo de busca esta vazio";
+		}
+	}
+	public function searchInputStockByType(){
+		$this->form_validation->set_rules('input_type', 'tipo', 'required');
+		if($this->form_validation->run()){
+			$type = $this->input->post('input_type');
+			$result = $this->StockModel->searchByType($type);
+			echo json_encode($result);	
+		}else{
+			echo "Você esta tentando sabotar site?";
+		}
+	}
+	public function searchStockOutputByPeople(){
+		$this->form_validation->set_rules('search_string', 'pessoa', 'required');
+		if($this->form_validation->run()){
+			$people = $this->input->post('search_string');
+			$result = $this->StockModel->searchOutputByPeople($people);
+			echo json_encode($result);	
+		}else{
+			echo "O campo de busca esta vazio";
+		}
+	}
 	/* ENTRADAS DE ESTOQUE */
 	public function entriesView(){
 		$data['input_stocks'] = $this->StockModel->getInputStocks();
@@ -255,16 +284,7 @@ class StockController extends CI_Controller {
 		}
 		else { echo "Erro ao apagar esta entrada. "; }
 	}
-	public function searchStockInputByPeople(){
-		$this->form_validation->set_rules('search_string', 'pessoa', 'required');
-		if($this->form_validation->run()){
-			$people = $this->input->post('search_string');
-			$result = $this->StockModel->searchInputByPeople($people);
-			echo json_encode($result);	
-		}else{
-			echo "O campo de busca esta vazio";
-		}
-	}
+
 	/* SAÍDAS DE ESTOQUE */
 	public function outputsView(){
 		$data['output_stocks'] = $this->StockModel->getOutputStocks();

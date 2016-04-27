@@ -22,13 +22,6 @@
 								items.push($("<tr><td><a href='<?= base_url('stock/entries/'); ?>/"+val.id_stock+"'>"+val.name+"</a></td><td>"+val.input_date+"</td><td>"+val.sum_value+"</td><td class='input_type_search'>"+val.input_type+"</td><td><a id="+ val.id_stock +" href='#' class='delete_stock_btn'>Apagar</a></td></tr>"));
 							});	
 							$('#input > tbody').append.apply($('#input > tbody'), items);
-							/*alert("foi");
-							if($(".input_type_search").text() == '1'){
-								alert($(this).text());
-								$(this).text("Compra");
-							}else{
-								$(this).text("Doação");
-							}*/
 						}catch(e) {		
 							alert('Ocorreu algum erro ao carregar as entradas de estoque!');
 						}			
@@ -39,15 +32,39 @@
 				}
 			});
 		});
-		$("#input").on("click", "#search_button", function(){
-			alert("foi");
-			if($(".input_type_search").text() == '1'){
-				alert($(this).text());
-				$(this).text("Compra");
-			}else{
-				$(this).text("Doação");
-			}
-		}); 
+		$("#input_type").change(function(){
+			$.ajax({
+				url: "<?php echo site_url('/StockController/searchInputStockByType'); ?>",
+				type: "POST",
+				data: {input_type: $(this).val()},
+				success: function(data){
+					if(data == 'Você esta tentando sabotar site?'){
+						Materialize.toast(data, 4000);
+					}
+					var obj = JSON.parse(data);
+					if(!obj.length>0){
+						Materialize.toast("Nenhuma entrada encontrada como " + $("#input_type").val(), 4000);
+					}else{
+						try{
+							$('#input > tbody').html("");
+							$("#pagination").html("");
+							var items=[]; 	
+																		
+							$.each(obj, function(i,val){
+							if(val.input_type == "1"){val.input_type = "Compra";}else{val.input_type = "Doação";}										
+								items.push($("<tr><td><a href='<?= base_url('stock/entries/'); ?>/"+val.id_stock+"'>"+val.name+"</a></td><td>"+val.input_date+"</td><td>"+val.sum_value+"</td><td class='input_type_search'>"+val.input_type+"</td><td><a id="+ val.id_stock +" href='#' class='delete_stock_btn'>Apagar</a></td></tr>"));
+							});	
+							$('#input > tbody').append.apply($('#input > tbody'), items);
+						}catch(e) {		
+							alert('Ocorreu algum erro ao carregar as entrada de estoque!');
+						}			
+					}	
+				},
+				error: function(){
+					Materialize.toast("Ocorreu algum erro", 2000);
+				}
+			});
+		});
 		function reloadTableProduct(){
 			$.ajax({
 				url: "<?= base_url('stock/entries/');?>",
@@ -114,7 +131,7 @@
 			</select>
 		</div>
 		<div class="input-field col s1">
-			<select id="group_id">
+			<select id="input_type">
 				<option disabled selected> Tipos...</option>
 				<option value="1"> Compras</option>
 				<option value="2"> Doações</option>
@@ -143,7 +160,7 @@
 							case '1':
 							echo 'Compra';
 							break;
-							
+
 							case '2':
 							echo 'Doação';
 							break;

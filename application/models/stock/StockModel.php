@@ -78,7 +78,21 @@ class StockModel extends CI_Model {
 	public function deleteInputStock($id_stock){
 		return $this->db->delete($this->input, $id_stock);
 	}
-	
+	public function searchInputByPeople($people){
+		$this->db->join('people', 'stock_input.id_people = people.id_people', 'inner');
+		$whereCondition = array('name' => $people);
+		$this->db->like($whereCondition);
+		$this->db->from($this->input);
+		$query = $this->db->get();
+		return $query->result();
+
+	}
+	public function searchByType($input_type){
+		$this->db->join('people', 'stock_input.id_people = people.id_people', 'inner');
+		$whereCondition = array('input_type' => $input_type);
+		$this->db->where($whereCondition);
+		return $this->db->get($this->input)->result_array();
+	}
 /* ESTOQUE DE SAÍDA */
 	public function createOutputStockPeople($people){
 		$this->db->insert($this->output, $people);
@@ -93,14 +107,13 @@ class StockModel extends CI_Model {
 	public function deleteOutputStock($id_stock){
 		return $this->db->delete($this->output, $id_stock);
 	}
-	public function searchInputByPeople($people){
-		$this->db->join('people', 'stock_input.id_people = people.id_people', 'inner');
+	public function searchOutputByPeople($people){
+		$this->db->join('people', 'stock_output.id_people = people.id_people', 'inner');
 		$whereCondition = array('name' => $people);
 		$this->db->like($whereCondition);
-		$this->db->from($this->input);
+		$this->db->from($this->output);
 		$query = $this->db->get();
 		return $query->result();
 
 	}
-
 }
