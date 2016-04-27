@@ -1,16 +1,5 @@
 <script type="text/javascript">
 	$(document).ready(function(){ 
-		function formatDate(){
-			var data = new Date();
-			var dia = data.getDate();
-			if (dia.toString().length == 1)
-				dia = "0"+dia;
-			var mes = data.getMonth()+1;
-			if (mes.toString().length == 1)
-				mes = "0"+mes;
-			var ano = data.getFullYear();  
-			return dia+"/"+mes+"/"+ano;
-		}
 		function reloadTableProduct(){
 			$.ajax({
 				url: "<?= base_url('stock/outputs/');?>",
@@ -66,8 +55,7 @@
 							$('#output > tbody').html("");
 							$("#pagination").html("");
 							var items=[]; 	
-							$.each(obj, function(i,val){
-								val.output_date.(formatDate);										
+							$.each(obj, function(i,val){									
 								items.push($("<tr><td><a href='<?= base_url('stock/outputs/'); ?>/"+val.id_stock+"'>"+val.name+"</a></td><td>rs</td><td>"+val.output_date+"</td><td>"+val.sum_value+"</td><td><a class='delete_stock_btn' id='"+val.id_stock+"' href='#'>Apagar</a></td></tr>"));
 							});	
 							$('#output > tbody').append.apply($('#output > tbody'), items);
