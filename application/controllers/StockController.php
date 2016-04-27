@@ -217,6 +217,18 @@ class StockController extends CI_Controller {
 			echo "O campo de busca esta vazio";
 		}
 	}
+	public function searchInputStockByDate(){
+		$this->form_validation->set_rules('from', 'de', 'required');
+		$this->form_validation->set_rules('to', 'a', 'required');
+		if($this->form_validation->run()){
+			$from = $this->input->post('from');
+			$to = $this->input->post('to');
+			$result = $this->StockModel->searchStockByDate($from, $to);
+			echo json_encode($result);
+		}else{
+			echo "Todos os campos são obrigatórios";
+		}
+	}
 	/* ENTRADAS DE ESTOQUE */
 	public function entriesView(){
 		$data['input_stocks'] = $this->StockModel->getInputStocks();

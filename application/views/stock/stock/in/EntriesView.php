@@ -43,15 +43,15 @@
 					}
 					var obj = JSON.parse(data);
 					if(!obj.length>0){
-						Materialize.toast("Nenhuma entrada encontrada como " + $("#input_type").val(), 4000);
+						Materialize.toast("Nenhuma entrada encontrada como " + $("#input_type option:selected").text(), 4000);
 					}else{
 						try{
 							$('#input > tbody').html("");
 							$("#pagination").html("");
 							var items=[]; 	
-																		
+
 							$.each(obj, function(i,val){
-							if(val.input_type == "1"){val.input_type = "Compra";}else{val.input_type = "Doação";}										
+								if(val.input_type == "1"){val.input_type = "Compra";}else{val.input_type = "Doação";}										
 								items.push($("<tr><td><a href='<?= base_url('stock/entries/'); ?>/"+val.id_stock+"'>"+val.name+"</a></td><td>"+val.input_date+"</td><td>"+val.sum_value+"</td><td class='input_type_search'>"+val.input_type+"</td><td><a id="+ val.id_stock +" href='#' class='delete_stock_btn'>Apagar</a></td></tr>"));
 							});	
 							$('#input > tbody').append.apply($('#input > tbody'), items);
@@ -61,6 +61,41 @@
 					}	
 				},
 				error: function(){
+					Materialize.toast("Ocorreu algum erro", 2000);
+				}
+			});
+		});
+		$("#dateInputStock").submit(function(e){
+			e.preventDefault();
+			$.ajax({
+				url: "<?php echo site_url('/StockController/searchInputStockByDate'); ?>",
+				type: "POST",
+				data: $("#dateInputStock").serialize(),
+				success: function(data){
+					if(data == 'Todos os campos são obrigatórios'){
+						Materialize.toast(data, 4000);
+					}
+					var obj = JSON.parse(data);
+					if(!obj.length>0){
+						Materialize.toast("Nenhuma entrada encontrada neste periodo", 4000);
+					}else{
+						try{
+							$('#input > tbody').html("");
+							$("#pagination").html("");
+							var items=[]; 	
+
+							$.each(obj, function(i,val){
+								if(val.input_type == "1"){val.input_type = "Compra";}else{val.input_type = "Doação";}										
+								items.push($("<tr><td><a href='<?= base_url('stock/entries/'); ?>/"+val.id_stock+"'>"+val.name+"</a></td><td>"+val.input_date+"</td><td>"+val.sum_value+"</td><td class='input_type_search'>"+val.input_type+"</td><td><a id="+ val.id_stock +" href='#' class='delete_stock_btn'>Apagar</a></td></tr>"));
+							});	
+							$('#input > tbody').append.apply($('#input > tbody'), items);
+						}catch(e) {		
+							alert('Ocorreu algum erro ao carregar as entrada de estoque!');
+						}			
+					}
+				},
+				error: function(data){
+					console.log(data);
 					Materialize.toast("Ocorreu algum erro", 2000);
 				}
 			});
@@ -115,21 +150,24 @@
 		<div class="input-field col s3">
 			<input type="text" name="search" placeholder=" Fornecedor..." required>
 		</div>
-		<div class="input-field col s2">
+		<div class="input-field col s1">
 			<button href="#" id="search_button" class="btn grey">
 				<i class="material-icons">search</i>
 			</button>
 		</div>
-		<div class="input-field col s3">
-			<select id="group_id">
-				<option disabled selected> Filtrar fornecedor...</option>
-				<?php foreach($input_stocks as $row) :
-				echo "<option value=".$row['id_people'].">";
-				echo $row['name'];
-				echo "</option>";
-				endforeach; ?>
-			</select>
-		</div>
+		<form id="dateInputStock">
+			<div class="input-field col s2">
+				<input required="required" type="date" name="from">
+			</div>
+			<div class="input-field col s2">
+				<input required="required" type="date" name="to">
+			</div>
+			<div class="input-field col s1">
+				<button type="submit" href="#" id="search_button" class="btn grey">
+					<i class="material-icons">search</i>
+				</button>
+			</div>
+		</form>
 		<div class="input-field col s1">
 			<select id="input_type">
 				<option disabled selected> Tipos...</option>

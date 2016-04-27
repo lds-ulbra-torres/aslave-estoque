@@ -64,7 +64,7 @@ class StockModel extends CI_Model {
 		return false;
 	}
 
-/* ESTOQUE DE ENTRADA */
+	/* ESTOQUE DE ENTRADA */
 	public function createInputStockPeople($peopleData){
 		$this->db->insert($this->input, $peopleData);
 		return $this->db->insert_id();
@@ -87,13 +87,19 @@ class StockModel extends CI_Model {
 		return $query->result();
 
 	}
+	public function searchStockByDate($from, $to){
+		$this->db->join('people', 'stock_input.id_people = people.id_people', 'inner');
+		$query = 'input_date BETWEEN "'.$from.'" and "'.$to.'"'; 
+		$this->db->where($query);
+		return $this->db->get($this->input)->result_array();
+	}
 	public function searchByType($input_type){
 		$this->db->join('people', 'stock_input.id_people = people.id_people', 'inner');
 		$whereCondition = array('input_type' => $input_type);
 		$this->db->where($whereCondition);
 		return $this->db->get($this->input)->result_array();
 	}
-/* ESTOQUE DE SAÍDA */
+	/* ESTOQUE DE SAÍDA */
 	public function createOutputStockPeople($people){
 		$this->db->insert($this->output, $people);
 		return $this->db->insert_id();
