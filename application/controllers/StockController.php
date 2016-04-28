@@ -221,10 +221,16 @@ class StockController extends CI_Controller {
 		$this->form_validation->set_rules('from', 'de', 'required');
 		$this->form_validation->set_rules('to', 'a', 'required');
 		if($this->form_validation->run()){
-			$from = $this->input->post('from');
-			$to = $this->input->post('to');
-			$result = $this->StockModel->searchStockByDate($from, $to);
-			echo json_encode($result);
+			$from = date('Y-m-d', strtotime($this->input->post('from')));
+			$to = date('Y-m-d', strtotime($this->input->post('to')));
+			if($to < $from){
+				echo "As datas devem estar em ordem crescente";
+			}else if($to > date("Y-m-d")){
+				echo "Data invalida";
+			}else{
+				$result = $this->StockModel->searchStockByDate($from, $to);
+				echo json_encode($result);
+			}
 		}else{
 			echo "Todos os campos são obrigatórios";
 		}

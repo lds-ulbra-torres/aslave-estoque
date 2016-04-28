@@ -74,25 +74,30 @@
 				success: function(data){
 					if(data == 'Todos os campos são obrigatórios'){
 						Materialize.toast(data, 4000);
-					}
-					var obj = JSON.parse(data);
-					if(!obj.length>0){
-						Materialize.toast("Nenhuma entrada encontrada neste periodo", 4000);
+					}else if(data == 'As datas devem estar em ordem crescente'){
+						Materialize.toast(data, 4000);
+					}else if(data == 'Data invalida'){
+						Materialize.toast(data, 4000);
 					}else{
-						try{
-							$('#input > tbody').html("");
-							$("#pagination").html("");
-							var items=[]; 	
+						var obj = JSON.parse(data);
+						if(!obj.length>0){
+							Materialize.toast("Nenhuma entrada encontrada neste periodo", 4000);
+						}else{
+							try{
+								$('#input > tbody').html("");
+								$("#pagination").html("");
+								var items=[]; 	
 
-							$.each(obj, function(i,val){
-								if(val.input_type == "1"){val.input_type = "Compra";}else{val.input_type = "Doação";}										
-								items.push($("<tr><td><a href='<?= base_url('stock/entries/'); ?>/"+val.id_stock+"'>"+val.name+"</a></td><td>"+val.input_date+"</td><td>"+val.sum_value+"</td><td class='input_type_search'>"+val.input_type+"</td><td><a id="+ val.id_stock +" href='#' class='delete_stock_btn'>Apagar</a></td></tr>"));
-							});	
-							$('#input > tbody').append.apply($('#input > tbody'), items);
-						}catch(e) {		
-							alert('Ocorreu algum erro ao carregar as entrada de estoque!');
-						}			
-					}
+								$.each(obj, function(i,val){
+									if(val.input_type == "1"){val.input_type = "Compra";}else{val.input_type = "Doação";}										
+									items.push($("<tr><td><a href='<?= base_url('stock/entries/'); ?>/"+val.id_stock+"'>"+val.name+"</a></td><td>"+val.input_date+"</td><td>"+val.sum_value+"</td><td class='input_type_search'>"+val.input_type+"</td><td><a id="+ val.id_stock +" href='#' class='delete_stock_btn'>Apagar</a></td></tr>"));
+								});	
+								$('#input > tbody').append.apply($('#input > tbody'), items);
+							}catch(e) {		
+								alert('Ocorreu algum erro ao carregar as entrada de estoque!');
+							}
+						}
+					}			
 				},
 				error: function(data){
 					console.log(data);
