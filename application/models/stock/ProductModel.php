@@ -31,12 +31,13 @@ class ProductModel extends CI_Model {
 		return $this->db->get($this->table)->num_rows();
 	}
 
-	public function getProducts($id_group=null, $search_string=null) {
-		if ($search_string) { $this->db->like($this->name, $search_string); }
+	public function getProducts() {
+		$this->db->from($this->table);
 		$this->db->join('stock_product_groups', 'stock_products.id_group = stock_product_groups.id_group', 'inner');
+		$this->db->order_by('name_product', 'asc');
 		$this->db->group_by('stock_products.id_product');
 
-		return $this->db->get($this->table)->result_array();
+		return $this->db->get()->result_array();
 	}
 
 	public function getProductById($id) {

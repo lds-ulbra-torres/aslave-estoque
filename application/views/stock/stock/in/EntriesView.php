@@ -158,30 +158,32 @@
 		<div class="input-field col s3">
 			<input type="text" name="search" placeholder=" Fornecedor..." required>
 		</div>
-		<div class="input-field col s1">
+		<div class="input-field col s2">
 			<button href="#" id="search_button" class="btn grey">
 				<i class="material-icons">search</i>
 			</button>
 		</div>
-		<form id="dateInputStock">
-			<div class="input-field col s2">
-				<input required="required" type="date" name="from">
-			</div>
-			<div class="input-field col s2">
-				<input required="required" type="date" name="to">
-			</div>
-			<div class="input-field col s1">
-				<button type="submit" href="#" id="search_button" class="btn grey">
-					<i class="material-icons">search</i>
-				</button>
-			</div>
-		</form>
-		<div class="input-field col s1">
+		<div class="input-field col s2">
 			<select id="input_type">
 				<option disabled selected> Tipos...</option>
 				<option value="1"> Compras</option>
 				<option value="2"> Doações</option>
 			</select>
+		</div>
+		<div class="col s11">
+			<form id="dateInputStock">
+				<div class="input-field col s2">
+					<input required="required" type="date" name="from">
+				</div>
+				<div class="input-field col s2">
+					<input required="required" type="date" name="to">
+				</div>
+				<div class="input-field col s1">
+					<button type="submit" href="#" id="search_button" class="btn grey">
+						<i class="material-icons">search</i>
+					</button>
+				</div>
+			</form>
 		</div>
 	</div>
 </div>

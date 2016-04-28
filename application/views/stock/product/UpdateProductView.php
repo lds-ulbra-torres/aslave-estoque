@@ -13,14 +13,10 @@
 				},
 				success: function(data){
 					if(data == 'Produto salvo.'){
-						window.setTimeout(redirecionar, 1500);
-						Materialize.toast(data, 1500);
+						document.location.href = "<?= base_url('stock/products'); ?>";
 					}else{
 						Materialize.toast(data, 1500);
 						$("#update_product_btn").attr("disabled", false);
-					}
-					function redirecionar() {
-						document.location.href = "<?= base_url('stock/products'); ?>";
 					}
 				},
 				error: function(data){

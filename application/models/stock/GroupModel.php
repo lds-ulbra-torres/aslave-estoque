@@ -30,12 +30,11 @@ class GroupModel extends CI_Model {
 		return $this->db->get($this->table)->num_rows();
 	}
 
-	public function getGroups($search_string=null) {
-		if ($search_string) { 
-			$this->db->like($this->name, $search_string); 
-		}
-		//$this->db->order_by($this->name, 'asc');
-		return $this->db->get($this->table)->result_array();
+	public function getGroups() {
+		$this->db->from($this->table);
+		$this->db->order_by('name_group', 'asc');
+		$query = $this->db->get();
+		return $query->result_array();
 	}
 
 	public function getGroupById($id) {
