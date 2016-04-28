@@ -1,2 +1,10 @@
 # Slave
-## Card 32 e 33 - Entradas e Saídas
+
+## Movimentações de estoque
+* Adicionar e remover produtos;
+* Adicionar e remover categorias;
+* Lançar entradas de estoque;
+* Lançar saídas de estoque;
+
+
+### Projeto desenvolvido por LDS Ulbra-Torres
