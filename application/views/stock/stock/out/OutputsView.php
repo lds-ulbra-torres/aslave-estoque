@@ -55,8 +55,9 @@
 							$('#output > tbody').html("");
 							$("#pagination").html("");
 							var items=[]; 	
-							$.each(obj, function(i,val){									
-								items.push($("<tr><td><a href='<?= base_url('stock/outputs/'); ?>/"+val.id_stock+"'>"+val.name+"</a></td><td>rs</td><td>"+val.output_date+"</td><td>"+val.sum_value+"</td><td><a class='delete_stock_btn' id='"+val.id_stock+"' href='#'>Apagar</a></td></tr>"));
+							$.each(obj, function(i,val){
+								explode = val.output_date.split("-");								
+								items.push($("<tr><td><a href='<?= base_url('stock/outputs/'); ?>/"+val.id_stock+"'>"+val.name+"</a></td><td>rs</td><td>"+explode.reverse().join("/")+"</td><td>"+val.sum_value+"</td><td><a class='delete_stock_btn' id='"+val.id_stock+"' href='#'>Apagar</a></td></tr>"));
 							});	
 							$('#output > tbody').append.apply($('#output > tbody'), items);
 						}catch(e) {		
