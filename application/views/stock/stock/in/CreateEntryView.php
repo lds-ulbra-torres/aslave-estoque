@@ -155,7 +155,6 @@
 						id_people: $("#people option").attr("id"),
 						type: $("#stock_type").val(),
 						date: $("input[name=date]").val(),
-						sum_value: total,
 						products: JSON.stringify(productsData)
 					},
 					success: function(data){

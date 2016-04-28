@@ -262,8 +262,7 @@ class StockController extends CI_Controller {
 			$people = array(
 				'input_date' => $this->input->post('date'),
 				'input_type' => $this->input->post('type'),
-				'id_people' => $this->input->post('id_people'),
-				'sum_value' => $this->input->post('sum_value'));
+				'id_people' => $this->input->post('id_people'));
 
 			$product = json_decode($this->input->post('products'));
 			if (sizeof($product) > 0) {
@@ -329,7 +328,6 @@ class StockController extends CI_Controller {
 			$people = array(
 				'output_date' => $this->input->post('date'),
 //descrição, descomentar quando tiver no banco 'descript' => $this->input->post('descript'),
-				'sum_value' => $this->input->post('sum_value'),
 				'id_people' => $this->input->post('id_people'));
 			$product = json_decode($this->input->post('products'));
 			if (sizeof($product) > 0) {
