@@ -155,7 +155,7 @@
 		<div class="input-field col s3">
 			<a class="green btn" href="<?=base_url('stock/entries/create') ?>">Adicionar nova</a>
 		</div>
-		<div class="input-field col s3">
+		<div class="input-field col s4">
 			<input type="text" name="search" placeholder=" Fornecedor..." required>
 		</div>
 		<div class="input-field col s2">
@@ -170,7 +170,7 @@
 				<option value="2"> Doações</option>
 			</select>
 		</div>
-		<div class="col s11">
+		<div class="">
 			<form id="dateInputStock">
 				<div class="input-field col s2">
 					<input required="required" type="date" name="from">

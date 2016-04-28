@@ -87,23 +87,6 @@
 				<i class="material-icons">search</i>
 			</button>
 		</div>
-		<div class="input-field col s3">
-			<select id="group_id">
-				<option disabled selected> Filtrar fornecedor...</option>
-				<?php foreach($output_stocks as $row) :
-				echo "<option value=".$row['id_people'].">";
-				echo $row['name'];
-				echo "</option>";
-				endforeach; ?>
-			</select>
-		</div>
-		<div class="input-field col s2">
-			<select id="group_id">
-				<option disabled selected> Ambiente</option>
-				<option value="1"> Uso interno</option>
-				<option value="2"> Uso externo</option>
-			</select>
-		</div>
 	</div>
 </div>
 
@@ -112,7 +95,6 @@
 		<table id="output" class="bordered highlight">
 			<thead>
 				<td><strong>Entidade</strong></td>
-				<td><strong>Descrição</strong></td>
 				<td><strong>Data</strong></td>
 				<td><strong>Valor total</strong></td>
 				<td><strong>Ações</strong></td>
@@ -121,7 +103,6 @@
 				<?php foreach($output_stocks as $row) :?>
 					<tr>
 						<td><a href="<?= base_url('stock/outputs/'.$row['id_stock']); ?>"><?= $row['name'] ?></a></td>
-						<td>desc</td>
 						<td><?= date('d/m/Y', strtotime($row['output_date'])); ?></td>
 						<td><?='R$ ' . number_format($row['sum_value'], 2, ',', '.');?></td>
 						<td>

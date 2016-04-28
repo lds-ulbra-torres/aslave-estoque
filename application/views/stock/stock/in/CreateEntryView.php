@@ -179,6 +179,7 @@
 	</script>
 	<div class="row">
 		<div class="">
+			<a href="<?=base_url('StockController/entries') ?>">< Voltar para entradas</a>
 			<h4>Nova entrada</h4>
 			<div class="card-panel col s8">
 				<div class="input-field col s5">

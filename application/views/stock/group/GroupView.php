@@ -43,7 +43,7 @@
 				data: {search_string: $("input[name=search]").val()},
 				success: function(data){
 					if(data == 'O campo de busca esta vazio'){
-						Materialize.toast(data, 4000);
+						reloadTableGroup();
 					}
 					var obj = JSON.parse(data);
 					if(!obj.length>0){
@@ -83,13 +83,6 @@
 			<button href="#" id="search_button" class="btn grey">
 				<i class="material-icons">search</i>
 			</button>
-		</div>
-		<div class="input-field col s3">
-			<select id="group_id">
-				<option disabled selected> Ordenar por...</option>
-				<option value="">Ascendente</option>
-				<option value="">Descendente</option>
-			</select>
 		</div>
 	</div>
 </div>	

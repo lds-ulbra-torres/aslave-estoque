@@ -183,6 +183,7 @@
 
 <div class="row">
 	<div class="">
+		<a href="<?=base_url('StockController/outputs') ?>">< Voltar para saídas</a>
 		<h4>Nova saída</h4>
 		<div class="card-panel col s8">
 			<div class="input-field col s5">

@@ -48,7 +48,7 @@
 				data: {search_string: $("input[name=search]").val()},
 				success: function(data){
 					if(data == 'O campo de busca esta vazio'){
-						Materialize.toast(data, 4000);
+						reloadTableProduct();
 					}
 					var obj = JSON.parse(data);
 					if(!obj.length>0){

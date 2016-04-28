@@ -13,7 +13,7 @@ class StockController extends CI_Controller {
 
 	public function index(){   
 		$data['view'] = null;
-		$this->template->load('template/template','stock/stock/HomeView', $data);
+		$this->template->load('template/templateMenu','stock/stock/HomeView', $data);
 	}
 
 	/* CATEGORIAS */
@@ -21,18 +21,18 @@ class StockController extends CI_Controller {
 		$data['groups'] = $this->GroupModel->getGroups();
 		$data['view'] = 'groups';
 		$data['search_string'] = null;
-		$this->template->load('template/template','stock/stock/HomeView', $data);
+		$this->template->load('template/templateMenu','stock/stock/HomeView', $data);
 	}
 
 	public function createGroupView() {
 		$data['view'] = 'groups/create';
-		$this->template->load('template/template','stock/stock/HomeView', $data);
+		$this->template->load('template/templateMenu','stock/stock/HomeView', $data);
 	}
 
 	public function updateGroupView() {
 		$data['group_data'] = $this->GroupModel->getGroupById($this->uri->segment(4));
 		$data['view'] = 'groups/update';
-		$this->template->load('template/template','stock/stock/HomeView', $data);
+		$this->template->load('template/templateMenu','stock/stock/HomeView', $data);
 	}
 
 	public function createGroup() {
@@ -82,20 +82,20 @@ class StockController extends CI_Controller {
 		$data['groups'] = $this->GroupModel->getGroups();
 		$data['products'] = $this->ProductModel->getProducts();
 		$data['view'] = 'products';
-		$this->template->load('template/template','stock/stock/HomeView', $data);
+		$this->template->load('template/templateMenu','stock/stock/HomeView', $data);
 	}
 
 	public function createProductView() {
 		$data['groups'] = $this->GroupModel->getGroups();
 		$data['view'] = 'products/create';
-		$this->template->load('template/template','stock/stock/HomeView', $data);
+		$this->template->load('template/templateMenu','stock/stock/HomeView', $data);
 	}
 
 	public function updateProductView() {
 		$data['groups'] = $this->GroupModel->getGroups();
 		$data['product_data'] = $this->ProductModel->getProductById($this->uri->segment(4));
 		$data['view'] = 'products/update';
-		$this->template->load('template/template','stock/stock/HomeView', $data);
+		$this->template->load('template/templateMenu','stock/stock/HomeView', $data);
 	}
 
 	public function createProduct() {
@@ -239,19 +239,19 @@ class StockController extends CI_Controller {
 	public function entriesView(){
 		$data['input_stocks'] = $this->StockModel->getInputStocks();
 		$data['view'] = 'stock/entries';
-		$this->template->load('template/template','stock/stock/HomeView', $data);
+		$this->template->load('template/templateMenu','stock/stock/HomeView', $data);
 	}
 
 	public function createEntryView(){
 		$data['view'] = 'stock/entries/create';
-		$this->template->load('template/template','stock/stock/HomeView', $data);
+		$this->template->load('template/templateMenu','stock/stock/HomeView', $data);
 	}
 
 	public function detailedEntryView() {
 		$id_stock = $this->uri->segment(3);
 		$data['view'] = 'stock/entries/detailed';
 		$data['entry_data'] = $this->StockModel->getDetailedEntry($id_stock);
-		$this->template->load('template/template','stock/stock/HomeView', $data);
+		$this->template->load('template/templateMenu','stock/stock/HomeView', $data);
 	}
 
 	public function createInputStock() {
@@ -307,19 +307,19 @@ class StockController extends CI_Controller {
 	public function outputsView(){
 		$data['output_stocks'] = $this->StockModel->getOutputStocks();
 		$data['view'] = 'stock/outputs';
-		$this->template->load('template/template','stock/stock/HomeView', $data);
+		$this->template->load('template/templateMenu','stock/stock/HomeView', $data);
 	}
 
 	public function createOutputView() {
 		$data['view'] = 'stock/outputs/create';
-		$this->template->load('template/template','stock/stock/HomeView', $data);
+		$this->template->load('template/templateMenu','stock/stock/HomeView', $data);
 	}
 
 	public function detailedOutputView() {
 		$id_stock = $this->uri->segment(3);
 		$data['view'] = 'stock/outputs/detailed';
 		$data['output_data'] = $this->StockModel->getDetailedOutput($id_stock);
-		$this->template->load('template/template','stock/stock/HomeView', $data);
+		$this->template->load('template/templateMenu','stock/stock/HomeView', $data);
 	}
 
 	public function createOutputStock() {
