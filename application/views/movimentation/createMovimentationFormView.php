@@ -4,7 +4,7 @@
 			<div class="col s6">
 				<label for="type">Tipo:</label>
 				<select class="browser-default" name="type" id="type"> 
-					<option value="" disabled selected>Choose your option</option>
+					<option value="" disabled selected>Selecione</option>
 					<option value="e">Entrada</option>
 					<option value="s">Saida</option>
 				</select>
@@ -18,8 +18,8 @@
 			</div>
 			
 			<div class="col s8">
-				<label for="people">Pessoa:</label>
-				<input type="text" name="people" id="people" placeholder="Escolha uma pessoa ao lado." value="" disabled></input>
+				<label for="inputPerson">Pessoa:</label>
+				<input type="text" name="people" id="inputPerson" placeholder="Escolha uma pessoa ao lado." value="" disabled></input>
 			</div>
 
 			<div class="col s4 right ">
@@ -95,11 +95,7 @@
 		</div>
 </div>
 <script type="text/javascript">
-	$(document).on('click','.searchSelect', function(){
-        document.getElementByName('people').id=$(this).attr('name');
-        $('#searchModal').closeModal();
-    });
-
+	  
 	$(document).ready(function(){
 		$("#type").change(function(){
 			var type = $('#type option:selected').val();
@@ -122,6 +118,7 @@
 
 		$(".openSearchModal").click(function(){
        		$('#searchModal').openModal();
+       		document.getElementById('search').value="";
      	});
 
 		$("input[name=search]").keyup(function(){
@@ -138,7 +135,7 @@
 							try{
 								var items=[];   
 								$.each(obj, function(i,val){                      
-									items.push($('<tr><td>' + val.name + '<button class="right btn searchSelect" name ="'+ val.id_people +'" >SELECIONAR</button></td></tr>'));
+									items.push($('<tr><td>' + val.name + '<button class="right btn" id="buttonPerson" name ="'+ val.id_people +'" >SELECIONAR</button><input id="namePerson" type="hidden" value="'+ val.name +'"></td></tr>'));
 								}); 
 								$('#finalResult').append.apply($('#finalResult'), items);
 							}catch(e) {   
@@ -156,6 +153,14 @@
 				$('#finalResult').empty();
 			}
 		});
+
+	$(document).on('click','#buttonPerson', function(){
+        document.getElementById('inputPerson').value=$('#namePerson').attr('value');
+        $("#searchModal").closeModal();
+        $('#finalResult').empty();
+
+    });
+
 
 		var mask = {
 			money: function() {

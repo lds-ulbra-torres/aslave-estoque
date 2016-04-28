@@ -11,8 +11,8 @@
 	<a class="modal-trigger waves-effect waves-light btn" href="create-movimentation-form" >+Movimentação</a>
 
 	<div class="container">
+	<input type="text" name="searchPeople"></input>
 		<h4 >Movimentações financeiras</h4>
-		
 		<table class="striped">
 			<thead>
 				<tr>
