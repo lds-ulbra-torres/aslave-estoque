@@ -6,7 +6,7 @@
 				type: "POST",
 				data: $("table"),
 				success: function(data){
-					$("#product").html($(data).find("table"));
+					$("#output").html($(data).find("table"));
 					console.log($(data).find("table"));
 				},
 				error: function(){
@@ -45,7 +45,7 @@
 				data: {search_string: $("input[name=search]").val()},
 				success: function(data){
 					if(data == 'O campo de busca esta vazio'){
-						Materialize.toast(data, 4000);
+						reloadTableProduct();
 					}
 					var obj = JSON.parse(data);
 					if(!obj.length>0){
