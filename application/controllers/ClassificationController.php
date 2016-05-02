@@ -24,7 +24,7 @@ class ClassificationController extends CI_Controller {
 	public function create(){
 
 		$classification = array(
-			'name' => $this->input->post('classificationName'),
+			'name_classification' => $this->input->post('classificationName'),
 			'classification_type' => $this->input->post('classificationType')
 			);
 
@@ -32,16 +32,15 @@ class ClassificationController extends CI_Controller {
 		redirect('classification');
 	}
 
-	public function updateForm($classification){
-		$data['classification'] = $classification;
-
+	public function updateForm($idClassification){
+		$data['classification']=$this->classificationModel->getDataClassification($idClassification); 
 		$this->template->load('template/templateMenu', 'classification/updateClassificationView', $data);
 	}
 
 	public function update($id){
 		$data = array(
 			'id_classification' => $id,
-			'name' => $this->input->post('updateClasName'),
+			'name_classification' => $this->input->post('updateClasName'),
 			'classification_type' => $this->input->post('updateClasType')
 			);
 		$this->classificationModel->update($data);
@@ -72,7 +71,7 @@ class ClassificationController extends CI_Controller {
 		$classifications = $this->classificationModel->getPerType($type);
 		foreach ($classifications as $classification) {			
 			?>
-			<option value="<?= $classification['id_classification'] ?>"><?= $classification['name'] ?> </option>
+				<option value="<?= $classification['id_classification'] ?>"><?= $classification['name_classification'] ?> </option>
 			<?php
 		}
 	}

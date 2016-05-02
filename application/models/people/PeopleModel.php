@@ -12,11 +12,14 @@ class PeopleModel extends CI_Model {
 	public function delete($people){
 		return $this->db->delete($this->table, $people);
 	}
-
+    public function listPeople($id) {
+        $this->db->where('id_people', $id);
+        return $this->db->get('people')->result();
+    }
 	public function update($people){
 		$query = $this->db->get('people');
 		$this->db->where('id_people', $people['id_people']);
-		return $this->db->replace($this->table, $people);
+		return $this->db->update($this->table, $people);
 	}
 
 	public function get(){

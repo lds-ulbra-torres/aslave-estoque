@@ -23,7 +23,7 @@
     $("input[name=search]").keyup(function(){
       if($(this).val() != ''){
         $.ajax({
-          url: "<?php echo site_url('/SearchController/buscar')?>",
+          url: "<?= site_url('/SearchController/buscar'); ?>",
           type: "POST",
           cache: false,
           data: {name_people: $(this).val()},

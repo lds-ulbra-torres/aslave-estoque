@@ -14,13 +14,6 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 
   <script type="text/javascript" src="http://www.technicalkeeda.com/js/javascripts/plugin/json2.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>
-  
-  <script type="text/javascript">
-  $(document).ready(function(){
-    $(".button-collapse").sideNav();
-  });
-</script>
 </head>
 <body>
 
@@ -32,8 +25,17 @@
 
         <li class=""><a href="<?= base_url() ?>"  class="blue-text">HOME</a></li>
         <li class=""><a href="stock" class="blue-text">ESTOQUE</a></li>
-        <li class=""><a href="<?= base_url('financial') ?>" class="blue-text">FINANCEIRO</a></li>
-
+        <li>
+        <a class="aColor dropdown-button blue-text" data-activates="financial2_buttons" href="#">FINANCEIRO
+          </a>
+            <ul id="financial2_buttons" class="dropdown-content">
+                <li><a href="<?= base_url('classification'); ?>">Classificações</a></li>
+                <li><a href="<?= base_url('people'); ?>">Pessoas</a></li>
+                <li><a href="<?= base_url('financial-movimentation'); ?>">Movimentações</a></li>
+                <li class="divider"></li>
+                <li><a href="<?= base_url('financial') ?>">Visão Geral</a></li>
+            </ul>
+        </li>
       </ul>
 
 
@@ -54,7 +56,20 @@
           <label class="white-text labelLogo left fontUt"  style="margin-left: 25px;"><strong>PROJETO SLAVE</strong></label>
           <a href="<?= base_url() ?>" class="aColor"><li class="liclass"><p class="fontUt strMenu " style="vertical-align: middle;">HOME</p></li></a>  
           <a href="stock" class="aColor"><li class="liclass"><p class="fontUt strMenu " style="vertical-align: middle;">ESTOQUE</p></li></a>
-          <a href="financial" class="aColor"><li class="liclass"><p class="fontUt strMenu " style="vertical-align: middle;">FINANCEIRO</p></li></a>
+
+          <a class="aColor dropdown-button" data-activates="financial_buttons" href="#">
+            <li class="liclass">
+              <p class="fontUt strMenu " style="vertical-align: middle;">FINANCEIRO
+              <i class="material-icons right">arrow_drop_down</i></p>
+            </li>
+          </a>
+            <ul id="financial_buttons" class="dropdown-content">
+                <li><a href="<?= base_url('classification'); ?>">Classificações</a></li>
+                <li><a href="<?= base_url('people'); ?>">Pessoas</a></li>
+                <li><a href="<?= base_url('financial-movimentation'); ?>">Movimentações</a></li>
+                <li class="divider"></li>
+                <li><a href="<?= base_url('financial') ?>">Visão Geral</a></li>
+            </ul>
 
 
         </ul>
@@ -73,4 +88,10 @@
   </div>
 
 </body>
+<script type="text/javascript" src="<?= base_url('assets/js/materialize.js')?>"></script>
+<script>
+  $(document).ready(function(){
+    $(".button-collapse").sideNav();
+  });
+</script>
 </html>

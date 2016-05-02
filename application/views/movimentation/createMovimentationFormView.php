@@ -1,3 +1,9 @@
+<?php 
+date_default_timezone_set('America/Sao_Paulo');
+$datePick = date('Y-m-d');
+$monPick = date('Y-m');
+?>
+<a class="modal-trigger waves-effect waves-light btn" href="<?= base_url('financial-movimentation') ?>" >Voltar</a>
 <div class="container">
 	<form action="create-movimentation" method="POST" >
 		<div class="row">
@@ -9,7 +15,6 @@
 					<option value="s">Saida</option>
 				</select>
 			</div>
-
 			<div class="col s6">
 				<label for="classification" >Classificação:</label>
 				<select class="browser-default" name="classification" id="classification">
@@ -17,17 +22,18 @@
 				</select>
 			</div>
 			
-			<div class="col s8">
+			<a class="col s10 waves-effect waves-light  modal-trigger openSearchModal"  href="#searchModal">
+			<div>
 				<label for="inputPerson">Pessoa:</label>
 				<input type="text" name="people" id="inputPerson" placeholder="Escolha uma pessoa ao lado." value="" disabled></input>
+				<input type="hidden" name="idPeople" id="idPeople"></input>
 			</div>
 
-			<div class="col s4 right ">
+			<div  style="margin-top: 1%; ;width: 110px;height: 100px;" class="right ">
 				<!-- Modal Trigger -->
-				<a style="margin-top: 3%; ;width: 70px;height: 60px;" class="waves-effect waves-light  modal-trigger openSearchModal"  href="#searchModal">
-					<nav>
+				    <nav>
 						<div  class="nav-wrapper color">
-							<i class="material-icons center">search</i>
+							<i style="margin-top: 3%; ;width: 70px;height: 60px;" class="material-icons center">search</i>
 						</div>
 					</nav>
 				</a>
@@ -40,11 +46,11 @@
 
 				<div class="col s6">
 					<label for="date">Data da competência: </label>
-					<input type="date" class="datepicker" name="date" >
+					<input type="month" class="datepicker" value="<?php echo $monPick ?>" required name="date" >
 				</div>
 				<div class="col s6">
-					<label for="movimentationDate">Data do movimento:</label>
-					<input type="date" class="datepicker" name="movimentationDate">
+					<label for="movimentationDate">Data do lançamento:</label>
+					<input type="date" class="datepicker" value="<?php echo $datePick ?>" required name="movimentationDate">
 				</div>
 
 				<div class="col s10">
@@ -97,10 +103,11 @@
 <script type="text/javascript">
 	  
 	$(document).ready(function(){
+		$('select').material_select();
 		$("#type").change(function(){
 			var type = $('#type option:selected').val();
 			$.ajax({
-				url: "ClassificationController/searchClassification",
+				url: "<?= site_url('/ClassificationController/searchClassification'); ?>",
 				type: "POST",
 				dataType: "html",
 				data:{
@@ -156,7 +163,8 @@
 
 	$(document).on('click','#buttonPerson', function(){
         document.getElementById('inputPerson').value=$('#namePerson').attr('value');
-        $("#searchModal").closeModal();
+        document.getElementById('idPeople').value=$('#buttonPerson').attr('name');
+        $('#searchModal').closeModal();	
         $('#finalResult').empty();
 
     });

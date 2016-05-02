@@ -20,13 +20,13 @@ class PeopleController extends CI_Controller {
 
 	public function create(){
 
-		$this->form_validation->set_rules('peopleName','nome','required');
+		$this->form_validation->set_rules('peopleName','nome','required|min_length[5]');
 		$this->form_validation->set_rules('peopleAdress','adress','required');
+		$this->form_validation->set_rules('peopleNumber','number','required|numeric');
 		$this->form_validation->set_rules('peopleNeighborhood','neighborhood','required');
-		$this->form_validation->set_rules('peopleCitie','citie','required');
 		$this->form_validation->set_rules('peopleCep','cep','required');
-		$this->form_validation->set_rules('peopleDateBirth','daterBirth','required');
-		$this->form_validation->set_rules('peoplePhone1','phone1','required');
+		$this->form_validation->set_rules('peopleDateBirth','daterBirth','required|max_length[10]');
+		$this->form_validation->set_rules('peopleCitie','citie','required');
 
 		if($this->form_validation->run()){
 			$cpfCnpj = $this->input->post('peopleClassification');
@@ -39,14 +39,13 @@ class PeopleController extends CI_Controller {
 				$documment = $this->input->post('peopleInscricao');
 			}
 			$people = array(
-				'type_people' =>$this->input->post('peopleClassification'),
 				'name' => $this->input->post('peopleName'),
 				'cpf_cnpj' => $cpfCnpj,
 				'documment' => $documment,
 				'adress' => $this->input->post('peopleAdress'),
 				'number' => $this->input->post('peopleNumber'),
 				'neighborhood' => $this->input->post('peopleNeighborhood'),
-				'citie' => $this->input->post('peopleCitie'),
+				'id_cities' => $this->input->post('peopleCitie'),
 				'cep' => $this->input->post('peopleCep'),
 				'date_birth' => $this->input->post('peopleDateBirth'),
 				'phone1' => $this->input->post('peoplePhone1'),
@@ -66,15 +65,14 @@ class PeopleController extends CI_Controller {
 
 	public function update($id){
 		$peoples = $this->peopleModel->get();
-
-		$this->form_validation->set_rules('updatePeopleName','updateName','required');
+    
+		$this->form_validation->set_rules('updatePeopleName','updateNome','required|min_length[5]');
 		$this->form_validation->set_rules('updatePeopleAdress','updateAdress','required');
-		$this->form_validation->set_rules('updatePeopleNumber','updateNumber','required');
+		$this->form_validation->set_rules('updatePeopleNumber','updateNumber','required|numeric');
 		$this->form_validation->set_rules('updatePeopleNeighborhood','updateNeighborhood','required');
-		$this->form_validation->set_rules('updatePeopleCitie','updateCitye','required');
 		$this->form_validation->set_rules('updatePeopleCep','updateCep','required');
-		$this->form_validation->set_rules('updatePeopleDateBirth','updateDateBirth','required');
-		$this->form_validation->set_rules('updatePeoplePhone1','updatePhone1','required');
+		$this->form_validation->set_rules('updatePeopleDateBirth','updateDaterBirth','required|max_length[10]');
+		$this->form_validation->set_rules('updatePeopleCitie','updateCitie','required');
 
 		if($this->form_validation->run()){
 
@@ -89,17 +87,17 @@ class PeopleController extends CI_Controller {
 							'adress' => $this->input->post('updatePeopleAdress'),
 							'number' => $this->input->post('updatePeopleNumber'),
 							'neighborhood' => $this->input->post('updatePeopleNeighborhood'),
-							'citie' => $this->input->post('updatePeopleCitie'),
+							'id_cities' => $this->input->post('updatePeopleCitie'),
 							'cep' => $this->input->post('updatePeopleCep'),
 							'date_birth' => $this->input->post('updatePeopleDateBirth'),
 							'phone1' => $this->input->post('updatePeoplePhone1'),
-							'phone2' => $this->input->post('update-peoplePhone2'),
+							'phone2' => $this->input->post('updatePeoplePhone2'),
 
 							);
 
 						$this->peopleModel->update($data);
 						redirect('people','refresh');
-					}else{
+					}else if (strlen($people['cpf_cnpj']) == 14){
 						$data = array(
 							'id_people' => $this->input->post('updatePeopleId'),
 							'name' => $this->input->post('updatePeopleName'),
@@ -108,11 +106,11 @@ class PeopleController extends CI_Controller {
 							'adress' => $this->input->post('updatePeopleAdress'),
 							'number' => $this->input->post('updatePeopleNumber'),
 							'neighborhood' => $this->input->post('updatePeopleNeighborhood'),
-							'citie' => $this->input->post('updatePeopleCitie'),
+							'id_cities' => $this->input->post('updatePeopleCitie'),
 							'cep' => $this->input->post('updatePeopleCep'),
 							'date_birth' => $this->input->post('updatePeopleDateBirth'),
 							'phone1' => $this->input->post('updatePeoplePhone1'),
-							'phone2' => $this->input->post('update-peoplePhone2'),
+							'phone2' => $this->input->post('updatePeoplePhone2'),
 
 							);
 
@@ -125,29 +123,35 @@ class PeopleController extends CI_Controller {
 			$data['id'] = $id;
 			$data['peoples'] = $this->peopleModel->get();
 			$data['states'] = $this->peopleModel->states();
+			$data['dados_pessoa'] = $this->peopleModel->listPeople($id);
 			$this->template->load('template/templateMenu', 'people/peopleUpdateView', $data);
 		}
 	}
 
-	public function delete($people){
-		$data = array('id_people' => $people);
-		$this->peopleModel->delete($data);
-		redirect('people','refresh');
+	public function delete(){
+		$data = array('id_people' => $this->input->post('id_people'));
+		if($this->peopleModel->delete($data)){
+			echo  'Cadastro Excluido!';
+		}else { 
+			echo 'Ocorreu algum erro. Tente novamente'; 
+		}
+		
 	}
 
 	public function searchLocalidade()
 	{
 		$options = "";
-		
-		$state = $this->input->post('state');
-		$localidades = $this->peopleModel->localidades($state);
-		foreach($localidades as $fila)
+		if($this->input->post('state'))
 		{
-			?>
-			<option value="<?=$fila -> id_cities ?>"><?=$fila -> name ?></option>
-			<?php
+			$state = $this->input->post('state');
+			$localidades = $this->peopleModel->localidades($state);
+			foreach($localidades as $fila)
+			{
+				?>
+				<option <?php if($fila->id_cities == '1'){?>  selected <?php } ?> value="<?=$fila -> id_cities ?>"><?=$fila -> name ?></option>
+				<?php
+			}
 		}
-		
 	}
 
 

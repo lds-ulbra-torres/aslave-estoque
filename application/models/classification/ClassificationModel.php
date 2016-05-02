@@ -37,6 +37,11 @@ class ClassificationModel extends CI_Model {
 		$this->db->like('classification_type', $type);
 		return $this->db->get($this->table)->result_array();
 	}
+	public function getDataClassification($id_classification){
+		$this->db->like('id_classification',$id_classification);
+		return $this->db->get($this->table)->result_array();
+
+	}
 }
 
 /* End of file classificationModel.php */

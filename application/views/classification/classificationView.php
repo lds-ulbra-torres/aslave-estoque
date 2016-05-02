@@ -5,41 +5,51 @@
 			$('#deleteClassModal').openModal();
 			document.getElementById('idDelete').value=$(this).attr('id');
 		});
+
+		$(".closeModal").click(function(){
+			$('#deleteClassModal').closeModal();
+		});
 	});
+
 
 </script>
 
 <div>
 	<!-- MODAL 1 -->
-	<a class="modal-trigger waves-effect waves-light btn" href="create-classification-form">+CLASSIFICAÇÃO</a>
+	<div class="input-field col s3">
+	<a class="modal-trigger btn green" href="create-classification-form" style="margin-left: 5px;">ADICIONAR NOVA</a>
+	</div>
 
-	<div id="deleteClassModal" class="modal modal-fixed-footer">
-		<div class="modal-content valign-wrapper">
-		<h3 class="center-align valign">Deseja mesmo deletar?</h3>
-			<form action="delete-classification" method="POST">
-				<input id="idDelete" name="idDeleteClass" type="hidden" value="">
+	<div id="deleteClassModal" class="modal">
+		<form action="delete-classification" method="POST" id="delete-c">
+			<div class="modal-content">
+				<h4>Aviso</h4>
+				<div class="row">
+					<p>Realmente quer apagar esta categoria?</p>
+				</div>
+			</div>
+		<input id="idDelete" name="idDeleteClass" type="hidden" value="">
+		<div class="modal-footer">
+			<a href="#!" class=" closeModal waves-effect waves-green btn-flat">Cancelar</a>
+			<a href="#!" id="delete_group" onClick="document.getElementById('delete-c').submit();" class="waves-effect waves-red btn-flat">Apagar</a>
 		</div>
-			<div class="modal-footer">
-				<button  class="modal-trigger marginl waves-effect waves-light btn red" type="submit">Sim</button>
-			    <a href="#!" class="modal-trigger marginl waves-effect waves-light btn">Não</a>
-		    </div>
 		</form>
 	</div>
 
 
 	<!-- MOSTRAR DADOS DO DB CLASSIFICAÇÃO -->
 	<div class="container">
-		<h3 align="center">Classificações</h3>
+		<h3>Classificações</h3>
 		<table class="striped">
 			<thead>
-				<td><strong>Nome: </strong></td>
-				<td><strong>Tipo de classificação: </strong></td>
+				<td><strong class="">Nome: </strong></td>
+				<td><strong class="">Tipo de classificação: </strong></td>
 			</thead>
 			<tbody>
 				<?php foreach ($classifications as $classification) :?>
 					<tr>
-						<td><?= $classification['name'] ?></td>
-						<td>
+						<td class=""><?= $classification['name_classification'] ?></td>
+						<td class="">
 							<?php
 							if($classification['classification_type'] == 'e'){
 								echo 'Entrada';
@@ -49,10 +59,10 @@
 							?>
 						</td>
 						<td>
-							<a href="update-classification-form/<?= $classification['id_classification'] ?>">
+							<a href="update-classification-form/<?= $classification['id_classification'] ?>" class="">
 								Alterar</a>
 							|
-							<a id="<?= $classification['id_classification'] ?>" class="openDeleteClassModal" ref="#deleteClassModal">
+							<a id="<?= $classification['id_classification'] ?>" class="openDeleteClassModal" href="#deleteClassModal" class="">
 							Deletar</a>
 						</td>
 					</tr>

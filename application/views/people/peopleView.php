@@ -1,14 +1,9 @@
-<script type="text/javascript"  src="<?= base_url('assets/js/jquery-2.2.2.js')?>"></script>
-<script src="<?= base_url('assets/js/jquery.maskedinput.js'); ?>" type="text/javascript"></script>
-<script src="<?= base_url('assets/js/jquery.validate.js'); ?>" type="text/javascript"></script>
-<meta charset="UTF-8">
-</script>
-<body>
-		<a class="modal-trigger waves-effect waves-light btn" href="create-people">+CADASTRO DE PESSOA</a>
-
+<div>
+		<a class="waves-effect waves-light btn" href="create-people">CADASTRO DE PESSOA
+		<i class="material-icons right">input</i></a></a>
 			<div>
 		<h3 align="center">Pessoas</h3>
-		<table class="striped">
+		<table id="Tpeople" class="bordered highlight">
 			<thead>
 				<td><strong>Nome </strong></td>
 				<td><strong>CPF/CNPJ </strong></td>
@@ -39,13 +34,85 @@
 						<td>
 							<a href="update-people/<?= $people['id_people'] ?>">Alterar</a>
 							|
-							<a href="delete-people/<?= $people['id_people'] ?>">Deletar</a>
+							<a class="delete_people" id="<?php echo $people['id_people']; ?>" href="#">Apagar</a>
 
 
 						</td>
 					</tr>
 				<?php endforeach ?>
 			</tbody>
+    </table>
+    <div class="pagination">
+			<ul class="pagination right-align">
+				<li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+				<li class="active grey"><a href="#!">1</a></li>
+				<li class="waves-effect"><a href="#!">2</a></li>
+				<li class="waves-effect"><a href="#!">3</a></li>
+				<li class="waves-effect"><a href="#!">4</a></li>
+				<li class="waves-effect"><a href="#!">5</a></li>
+				<li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+			</ul>
+		</div>
+		
+    <div id="deletePeople" class="modal">
+    <div class="modal-content">
+      <h4>Apagar</h4>
+      <p>Deseja realmente apagar o cadastro?</p>
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Cancelar
+        <i class="material-icons right">clear</i></a></a>
+		<a href="#!" id="delete_people" class=" modal-action modal-close waves-effect waves-red btn-flat">Apagar
+		<i class="material-icons right">delete_forever</i></a>
+    </div>
+  </div>
 		</table>
 	</div>
 </div>
+<script type="text/javascript"  src="<?= base_url('assets/js/jquery-2.2.2.js')?>"></script>
+<script src="<?= base_url('assets/js/jquery.maskedinput.js'); ?>" type="text/javascript"></script>
+<script src="<?= base_url('assets/js/jquery.validate.js'); ?>" type="text/javascript"></script>
+<script type="text/javascript">
+ $(document).ready(function(){
+		function reloadTablePeople(){
+			$.ajax({
+				url: "<?= base_url('people/');?>",
+				type: "POST",
+				data: $("table"),
+				success: function(data){
+					$("#Tpeople").html($(data).find("table"));
+					console.log($(data).find("table"));
+				},
+				error: function(){
+					console.log(data);
+					window.location.reload();
+				}
+			});
+		}
+var idPeople;
+		$("table").on("click",".delete_people", function(){
+			$('#deletePeople').openModal();	
+			idPeople = $(this).attr("id");
+		});
+
+		$("#delete_people").on("click", function(){
+			$.ajax({
+				url: "<?php echo site_url('/PeopleController/delete'); ?>",
+				type: "POST",
+				data: {id_people: idPeople},
+				success: function(data){
+					if(!data){
+						Materialize.toast(data, 4000);
+					}else{
+						Materialize.toast(data, 4000,'rounded');
+						reloadTablePeople();
+					}
+				},
+				error: function(data){
+					console.log(data);
+					Materialize.toast('Erro ao Excluir, Cadastro sendo utilizado!', 4000,'rounded');	
+				}
+			});
+		});   
+	});    
+ </script>
