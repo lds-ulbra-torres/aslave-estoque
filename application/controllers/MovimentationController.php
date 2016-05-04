@@ -78,17 +78,46 @@ class MovimentationController extends CI_Controller {
 		}
 	}
 
-	public function updateMovimentation($idMovimentation){
+	public function updateMovimentationForm($idMovimentation){
 		$data['movimentation'] = $this->movimentationModel->getUpdateData($idMovimentation);
-		$this->template->load('template/templateMenu', 'movimentation/updateMovimentationView', $data);
+		$this->template->load('template/templateMenu', 'movimentation/updateMovimentationView', $data);			
+	}
+
+	public function updateMovimentation(){
+		$this->form_validation->set_rules('type', 'type','required');
+		$this->form_validation->set_rules('idPeople','idPeople' ,'required');
+		$this->form_validation->set_rules('classification', 'classification','required');
+		$this->form_validation->set_rules('date', 'date','required');
+		$this->form_validation->set_rules('value', 'value','required');
+		$this->form_validation->set_rules('historic', 'historic','required');
+		$this->form_validation->set_rules('movimentationDate', 'movimentationDate','required');
+		$this->form_validation->set_rules('numDoc', 'numDoc','required');
+
+		
+		if($this->form_validation->run()){
+			$data = array(
+				'id_people' => $this->input->post('idPeople'),
+				'id_classification' => $this->input->post('classification'),
+				'type_mov' => $this->input->post('type'),
+				'num_doc' => $this->input->post('numDoc'),
+				'date_financial_release' => $dateComp,
+				'value' => $this->input->post('value'),
+				'due_date_pay' => $this->input->post('movimentationDate'),
+				'historic' => $this->input->post('historic')
+				);
+
+		}else{
+			
+		}
 	}
 
 	public function searchMovimentation(){	
 		$data = array(
-			'id_people' => $this->input->post('searchPeople'),
-			'date_financial_release' => $this->input->post('dateSearch'),
+			'id_people' => $this->input->post('searchPeopleId'),
+			'date_financial_release' => $this->input->post('searchDate'),
 			'type_mov' => $this->input->post('typeSearch')
 			);
+		
 		$query = $this->movimentationModel->searchMovimentation($data);
 		echo json_encode($query);
 	}

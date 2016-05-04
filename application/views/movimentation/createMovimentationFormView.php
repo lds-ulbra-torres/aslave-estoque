@@ -22,41 +22,35 @@ $monPick = date('Y-m');
 				</select>
 			</div>
 			
-			<a class="col s10 waves-effect waves-light  modal-trigger openSearchModal"  href="#searchModal">
-			<div>
-				<label for="inputPerson">Pessoa:</label>
-				<input type="text" name="people" id="inputPerson" placeholder="Escolha uma pessoa ao lado." value="" disabled></input>
-				<input type="hidden" name="idPeople" id="idPeople"></input>
-			</div>
+			<a class="col s12 waves-effect waves-light  modal-trigger openSearchModal"  href="#searchModal">
+				<div>
+					<label for="inputPerson">Pessoa:</label>
+					<input type="text" name="people" id="inputPerson" placeholder="Clique aqui para escolher uma pessoa." value="" disabled></input>
+					<input type="hidden" name="idPeople" id="idPeople"></input>
+				</div>
+			</a>
 
-			<div  style="margin-top: 1%; ;width: 110px;height: 100px;" class="right ">
-				<!-- Modal Trigger -->
-				    <nav>
-						<div  class="nav-wrapper color">
-							<i style="margin-top: 3%; ;width: 70px;height: 60px;" class="material-icons center">search</i>
-						</div>
-					</nav>
-				</a>
-			</div>
 
-				<div class="col s12">
+				<div class="col s6">
 					<label for="numDoc">Numero do documento:</label>
 					<input type="text" name="numDoc">
 				</div>
 
 				<div class="col s6">
+					<label for="value">Valor:</label>
+					<input type="text" id="value" name="value" class="money" value="0.00">				
+				</div>	
+
+				<div class="col s6">
 					<label for="date">Data da competência: </label>
-					<input type="month" class="datepicker" value="<?php echo $monPick ?>" required name="date" >
+					<input type="month" class="datepicker" value="" required name="date" >
 				</div>
 				<div class="col s6">
 					<label for="movimentationDate">Data do lançamento:</label>
 					<input type="date" class="datepicker" value="<?php echo $datePick ?>" required name="movimentationDate">
 				</div>
 
-				<div class="col s10">
-					<label for="value">Valor:</label>
-					<input type="text" id="value" name="value" class="money" value="0.00">				
-				</div>	
+				
 
 				<div class="col s12">
 					<label for="historic">Histórico</label>
@@ -142,7 +136,7 @@ $monPick = date('Y-m');
 							try{
 								var items=[];   
 								$.each(obj, function(i,val){                      
-									items.push($('<tr><td>' + val.name + '<button class="right btn" id="buttonPerson" name ="'+ val.id_people +'" >SELECIONAR</button><input id="namePerson" type="hidden" value="'+ val.name +'"></td></tr>'));
+									items.push($('<tr><td>' + val.name + '<button class="right btn button" id="'+ val.id_people +'" name ="'+ val.name +'" >SELECIONAR</button></td></tr>'));
 								}); 
 								$('#finalResult').append.apply($('#finalResult'), items);
 							}catch(e) {   
@@ -161,9 +155,9 @@ $monPick = date('Y-m');
 			}
 		});
 
-	$(document).on('click','#buttonPerson', function(){
-        document.getElementById('inputPerson').value=$('#namePerson').attr('value');
-        document.getElementById('idPeople').value=$('#buttonPerson').attr('name');
+	$(document).on('click','.button', function(){
+        document.getElementById('inputPerson').value=$(this).attr('name');
+        document.getElementById('idPeople').value=$(this).attr('id');
         $('#searchModal').closeModal();	
         $('#finalResult').empty();
 

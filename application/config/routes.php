@@ -65,7 +65,8 @@ $route['financial-movimentation'] = 'movimentationController';
 $route['create-movimentation-form'] = 'movimentationController/createMovimentationForm';
 $route['create-movimentation'] = 'movimentationController/createMovimentation';
 $route['delete-movimentation'] = 'movimentationController/deleteMovimentation';
-$route['update-movimentation/(:num)'] = 'movimentationController/updateMovimentation/$1';
+$route['update-movimentation-form/(:num)'] = 'movimentationController/updateMovimentationForm/$1';
+$route['update-movimentation'] = 'movimentationController/updateMovimentation';
 $route['search-movimentation'] = 'movimentationController/searchMovimentation';
 
 /* ROTAS PESSOAS */
@@ -77,3 +78,4 @@ $route['update-people/(:num)'] = 'peopleController/update/$1';
 
 /* ROTAS DO SEARCH */
 $route['templateSearch'] = 'searchController';
+$route['movimentation-search'] = 'movimentationController/searchMovimentation';

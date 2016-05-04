@@ -1,61 +1,60 @@
+<?php 
+date_default_timezone_set('America/Sao_Paulo');
+$datePick = date('Y-m-d');
+$monPick = date('Y-m');
+?>
 <a class="modal-trigger waves-effect waves-light btn" href="<?= base_url('financial-movimentation') ?>" >Voltar</a>
 <div class="container">
 	<form action="update-movimentation" method="POST" >
 		<div class="row">
 			<div class="col s6">
 				<label for="type">Tipo:</label>
-				<select class="browser-default" name="type" id="type"> 
+				<select class="browser-default" name="type" id="type" required> 
 					<option value="" disabled selected>Selecione</option>
 					<option value="e" <?php if($movimentation[0]['type_mov'] == 'e'){echo "selected";}?> >Entrada</option>
-					<option value="s" <?php if($movimentation[0]['type_mov'] == 's'){echo "selected";}?>>Saida</option>
+					<option value="s" <?php if($movimentation[0]['type_mov'] == 's'){echo "selected";}?> >Saida</option>
 				</select>
 			</div>
 
 			<div class="col s6">
 				<label for="classification" >Classificação:</label>
-				<select class="browser-default" name="classification" id="classification">
+				<select class="browser-default" name="classification" id="classification" required>
 					<option value="<?= $movimentation[0]['id_classification']; ?>"><?= $movimentation[0]['name_classification']; ?></option>
 				</select>
-			</div>
-			<a class="col s10 waves-effect waves-light  modal-trigger openSearchModal"  href="#searchModal">
-			<div>
-				<label for="inputPerson">Pessoa:</label>
-				<input type="text" name="people" id="inputPerson" placeholder="Escolha uma pessoa ao lado." value="<?= $movimentation[0]['name']; ?>" disabled></input>
-				<input type="hidden" name="idPeople" id="idPeople" value="<?= $movimentation[0]['id_people'] ?>" ></input>
-			</div>
+			</div >
+			<a class="col s12 waves-effect waves-light  modal-trigger openSearchModal"  href="#searchModal">
+				<div>
+					<label for="inputPerson">Pessoa:</label>
+					<input type="text" name="people" id="inputPerson" required placeholder="Clique aqui para escolher uma pessoa." value="<?= $movimentation[0]['name']; ?>" disabled></input>
+					<input type="hidden" name="idPeople" id="idPeople" value="<?= $movimentation[0]['id_people'] ?>" ></input>
+				</div>	
+			</a>
 
-			<div  style="margin-top: 1%; ;width: 110px;height: 100px;" class="right ">
-				<!-- Modal Trigger -->
-					<nav>
-						<div  class="nav-wrapper color">
-							<i class="material-icons center">search</i>
-						</div>
-					</nav>
-				</a>
-			</div>
-
-				<div class="col s12">
+				<div class="col s6">
 					<label for="numDoc">Numero do documento:</label>
-					<input type="text" name="numDoc" value="<?= $movimentation[0]['num_doc']; ?>">
+					<input type="text" name="numDoc" value="<?= $movimentation[0]['num_doc']; ?>" required>
 				</div>
+
+				<div class="col s6">
+					<label for="value">Valor:</label>
+					<input required type="text" id="value" name="value" class="money" value="<?= $movimentation[0]['value']; ?>">	
+				</div>	
 
 				<div class="col s6">
 					<label for="date">Data da competência: </label>
-					<input type="date" class="datepicker" name="date" value="<?= $movimentation[0]['due_date_pay']; ?>">
+					<input type="month" required class="datepicker" name="date" value="<?= $movimentation[0]['date_financial_release'] = date('M-Y'); ?>">
+					<?php echo $movimentation[0]['date_financial_release'] ?>
 				</div>
 				<div class="col s6">
 					<label for="movimentationDate">Data do lançamento:</label>
-					<input type="date" class="datepicker" name="movimentationDate" value="<?= $movimentation[0]['date_financial_release']; ?>">
+					<input required type="date" class="datepicker" name="movimentationDate" value="<?= $movimentation[0]['due_date_pay']; ?>">
 				</div>
 
-				<div class="col s10">
-					<label for="value">Valor:</label>
-					<input type="text" id="value" name="value" class="money" value="<?= $movimentation[0]['value']; ?>">				
-				</div>	
+				
 
 				<div class="col s12">
 					<label for="historic">Histórico</label>
-					<textarea class="materialize-textarea" name="historic" maxlength="255" cols="30" rows="10" ><?= $movimentation[0]['historic']; ?></textarea>
+					<textarea required class="materialize-textarea" name="historic" maxlength="255" cols="30" rows="10" ><?= $movimentation[0]['historic']; ?></textarea>
 					<button type="submit" class="btn green">Salvar 
 						<i class="material-icons right">send</i>
 					</button>
@@ -135,7 +134,7 @@
 							try{
 								var items=[];   
 								$.each(obj, function(i,val){                      
-									items.push($('<tr><td>' + val.name + '<button class="right btn" id="buttonPerson" name ="'+ val.id_people +'" >SELECIONAR</button><input id="namePerson" type="hidden" value="'+ val.name +'"></td></tr>'));
+									items.push($('<tr><td>' + val.name + '<button class="right btn" id="'+ val.id_people +'" name ="'+ val.name +'" >SELECIONAR</button></td></tr>'));
 								}); 
 								$('#finalResult').append.apply($('#finalResult'), items);
 							}catch(e) {   
@@ -154,9 +153,9 @@
 			}
 		});
 
-	$(document).on('click','#buttonPerson', function(){
-        document.getElementById('inputPerson').value=$('#namePerson').attr('value');
-        document.getElementById('idPeople').value=$('#buttonPerson').attr('name');
+	$(document).on('click','button', function(){
+        document.getElementById('inputPerson').value=$(this).attr('name');
+        document.getElementById('idPeople').value=$(this).attr('id');
         $('#searchModal').closeModal();	
         $('#finalResult').empty();
 
