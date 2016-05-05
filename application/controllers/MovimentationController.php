@@ -125,8 +125,15 @@ class MovimentationController extends CI_Controller {
 			);
 
 		$query = $this->movimentationModel->searchMovimentation($data);
-
-		echo json_encode($query);
+		$arrayName;
+		$count = 0;
+		foreach ($query as $key) {
+			$key['date_financial_release'] = date('m-Y', strtotime($key['date_financial_release']));
+			$key['due_date_pay'] = date('d-m-Y', strtotime($key['due_date_pay']));
+			$arrayName[$count]= $key;
+			$count++;
+		}
+		echo json_encode($arrayName);
 	}
 }
 

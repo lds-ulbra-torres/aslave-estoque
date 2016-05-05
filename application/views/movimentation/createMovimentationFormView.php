@@ -9,7 +9,7 @@ $monPick = date('Y-m');
 		<div class="row">
 			<div class="col s6">
 				<label for="type">Tipo:</label>
-				<select class="browser-default" name="type" id="type"> 
+				<select class="browser-default" required name="type" id="type"> 
 					<option value="" disabled selected>Selecione</option>
 					<option value="e">Entrada</option>
 					<option value="s">Saida</option>
@@ -17,7 +17,7 @@ $monPick = date('Y-m');
 			</div>
 			<div class="col s6">
 				<label for="classification" >Classificação:</label>
-				<select class="browser-default" name="classification" id="classification">
+				<select class="browser-default" required name="classification" id="classification">
 					<option>Escolha um tipo</option>
 				</select>
 			</div>
@@ -25,20 +25,20 @@ $monPick = date('Y-m');
 			<a class="col s12 waves-effect waves-light  modal-trigger openSearchModal"  href="#searchModal">
 				<div>
 					<label for="inputPerson">Pessoa:</label>
-					<input type="text" name="people" id="inputPerson" placeholder="Clique aqui para escolher uma pessoa." value="" disabled></input>
-					<input type="hidden" name="idPeople" id="idPeople"></input>
+					<input type="text" name="people" id="inputPerson" placeholder="Clique aqui para escolher uma pessoa." value="" disabled required></input>
+					<input type="hidden" name="idPeople" id="idPeople" ></input>
 				</div>
 			</a>
 
 
 				<div class="col s6">
 					<label for="numDoc">Numero do documento:</label>
-					<input type="text" name="numDoc">
+					<input type="number" name="numDoc" required>
 				</div>
 
 				<div class="col s6">
 					<label for="value">Valor:</label>
-					<input type="text" id="value" name="value" class="money" value="0.00">				
+					<input type="text" id="value" required name="value" class="money" value="0.00">				
 				</div>	
 
 				<div class="col s6">

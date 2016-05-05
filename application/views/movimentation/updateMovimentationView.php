@@ -27,7 +27,7 @@
 
 				<div class="col s6">
 					<label for="numDoc">Numero do documento:</label>
-					<input type="text" name="numDoc" value="<?= $movimentation[0]['num_doc']; ?>" required>
+					<input type="number" name="numDoc" value="<?= $movimentation[0]['num_doc']; ?>" required>
 				</div>
 
 				<div class="col s6">
