@@ -1,17 +1,23 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8">
-  <title>Slave</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <meta name="keywords" content="">
-  <meta name="description" content="">
-  <meta name="author" content="LDS Ulbra Torres">
+	<meta charset="UTF-8">
+	<title>Slave</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta name="keywords" content="">
+	<meta name="description" content="">
+	<meta name="author" content="LDS Ulbra Torres">
 
-  <link rel="stylesheet" type="text/css" href="<?= base_url ('assets/css/materialize.css')?>">
-  <link rel="stylesheet" type="text/css" href="<?= base_url('assets/css/templateMenu.css') ?>">
-  <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" type="text/css" href="<?= base_url ('assets/css/materialize.css')?>">
+	<link rel="stylesheet" type="text/css" href="<?= base_url('assets/css/templateMenu.css') ?>">
+	<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
+  
+	<script type="text/javascript"  src="<?= base_url('assets/js/jquery-2.2.2.js')?>"></script>		
+	<script src="<?= base_url('assets/js/jquery.maskedinput.js'); ?>" type="text/javascript"></script>
+	<script src="<?= base_url('assets/js/jquery.validate.js'); ?>" type="text/javascript"></script>
+	<script type="text/javascript" src="http://www.technicalkeeda.com/js/javascripts/plugin/json2.js"></script>
+  
 </head>
 <body>
   <div>
@@ -19,7 +25,18 @@
       <ul id="nav-mobile" class="side-nav">
         <li class=""><a href="<?= base_url() ?>"  class="blue-text">HOME</a></li>
         <li class=""><a href="stock" class="blue-text">ESTOQUE</a></li>
-        <li class=""><a href="financial" class="blue-text">FINANCEIRO</a></li>
+		<li>
+			<a class="aColor dropdown-button blue-text" data-activates="financial2_buttons" href="#">FINANCEIRO
+			</a>
+            <ul id="financial2_buttons" class="dropdown-content">
+                <li><a href="<?= base_url('classification'); ?>">Classificações</a></li>
+                <li><a href="<?= base_url('people'); ?>">Pessoas</a></li>
+                <li><a href="<?= base_url('financial-movimentation'); ?>">Movimentações</a></li>
+                <li class="divider"></li>
+                <li><a href="<?= base_url('financial') ?>">Visão Geral</a></li>
+            </ul>
+        </li>
+
       </ul>
       <div class="hide-on-large-only center nav-wrapper"> 
         <nav class="color" role="navigation">
@@ -37,7 +54,17 @@
               <i class="material-icons right">arrow_drop_down</i></p>
             </li>
           </a>
-          <a href="<?= base_url(); ?>" class="aColor"><li class="liclass"><p class="fontUt strMenu " style="vertical-align: middle;">FINANCEIRO</p></li></a>
+         <li>
+			<a class="aColor dropdown-button blue-text" data-activates="financial2_buttons" href="#">FINANCEIRO</a>
+            <ul id="financial2_buttons" class="dropdown-content">
+                <li><a href="<?= base_url('classification'); ?>">Classificações</a></li>
+                <li><a href="<?= base_url('people'); ?>">Pessoas</a></li>
+                <li><a href="<?= base_url('financial-movimentation'); ?>">Movimentações</a></li>
+                <li class="divider"></li>
+                <li><a href="<?= base_url('financial') ?>">Visão Geral</a></li>
+            </ul>
+        </li>
+		  
         </ul>
       </div>
     </div>
@@ -56,9 +83,11 @@
   	<?php echo $contents ?>
   </div>
 </body>
-<script type="text/javascript" src="<?= base_url('assets/js/jquery-2.2.2.js')?>"></script>
-<script type="text/javascript" src="<?= base_url('assets/js/materialize.js')?>"></script>
+
+
 <script>
   $(".button-collapse").sideNav();
 </script>
+
+
 </html>

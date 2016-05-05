@@ -15,6 +15,3 @@ class Template {
 			return $this->CI->load->view($template, $this->template_data, $return);
 		}
 }
-
-/* End of file Template.php */
-/* Location: ./system/application/libraries/Template.php */

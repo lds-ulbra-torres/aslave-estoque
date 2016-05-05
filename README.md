@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Slave
 
 ## Movimentações de estoque
@@ -8,3 +9,8 @@
 
 
 ### Projeto desenvolvido por LDS Ulbra-Torres
+=======
+# projeto-slave
+
+#Card's 26 e 29 completos
+>>>>>>> card_38
