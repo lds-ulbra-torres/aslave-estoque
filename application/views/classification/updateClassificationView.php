@@ -22,7 +22,9 @@
 			</li>
 			<hr>
 			<li>
-				<button class="btn waves-effect waves-light" type="submit" id="submitButton">Enviar</button>
+				<button id="sendClassification" class="btn green" type="submit" name="action">Salvar 
+					<i class="material-icons right">send</i>
+				</button>    
 			</li>
 		</ul>
 	</form>

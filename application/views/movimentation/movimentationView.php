@@ -16,6 +16,7 @@ $monPick = date('Y-m');
 	      	$('#found').empty();
    		});
 
+
 		// Pesquisa Pessoa
 		$("input[id=searchPeople]").keyup(function(){
 			if($(this).val() != ''){
@@ -54,25 +55,33 @@ $monPick = date('Y-m');
 		// Achar a bendita
 		$("#toFound").submit(function(e){
 			e.preventDefault();
+			console.log($("#searchPeopleId").val(),$("#searchDate").val(),$("#typeSearch").val());
 			$.ajax({
 				url: "<?= site_url('search-movimentation'); ?>",
 				type: "POST",
-				data: {id_people:$("input[name=searchPeopleId]").val(),date_financial_release:$("input[name=searchDate]").val(),type_mov:$("input[name=typeSearch]").val()},
+				data: {id_people:$("#searchPeopleId").val(),date_financial_release:$("#searchDate").val(),type_mov:$("#typeSearch").val()},
 				success:function(data){
-					$('#batata').html("");
+					document.getElementById('searchPeopleId').value="";
+					document.getElementById('searchPeople').value="";
+					document.getElementById('searchDate').value="";
+					document.getElementById('typeSearch').value="";
+
+					$('#bodyMove').html("");
 						var obj = JSON.parse(data);
 						if(obj.length>0){
 							try{
 								var items=[];   
 								$.each(obj, function(i,val){                
-									items.push($('<tr><td>' + val.date_financial_release +'</td><td>'+ val.due_date_pay +'</td><td>'+ val.name +'</td><td class="right">'+ val.value +' </td><td>'+ val.type_mov +' </td><td> <a href="update-movimentation-form/'+ val.id_financial_release +'">Alterar</a> | <a href="#deleteMovModal" id="'+ val.id_financial_release +'"class="deleteMovModal">Deletar</a></td> </tr>'));
+									items.push($('<tr><td>' + val.date_financial_release +'</td><td>'+ val.due_date_pay +'</td><td>'+ val.name +'</td><td class="right">'+ val.value+ ".00" +' </td><td>'+ val.type_mov +' </td><td> <a href="update-movimentation-form/'+ val.id_financial_release +'">Alterar</a> | <a href="#deleteMovModal" id="'+ val.id_financial_release +'"class="deleteMovModal">Deletar</a></td> </tr>'));
 								});
-								$('#batata').append.apply($('#batata'), items);
+
+								$('#bodyMove').append.apply($('#bodyMove'), items);
+								
 							}catch(e) {   
 								alert('Exception while request..');
 							}   
 						}else{
-							$('#batata').html($('<span/>').text("Nenhum nome encontrado"));    
+							$('#bodyMove').html($('<span/>').text("Nenhuma movimentação encontrada"));    
 						}   
 				},
 				error:function(data){
@@ -82,9 +91,17 @@ $monPick = date('Y-m');
 		});
 
 	});
+
+		$(document).ready(function(){
+
+		$(".closeModal").click(function(){
+			$('#deleteMovModal').closeModal();
+		});
+	});
 </script>
 <div> 
-	<a class="modal-trigger waves-effect waves-light btn" href="create-movimentation-form" >+Movimentação</a>
+<br>
+	<a class="modal-trigger btn green" href="create-movimentation-form" style="margin-left: 5px;">ADICIONAR NOVA</a>
 
 	<div class="container">
 	
@@ -104,7 +121,7 @@ $monPick = date('Y-m');
 				</div>
 				<div class="col s12 m3">
 					<label for="searchDate" class="black-text">Competência:</label>
-					<input type="month" name="searchDate" class=""></input>
+					<input type="month" name="searchDate" id="searchDate" value=""></input>
 				</div>
 				<div class="col s12 m3">
 					<label for="typeSearch" class="black-text">Tipo:</label>
@@ -114,7 +131,7 @@ $monPick = date('Y-m');
 						<option value="s">Saida</option>
 					</select>
 				</div>
-				<input class="btn green" type="submit"></input>
+				<input class="btn green" value="Buscar" type="submit" style="margin-top: 30px;"></input>
 			</form>
 
 
@@ -122,9 +139,9 @@ $monPick = date('Y-m');
 		<div class="col s12 m3 right"><h5 class="">Total</h5>
 				<?php 
 					if($total > 0){
-						echo "<h6 style='color:green'>R$ ".$total."</h6>";
+						echo "<h6 style='color:green'>R$ ".$total.".00</h6>";
 					}else{
-						echo "<h6 style='color:red'>R$ ".$total."</h6>";
+						echo "<h6 style='color:red'>R$ ".$total.".00</h6>";
 					}
 				?>
 			</div>
@@ -139,17 +156,13 @@ $monPick = date('Y-m');
 				</tr>
 			</thead>
 			
-			<tbody id="batata">
+			<tbody id="bodyMove">
 				<?php foreach($movimentations as $movimentation) : ?>
 					<tr>
-						<td><?= $movimentation['date_financial_release'] ?></td>
-						<td><?= $movimentation['due_date_pay'] ?></td>
+						<td><?= date('m-Y', strtotime($movimentation['date_financial_release']));?></td>
+						<td><?= date('d-m-Y', strtotime($movimentation['due_date_pay']));?></td>
 						<td><?= $movimentation['name'] ?></td>
-						<?php if($movimentation['type_mov'] == 's'){ ?>
-						<td class=""><span style="color:red;" class="right" > <?= "-".$movimentation['value'] ?></span></td>
-						<?php }else{ ?>
-						<td class=" right"> <?= $movimentation['value'] ?></td>
-						<?php } ?>
+						<td class=" right"> <?= $movimentation['value'] ?>.00</td>
 						<td><?= $movimentation['type_mov'] ?></td>
 						<td> 
 							<a href="update-movimentation-form/<?= $movimentation['id_financial_release'] ?>">Alterar</a>
@@ -163,19 +176,22 @@ $monPick = date('Y-m');
 
 		</table>
 	</div>
-
-	<div id="deleteMovModal" class="modal modal-fixed-footer">
-		<div class="modal-content valign-wrapper">
-		<h3 class="center-align valign">Deseja mesmo deletar?</h3>
-			<form action="delete-movimentation" method="POST">
-				<input id="idDeleteMov" name="DeleteMov" type="hidden" value="">
+<br><br>
+	<div id="deleteMovModal" class="modal">
+		<div class="modal-content">
+			<form action="delete-movimentation" id="delete-c" method="POST">
+				<div class="modal-content">
+					<h4>Aviso</h4>
+					<div class="row">
+						<p>Realmente quer apagar esta movimentação?</p>
+					</div>
+				</div>
+					<input id="idDeleteMov" name="DeleteMov" type="hidden" value="">
+				<div class="modal-footer">
+					<a href="#!" class=" closeModal waves-effect waves-green btn-flat">Cancelar</a>
+					<a href="#!" onClick="document.getElementById('delete-c').submit();" class="waves-effect waves-red btn-flat">Apagar</a>
+				</div>		
+			</form>
 		</div>
-			<div class="modal-footer">
-				<button  class="modal-trigger marginl waves-effect waves-light btn green" type="submit">Sim</button>
-			    <a href="#!" class="modal-trigger marginl waves-light btn">Não</a>
-		    </div>
-		</form>
 	</div>
-
-
 </div>

@@ -11,6 +11,7 @@ class MovimentationModel extends CI_Model {
 	public function get(){
 			$this->db->from('financial_releases');
 			$this->db->join('people', 'people.id_people = financial_releases.id_people');
+			$this->db->order_by('id_financial_release' , 'desc');
 		return $this->db->get()->result_array();
 	}	
 
@@ -25,6 +26,10 @@ class MovimentationModel extends CI_Model {
 		return $this->db->get($this->table)->result_array(); 
 	}
 
+	public function update($movimentation){
+			$this->db->like('id_financial_release', $movimentation['id_financial_release']);
+		return $this->db->update($this->table, $movimentation);
+	}
 
 	public function searchMovimentation($data){
 		  	$this->db->join('people', 'people.id_people = financial_releases.id_people');

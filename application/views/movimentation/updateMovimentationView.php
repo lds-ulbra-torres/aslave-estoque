@@ -1,11 +1,6 @@
-<?php 
-date_default_timezone_set('America/Sao_Paulo');
-$datePick = date('Y-m-d');
-$monPick = date('Y-m');
-?>
-<a class="modal-trigger waves-effect waves-light btn" href="<?= base_url('financial-movimentation') ?>" >Voltar</a>
+<a class="modal-trigger waves-effect waves-light btn" href="<?= base_url('financial-movimentation') ?>" style="margin-left: 5px;" >Voltar</a>
 <div class="container">
-	<form action="update-movimentation" method="POST" >
+	<form action="<?= base_url("update-movimentation/"); ?><?= "/".$movimentation[0]['id_financial_release']; ?> " method="POST" >
 		<div class="row">
 			<div class="col s6">
 				<label for="type">Tipo:</label>
@@ -42,8 +37,7 @@ $monPick = date('Y-m');
 
 				<div class="col s6">
 					<label for="date">Data da competência: </label>
-					<input type="month" required class="datepicker" name="date" value="<?= $movimentation[0]['date_financial_release'] = date('M-Y'); ?>">
-					<?php echo $movimentation[0]['date_financial_release'] ?>
+					<input type="month" required class="datepicker" name="date" value="<?= date('Y-m', strtotime($movimentation[0]['date_financial_release'])); ?>">
 				</div>
 				<div class="col s6">
 					<label for="movimentationDate">Data do lançamento:</label>
@@ -134,7 +128,7 @@ $monPick = date('Y-m');
 							try{
 								var items=[];   
 								$.each(obj, function(i,val){                      
-									items.push($('<tr><td>' + val.name + '<button class="right btn" id="'+ val.id_people +'" name ="'+ val.name +'" >SELECIONAR</button></td></tr>'));
+									items.push($('<tr><td>' + val.name + '<button class="right btn button" id="'+ val.id_people +'" name ="'+ val.name +'" >SELECIONAR</button></td></tr>'));
 								}); 
 								$('#finalResult').append.apply($('#finalResult'), items);
 							}catch(e) {   
@@ -153,13 +147,13 @@ $monPick = date('Y-m');
 			}
 		});
 
-	$(document).on('click','button', function(){
+	$(document).on('click','.button', function(){
         document.getElementById('inputPerson').value=$(this).attr('name');
         document.getElementById('idPeople').value=$(this).attr('id');
         $('#searchModal').closeModal();	
         $('#finalResult').empty();
-
     });
+
 		var mask = {
 			money: function() {
 				var el = this

@@ -83,7 +83,7 @@ class MovimentationController extends CI_Controller {
 		$this->template->load('template/templateMenu', 'movimentation/updateMovimentationView', $data);			
 	}
 
-	public function updateMovimentation(){
+	public function updateMovimentation($idMovimentation){
 		$this->form_validation->set_rules('type', 'type','required');
 		$this->form_validation->set_rules('idPeople','idPeople' ,'required');
 		$this->form_validation->set_rules('classification', 'classification','required');
@@ -92,10 +92,13 @@ class MovimentationController extends CI_Controller {
 		$this->form_validation->set_rules('historic', 'historic','required');
 		$this->form_validation->set_rules('movimentationDate', 'movimentationDate','required');
 		$this->form_validation->set_rules('numDoc', 'numDoc','required');
-
+			
 		
 		if($this->form_validation->run()){
+			$datePick = $this->input->post('date');
+			$dateComp = "$datePick-01";
 			$data = array(
+				'id_financial_release' => $idMovimentation,
 				'id_people' => $this->input->post('idPeople'),
 				'id_classification' => $this->input->post('classification'),
 				'type_mov' => $this->input->post('type'),
@@ -106,6 +109,9 @@ class MovimentationController extends CI_Controller {
 				'historic' => $this->input->post('historic')
 				);
 
+			if($this->movimentationModel->update($data)){
+				redirect('financial-movimentation','refresh');
+			}
 		}else{
 			
 		}
@@ -113,12 +119,13 @@ class MovimentationController extends CI_Controller {
 
 	public function searchMovimentation(){	
 		$data = array(
-			'id_people' => $this->input->post('searchPeopleId'),
-			'date_financial_release' => $this->input->post('searchDate'),
-			'type_mov' => $this->input->post('typeSearch')
+			'id_people' => $this->input->post('id_people'),
+			'date_financial_release' => $this->input->post('date_financial_release'),
+			'type_mov' => $this->input->post('type_mov')
 			);
-		
+
 		$query = $this->movimentationModel->searchMovimentation($data);
+
 		echo json_encode($query);
 	}
 }
