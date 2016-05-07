@@ -11,9 +11,49 @@ class PeopleController extends CI_Controller {
 	}
 
 
-	public function index()
+	public function index($init = 0)
 	{
-		$data['peoples'] = $this->peopleModel->get();
+		//Paginação
+		$this->load->library('pagination');
+        $max = 2;
+        $init = (!$this->uri->segment('2')) ? 0 : $this->uri->segment('2');
+        $config['base_url'] = base_url('people');
+        $config['total_rows'] = $this->peopleModel->count_register();
+        $config['per_page'] = $max;
+
+
+    
+        $config['full_tag_open'] = '<div class="pagination">
+                                        <ul class="pagination right-align">';
+        $config['full_tag_close'] = '   </ul>
+                                    </div>';
+
+        $config['first_link'] = 'Primeiro';
+        $config['first_tag_open'] = '<li class="waves-effect">';
+        $config['first_tag_close'] = '</li>';
+
+        $config['last_link'] = 'Último';
+        $config['last_tag_open'] = '<li class="waves-effect">';
+        $config['last_tag_close'] = '</li>';
+
+        $config['next_link'] = '<i class="active material-icons">chevron_right</i>';
+        $config['next_tag_open'] = '<li class="waves-effect">';
+        $config['next_tag_close'] = '</li>';
+
+        $config['prev_link'] = '<i class="active material-icons">chevron_left</i>';
+        $config['prev_tag_open'] = '<li class="waves-effect">';
+        $config['prev_tag_close'] = '</li>';
+
+        $config['cur_tag_open'] = '<li style="color:#blue;  font-size: 200%;" class="waves-effect">';
+        $config['cur_tag_close'] = '</li>';
+
+        $config['num_tag_open'] = '<li class="waves-effect">';
+        $config['num_tag_close'] = '</li>';
+
+        $this->pagination->initialize($config);
+
+        $data['pagination_show'] =  $this->pagination->create_links();
+    	$data['peoples'] = $this->peopleModel->get_pagination($max, $init);
 		$this->template->load('template/templateMenu', 'people/peopleView', $data);
 	}
 
@@ -65,6 +105,7 @@ class PeopleController extends CI_Controller {
 
 	public function update($id){
 		$peoples = $this->peopleModel->get();
+
     
 		$this->form_validation->set_rules('updatePeopleName','updateNome','required|min_length[5]');
 		$this->form_validation->set_rules('updatePeopleAdress','updateAdress','required');
@@ -124,6 +165,7 @@ class PeopleController extends CI_Controller {
 			$data['peoples'] = $this->peopleModel->get();
 			$data['states'] = $this->peopleModel->states();
 			$data['dados_pessoa'] = $this->peopleModel->listPeople($id);
+			$data['alter_states'] = $this->peopleModel->alterStates($id);
 			$this->template->load('template/templateMenu', 'people/peopleUpdateView', $data);
 		}
 	}
@@ -148,12 +190,34 @@ class PeopleController extends CI_Controller {
 			foreach($localidades as $fila)
 			{
 				?>
-				<option <?php if($fila->id_cities == '1'){?>  selected <?php } ?> value="<?=$fila -> id_cities ?>"><?=$fila -> name ?></option>
+				<option value="<?=$fila -> id_cities ?>"><?=$fila -> name ?></option>
 				<?php
 			}
 		}
 	}
 
+	public function alterCitie($id)
+	{
+		$options = "";
+		if($this->input->post('state'))
+		{
+			$state = $this->input->post('state');
+			$localidades = $this->peopleModel->localidades($state);
+			$data['alter_states'] = $this->peopleModel->alterStates($id);
+			foreach($localidades as $fila)
+			{
+				?>
+				
+				<option 
+						value="<?php echo $fila->id_cities ?>"
+							<?php echo $fila->id_cities==$data['alter_states'][0]->id_cities ?'selected':'';?>
+						>
+						<?= $fila -> name ?>
+						</option>
+				<?php
+			}
+		}
+	}
 
 
 }

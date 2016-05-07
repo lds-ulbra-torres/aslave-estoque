@@ -301,7 +301,40 @@ class StockController extends CI_Controller {
 		}
 		else { echo "Erro ao apagar esta entrada. "; }
 	}
+	public function removeProductInputStock(){
+		$id_product = array('id_product' => $this->input->post('id_product'));
+		if ($this->StockModel->removeProductStock($id_product)) {
+			echo true;
+		}else { echo "Erro ao remover este produto"; }
+	}
+	public function insertProductsInputStock(){
+		$this->form_validation->set_rules('id_stock', 'estoque', 'required');
+		if ($this->form_validation->run()) {
+			$people = array(
+				'input_date' => $this->input->post('date'),
+				'input_type' => $this->input->post('type'),
+				'id_people' => $this->input->post('id_people'));
 
+			$product = json_decode($this->input->post('products'));
+			if (sizeof($product) > 0) {
+				$product_array = array();
+				foreach ($product as $products) {
+					$row = array(
+						'id_product' => $products->id_product,
+						'id_stock' => $this->input->post('id_stock'),
+						'unit_price_input' => $products->price,
+						'amount_input' => $products->amount);
+					array_push($product_array, $row);
+				}
+				if ($this->StockModel->createInputStockProduct($product_array)) {
+					echo 2;
+				}
+				else { echo "Erro ao salvar os produtos."; }
+			}
+			else { echo "Nenhum produto adicionado."; }
+		}
+		else { echo "Ocorreu algum problema interno."; }
+	}
 	/* SAÍDAS DE ESTOQUE */
 	public function outputsView(){
 		$data['output_stocks'] = $this->StockModel->getOutputStocks();
@@ -327,7 +360,7 @@ class StockController extends CI_Controller {
 		if ($this->form_validation->run()) {
 			$people = array(
 				'output_date' => $this->input->post('date'),
-//descrição, descomentar quando tiver no banco 'descript' => $this->input->post('descript'),
+				'descript' => $this->input->post('descript'),
 				'id_people' => $this->input->post('id_people'));
 			$product = json_decode($this->input->post('products'));
 			if (sizeof($product) > 0) {
@@ -363,6 +396,40 @@ class StockController extends CI_Controller {
 			else { echo "Erro ao apagar esta saída. "; }
 		}
 		else { echo "Erro ao apagar esta saída. "; }
+	}
+	public function removeProductOutputStock(){
+		$id_product = array('id_product' => $this->input->post('id_product'));
+		if ($this->StockModel->removeProductOutputStock($id_product)) {
+			echo true;
+		}else { echo "Erro ao remover este produto"; }
+	}
+	public function insertProductsOutputStock(){
+		$this->form_validation->set_rules('id_stock', 'estoque', 'required');
+		if ($this->form_validation->run()) {
+			$people = array(
+				'input_date' => $this->input->post('date'),
+				'input_type' => $this->input->post('type'),
+				'id_people' => $this->input->post('id_people'));
+
+			$product = json_decode($this->input->post('products'));
+			if (sizeof($product) > 0) {
+				$product_array = array();
+				foreach ($product as $products) {
+					$row = array(
+						'id_product' => $products->id_product,
+						'id_stock' => $this->input->post('id_stock'),
+						'unit_price_output' => $products->price,
+						'amount_output' => $products->amount);
+					array_push($product_array, $row);
+				}
+				if ($this->StockModel->createOutputStockProduct($product_array)) {
+					echo 2;
+				}
+				else { echo "Erro ao salvar os produtos."; }
+			}
+			else { echo "Nenhum produto adicionado."; }
+		}
+		else { echo "Ocorreu algum problema interno."; }
 	}
 
 }

@@ -12,51 +12,48 @@
 							    <input class="with-gap" type="radio" value="2" name="peopleClassification" id="juridica">
 							    <label for="juridica">Pessoa Jurídica</label>
 						</div>
-                        
-                        <div style="color: red;" class="active" id="mensagens"></div>
-
 						<div class="peopleRegistration">                        
 							<div class="col s12">
-							<label for="nome">Nome</label>
+							<label for="nome">Nome *</label>
 								<input type="text" id="nome" name="peopleName">
 							</div>
 							<div class="col s6">
 							    <div class="documentFisic">
-							    <label>CPF</label>
+							    <label>CPF *</label>
 								    <input type="text" class="cpf" id="cpf" name="peopleCpf">
 							    </div>
 							    <div class="documentJuridic">
-							    	<label>CNPJ</label>	
+							    	<label>CNPJ *</label>	
 								    <input type="text" class="cnpj" id="cnpj" name="peopleCnpj">							    
 							    </div>
 							</div>
 							<div class="col s6">
 							    <div class="documentFisic">
-							    <label>RG</label>
+							    <label>RG *</label>
 								    <input type="text" class="rg" name="peopleRg">
 							    </div>
 							    <div class="documentJuridic">
-							        <label>Inscrição Estadual</label>
+							        <label>Inscrição Estadual *</label>
 								    <input type="text" class="inscEstadual" name="peopleInscricao">
 							    </div>
 							</div>
 							<div class="col s12">
-							<label for="adress">Endereço</label>
+							<label for="adress">Endereço *</label>
 								<input type="text" id="adress" name="peopleAdress">
 																
 							</div>
 							<div class="col s6">
-							<label for="number">Numero</label>
+							<label for="number">Numero *</label>
 								<input type="text" id="number" name="peopleNumber" value="">
 																
 							</div>
 							<div class="col s6">
-							<label>Bairro</label>
+							<label>Bairro *</label>
 								<input type="text" name="peopleNeighborhood">
 																
 							</div>
 							<div class="col s6">
-							<label>Estado</label>
+							<label>Estado *</label>
 							<select class="browser-default" name="state" id="state">
 							<option disabled selected> Escolha o Estado</option>
 		                        <?php 
@@ -70,18 +67,18 @@
 	                        </select>
 							</div>
 							<div class="col s6">
-							<label>Cidade</label>
+							<label>Cidade *</label>
 	                        <select class="browser-default" name="peopleCitie" id="localidade">
 	                            <option disabled selected> -- </option>    		                        
                             </select>
 							</div>
 							<div class="col s6">
-							    <label>CEP</label>
+							    <label>CEP *</label>
 								<input type="text" class="cep" name="peopleCep">
 
 							</div>
 							<div class="col s6">
-							    <label for="dataNasc">Data de Nascimento</label>
+							    <label for="dataNasc">Data de Nascimento *</label>
 								<input type="date" id="dataNasc" name="peopleDateBirth" class="datepicker">
 							</div>
 							<div class="col s6">
@@ -94,7 +91,10 @@
 								<input type="text" class="phone" name="peoplePhone2">
 																
 							</div>
-							<div align="right">
+							<div class="col s6" align="left">
+							    <label style="color:black;">* campos obrigatórios</label>
+							</div>
+							<div class="col s6" align="right">
 							<button type="submit" class="waves-green btn green">Salvar 
 						        <i class="material-icons right">send</i>
 					        </button>
@@ -103,10 +103,7 @@
 					</form>
 			</div>
 		</div>
-<script type="text/javascript"  src="<?= base_url('assets/js/jquery-2.2.2.js')?>"></script>
-<script src="<?= base_url('assets/js/jquery.maskedinput.js'); ?>" type="text/javascript"></script>
-<script src="<?= base_url('assets/js/jquery.validate.js'); ?>" type="text/javascript"></script>
-<meta charset="UTF-8">
+
 <script type="text/javascript">
 $(document).ready(function(){
 //Mascaras
@@ -134,24 +131,24 @@ $('#formPeople').validate({
                 peopleNumber: { required: true, digits:true,},  
                 state: {required: true,},
                 peopleCnpj: { required: true,},  
-                peopleInsc: { required: true,}, 
+                peopleInscricao: { required: true,}, 
                 peopleCpf: { required: true,},  
                 peopleRg: { required: true,},
                 peopleCitie: {required: true,},
             },  
             messages: {  
-                peopleName: { required: '<p class="col s6" style="color: red;">Preencha o campo Nome<br>', minlength: '<p class="col s6" style="color: red;">No mínimo 5 letras <br>'}, 
-                peopleAdress: { required: '<p class="col s6" style="color: red;">Preencha o campo Endereco <br>'},
-                peopleNeighborhood: {required:'<p class="col s6" style="color: red;">Preencha o campo Bairro<br>'},
-                peopleDateBirth: { required: '<p class="col s6" style="color: red;">Preencha a Data de Nascimento<br>',maxlength:'<p style="color: red;">Informe uma data válida<br>'}, 
-                peopleCep: { required: '<p class="col s6" style="color: red;">Preencha o campo CEP<br>',}, 
-                peopleNumber: { required: '<p class="col s6" style="color: red;">Preencha o campo Numero <br>', digits:'<p class="col s6" style="color: red;">Apenas numeros <br>'}, 
-                state: {required: '<p class="col s6" style="color: red;">Escolha um estado <br>',},
-                peopleCnpj: { required: '<p class="col s6" style="color: red;">Preencha o campo CNPJ <br>'}, 
-                popleInsc: { required: '<p class="col s6" style="color: red;">Preencha o campo Inscrição Estadual <br>'},
-                peopleCpf: { required: '<p class="col s6" style="color: red;">Preencha o campo CPF<br>',},  
-                peopleRg: { required: '<p class="col s6" style="color: red;">Preencha o campo RG<br>',},
-                peopleCitie :{required: '<p class="col s6" style="color: red;">Escolha uma cidade <br>',},
+                peopleName: { required: '<span class="col s6" style="color: red; margin-top:1px;">Preencha o campo Nome<br>', minlength: '<p class="col s6" style="color: red; margin-top:1px;">No mínimo 5 letras <br>'}, 
+                peopleAdress: { required: '<p class="col s6" style="color: red; margin-top:1px;">Preencha o campo Endereco <br>'},
+                peopleNeighborhood: {required:'<p class="col s6" style="color: red; margin-top:1px;">Preencha o campo Bairro<br>'},
+                peopleDateBirth: { required: '<p class="col s6" style="color: red; margin-top:1px;">Preencha a Data de Nascimento<br>',maxlength:'<p style="color: red; margin-top:1px;">Informe uma data válida<br>'}, 
+                peopleCep: { required: '<p class="col s6" style="color: red; margin-top:1px;">Preencha o campo CEP<br>',}, 
+                peopleNumber: { required: '<p class="col s6" style="color: red; margin-top:1px;">Preencha o campo Numero <br>', digits:'<p class="col s6" style="color: red; margin-top:1px;">Apenas numeros <br>'}, 
+                state: {required: '<p class="col s6" style="color: red; margin-top:1px;">Escolha um estado <br>',},
+                peopleCnpj: { required: '<p class="col s6" style="color: red; margin-top:1px;">Preencha o campo CNPJ <br>'}, 
+                peopleInscricao: { required: '<p class="col s8" style="color: red; margin-top:1px;">Preencha o campo Inscrição Estadual <br>'},
+                peopleCpf: { required: '<p class="col s6" style="color: red; margin-top:1px;">Preencha o campo CPF<br>',},  
+                peopleRg: { required: '<p class="col s6" style="color: red; margin-top:1px;">Preencha o campo RG<br>',},
+                peopleCitie :{required: '<p class="col s6" style="color: red; margin-top:1px;">Escolha uma cidade <br>',},
             },
        
 

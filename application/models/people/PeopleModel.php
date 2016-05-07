@@ -36,6 +36,16 @@ class PeopleModel extends CI_Model {
 			return $state->result();
 		}
 	}
+
+	public function cities()
+	{
+		$this->db->order_by('name','asc');
+		$citie = $this->db->get('cities');
+		if($citie->num_rows()>0)
+		{
+			return $citie->result();
+		}
+	}
 	
 	public function localidades($state)
 	{
@@ -48,6 +58,22 @@ class PeopleModel extends CI_Model {
 		}
 	}
 
+	public function alterStates($id)
+	{
+	    return $this->db->query("call SP_people_cities($id)")->result();
+	}
+    
+    public function get_pagination($max, $init){
+        
+		$this->db->order_by('name','asc');
+		$query = $this->db->get('people', $max, $init);
+        return $query->result();
+	}
+
+	public function count_register()
+    {
+        return $this->db->count_all_results('people');
+    }
 
 
 }

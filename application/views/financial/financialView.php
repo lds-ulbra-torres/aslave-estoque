@@ -1,7 +1,3 @@
-
-<script type="text/javascript">
-
-</script>
 <div>
 	
 	<a class="modal-trigger waves-effect waves-light btn" href="classification">CLASSIFICAÇÕES

@@ -9,3 +9,5 @@ class HomeController extends CI_Controller {
 	}
 }
 
+/* End of file HomeController.php */
+/* Location: ./application/controllers/HomeController.php */

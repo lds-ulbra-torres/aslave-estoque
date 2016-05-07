@@ -3,6 +3,7 @@ date_default_timezone_set('America/Sao_Paulo');
 $datePick = date('Y-m-d');
 $monPick = date('Y-m');
 ?>
+
 <script type="text/javascript">
 	$(document).ready(function(){
 		$(document).on('click','.deleteMovModal',function(){
@@ -72,7 +73,7 @@ $monPick = date('Y-m');
 							try{
 								var items=[];   
 								$.each(obj, function(i,val){                
-									items.push($('<tr><td>' + val.date_financial_release +'</td><td>'+ val.due_date_pay +'</td><td>'+ val.name +'</td><td class="right">'+ val.value+ ".00" +' </td><td>'+ val.type_mov +' </td><td> <a href="update-movimentation-form/'+ val.id_financial_release +'">Alterar</a> | <a href="#deleteMovModal" id="'+ val.id_financial_release +'"class="deleteMovModal">Deletar</a></td> </tr>'));
+									items.push($('<tr><td>' + val.date_financial_release +'</td><td>'+ val.due_date_pay +'</td><td>'+ val.name +'</td><td class="right">'+ val.value + ' </td><td>'+ val.type_mov +' </td><td> <a href="update-movimentation-form/'+ val.id_financial_release + '">Alterar</a> | <a href="#deleteMovModal" id="'+ val.id_financial_release +'"class="deleteMovModal">Deletar</a></td> </tr>'));
 								});
 
 								$('#bodyMove').append.apply($('#bodyMove'), items);
@@ -139,9 +140,9 @@ $monPick = date('Y-m');
 		<div class="col s12 m3 right"><h5 class="">Total</h5>
 				<?php 
 					if($total > 0){
-						echo "<h6 style='color:green'>R$ ".$total.".00</h6>";
+						echo "<h6 style='color:green'>R$ ".$total."</h6>";
 					}else{
-						echo "<h6 style='color:red'>R$ ".$total.".00</h6>";
+						echo "<h6 style='color:red'>R$ ".$total."</h6>";
 					}
 				?>
 			</div>
@@ -162,7 +163,7 @@ $monPick = date('Y-m');
 						<td><?= date('m-Y', strtotime($movimentation['date_financial_release']));?></td>
 						<td><?= date('d-m-Y', strtotime($movimentation['due_date_pay']));?></td>
 						<td><?= $movimentation['name'] ?></td>
-						<td class=" right"> <?= $movimentation['value'] ?>.00</td>
+						<td class=" right"> <?= $movimentation['value'] ?></td>
 						<td><?= $movimentation['type_mov'] ?></td>
 						<td> 
 							<a href="update-movimentation-form/<?= $movimentation['id_financial_release'] ?>">Alterar</a>

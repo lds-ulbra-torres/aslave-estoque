@@ -20,7 +20,7 @@
 							$.each(obj, function(i,val){
 								if(val.input_type == "1"){val.input_type = "Compra";}else{val.input_type = "Doação";}
 								explode = val.input_date.split("-");		
-								items.push($("<tr><td><a href='<?= base_url('stock/entries/'); ?>/"+val.id_stock+"'>"+val.name+"</a></td><td>"+explode.reverse().join("/")	+"</td><td>"+val.sum_value+"</td><td class='input_type_search'>"+val.input_type+"</td><td><a id="+ val.id_stock +" href='#' class='delete_stock_btn'>Apagar</a></td></tr>"));
+								items.push($("<tr><td><a href='<?= base_url('stock/entries/'); ?>/"+val.id_stock+"'>"+val.name+"</a></td><td>"+explode.reverse().join("/")	+"</td><td>R$  "+val.sum_value+"</td><td class='input_type_search'>"+val.input_type+"</td><td><a id="+ val.id_stock +" href='#' class='delete_stock_btn'>Apagar</a></td></tr>"));
 							});	
 							$('#input > tbody').append.apply($('#input > tbody'), items);
 						}catch(e) {		
@@ -54,7 +54,7 @@
 							$.each(obj, function(i,val){
 								if(val.input_type == "1"){val.input_type = "Compra";}else{val.input_type = "Doação";}
 								explode = val.input_date.split("-");		
-								items.push($("<tr><td><a href='<?= base_url('stock/entries/'); ?>/"+val.id_stock+"'>"+val.name+"</a></td><td>"+explode.reverse().join("/")+"</td><td>"+val.sum_value+"</td><td class='input_type_search'>"+val.input_type+"</td><td><a id="+ val.id_stock +" href='#' class='delete_stock_btn'>Apagar</a></td></tr>"));
+								items.push($("<tr><td><a href='<?= base_url('stock/entries/'); ?>/"+val.id_stock+"'>"+val.name+"</a></td><td>"+explode.reverse().join("/")+"</td><td>R$  "+val.sum_value+"</td><td class='input_type_search'>"+val.input_type+"</td><td><a id="+ val.id_stock +" href='#' class='delete_stock_btn'>Apagar</a></td></tr>"));
 							});	
 							$('#input > tbody').append.apply($('#input > tbody'), items);
 						}catch(e) {		
@@ -93,7 +93,7 @@
 								$.each(obj, function(i,val){
 									if(val.input_type == "1"){val.input_type = "Compra";}else{val.input_type = "Doação";}			
 									explode = val.input_date.split("-");			
-									items.push($("<tr><td><a href='<?= base_url('stock/entries/'); ?>/"+val.id_stock+"'>"+val.name+"</a></td><td>"+explode.reverse().join("/")+"</td><td>"+val.sum_value+"</td><td class='input_type_search'>"+val.input_type+"</td><td><a id="+ val.id_stock +" href='#' class='delete_stock_btn'>Apagar</a></td></tr>"));
+									items.push($("<tr><td><a href='<?= base_url('stock/entries/'); ?>/"+val.id_stock+"'>"+val.name+"</a></td><td>"+explode.reverse().join("/")+"</td><td>R$  "+val.sum_value+"</td><td class='input_type_search'>"+val.input_type+"</td><td><a id="+ val.id_stock +" href='#' class='delete_stock_btn'>Apagar</a></td></tr>"));
 								});	
 								$('#input > tbody').append.apply($('#input > tbody'), items);
 							}catch(e) {		

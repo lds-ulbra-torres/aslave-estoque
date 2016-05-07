@@ -1,4 +1,4 @@
-<script type="text/javascript" src="http://www.technicalkeeda.com/js/javascripts/plugin/json2.js"></script>
+
 <style type="text/css">
 	li{
 		list-style: none;
@@ -134,7 +134,7 @@
 			var valueRemove = $this.parents("tr").find(".tdProductTotal").text().replace(/[^0-9.,]/g,'');
 			total = total - valueRemove;
 			$("#total").html("Total: R$ "+ total);
-			$(this).closest('tr').remove();
+			$(this).parents('tr').remove();
 		});
 		$("#add_output_stock_btn").click(function(e){
 			e.preventDefault();
@@ -144,7 +144,6 @@
 			$(".productRow").each(function(i){
 				var pData = { 
 					id_product: $(this).find(".tdProductId").attr("id"),
-					descript:  $(this).find(".tdProductDescript").text(),
 					amount:  $(this).find(".tdProductAmount").text(),
 					price: Number($(this).find(".tdProductPrice").text().replace(/[^0-9.,]/g,''))
 				};
@@ -189,7 +188,7 @@
 				<input name="people" type="text" autocomplete="off" maxlength="45" required placeholder="Pessoa...">
 			</div>
 			<div class="input-field col s3">
-				<input name="descript" type="text" maxlength="45" placeholder="Descrição...">
+				<input name="descript" type="text" maxlength="250" placeholder="Descrição...">
 			</div>
 			<div class="input-field col s3">
 				<input placeholder="Data" name="date" type="date" required>

@@ -1,4 +1,4 @@
-	<script type="text/javascript" src="http://www.technicalkeeda.com/js/javascripts/plugin/json2.js"></script>
+
 	<style type="text/css">
 		li{
 			list-style: none;
@@ -87,7 +87,7 @@
 				$('#loadProduct').empty();
 			});
 			var total = 0;
-			$("#add_product_input_stock_btn").click(function(e){
+			$("#generate_table_product").submit(function(e){
 				e.preventDefault();
 				var id = $("#product option").attr("id");
 				var check = false;
@@ -132,7 +132,7 @@
 				var valueRemove = $this.parents("tr").find(".tdProductTotal").text().replace(/[^0-9.,]/g,'');
 				total = total - valueRemove;
 				$("#total").html("Total: R$ "+ total.toFixed(2));
-				$(this).closest('tr').remove();
+				$(this).parents('tr').remove();
 			});
 			$("#add_input_stock_btn").click(function(e){
 				e.preventDefault();
@@ -229,7 +229,7 @@
 	</div>
 
 	<div id="add_product_modal" class="modal">
-		<form id="">
+		<form id="generate_table_product">
 			<div class="modal-content row">
 				<h4>Adicionar produto</h4>
 				<div class="input-field col s4">	

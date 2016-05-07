@@ -3,6 +3,10 @@
  * Copyright 2014-2015 Materialize
  * MIT License (https://raw.githubusercontent.com/Dogfalo/materialize/master/LICENSE)
  */
+.marginl{
+  margin-left: 10px;
+}
+
 .materialize-red.lighten-5 {
   background-color: #fdeaeb !important; }
 
@@ -5985,8 +5989,6 @@ button.btn-floating {
     -o-transform: scale(0);
     transform: scale(0);
     pointer-events: none; }
-  .waves-effect.waves-light .waves-ripple {
-    background-color: #425f9c; }
   .waves-effect.waves-red .waves-ripple {
     background-color: rgba(244, 67, 54, 0.7); }
   .waves-effect.waves-yellow .waves-ripple {
@@ -6262,7 +6264,7 @@ label {
 :-ms-input-placeholder {
   color: #d1d1d1; }
 
-input[type=text], input[type=password], input[type=email], input[type=url], input[type=time], input[type=date], input[type=datetime-local], input[type=tel], input[type=number], input[type=search], textarea.materialize-textarea {
+input[type=text], input[type=password],input[type=month] ,input[type=email], input[type=url], input[type=time], input[type=date], input[type=datetime-local], input[type=tel], input[type=number], input[type=search], textarea.materialize-textarea {
   background-color: transparent;
   border: none;
   border-bottom: 1px solid #9e9e9e;

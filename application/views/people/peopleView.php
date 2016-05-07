@@ -1,58 +1,38 @@
 <div>
-		<a class="waves-effect waves-light btn" href="create-people">CADASTRO DE PESSOA
-		<i class="material-icons right">input</i></a></a>
-			<div>
+        <div>
+		    <a class="waves-effect waves-light btn" href="<?= base_url('create-people')?>">CADASTRO DE PESSOA
+		    <i class="material-icons right">input</i></a></a>
+		<div>
 		<h3 align="center">Pessoas</h3>
-		<table id="Tpeople" class="bordered highlight">
-			<thead>
-				<td><strong>Nome </strong></td>
-				<td><strong>CPF/CNPJ </strong></td>
-				<td><strong>Documento</strong></td>
-				<td><strong>End. </strong></td>
-				<td><strong>Num. </strong></td>
-				<td><strong>Bairro </strong></td>
-				<td><strong>CEP </strong></td>
-				<td><strong>Data de Nasc </strong></td>
-				<td><strong>Phone  </strong></td>
-				<td><strong>Phone2 </strong></td>
+		<div class="row">
+		    <div class="container">
+		    <table id="Tpeople" class="bordered highlight">
+			    <thead>
+				    <td><strong>Nome </strong></td>
+				    <td><strong>CPF/CNPJ </strong></td>
+				    <td><strong>Documento</strong></td>
+			    </thead>
+			    <tbody>
+				    <?php foreach ($peoples as $people) :?>
+					    <tr>
+						    <td><a href="<?= base_url('update-people/'.$people->id_people)?>"><?= $people->name ?></a></td>
+						    <td><?= $people->cpf_cnpj ?></td>
+						    <td><?= $people->documment ?></td>
+						    <td>
+							    <a class="delete_people" id="<?php echo $people->id_people; ?>" href="#">
+                                    <i class="material-icons" style="color:red;">delete_forever</i>
+							    </a>
 
-
-			</thead>
-			<tbody>
-				<?php foreach ($peoples as $people) :?>
-					<tr>
-						<td><?= $people['name'] ?></td>
-						<td><?= $people['cpf_cnpj'] ?></td>
-						<td><?= $people['documment'] ?></td>
-						<td><?= $people['adress'] ?></td>
-						<td><?= $people['number'] ?></td>
-						<td><?= $people['neighborhood'] ?></td>
-						<td><?= $people['cep'] ?></td>
-						<td><?= $people['date_birth'] ?></td>
-						<td><?= $people['phone1'] ?></td>
-						<td><?= $people['phone2'] ?></td>
-						<td>
-							<a href="update-people/<?= $people['id_people'] ?>">Alterar</a>
-							|
-							<a class="delete_people" id="<?php echo $people['id_people']; ?>" href="#">Apagar</a>
-
-
-						</td>
-					</tr>
-				<?php endforeach ?>
-			</tbody>
-    </table>
-    <div class="pagination">
-			<ul class="pagination right-align">
-				<li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
-				<li class="active grey"><a href="#!">1</a></li>
-				<li class="waves-effect"><a href="#!">2</a></li>
-				<li class="waves-effect"><a href="#!">3</a></li>
-				<li class="waves-effect"><a href="#!">4</a></li>
-				<li class="waves-effect"><a href="#!">5</a></li>
-				<li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
-			</ul>
-		</div>
+						    </td>
+					    </tr>
+				    <?php endforeach ?>
+			    </tbody>
+             </table>
+                 <div>
+    	            <?php echo $pagination_show;  ?>
+                 </div>
+          </div>
+        </div>
 		
     <div id="deletePeople" class="modal">
     <div class="modal-content">
@@ -60,10 +40,8 @@
       <p>Deseja realmente apagar o cadastro?</p>
     </div>
     <div class="modal-footer">
-        <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Cancelar
-        <i class="material-icons right">clear</i></a></a>
-		<a href="#!" id="delete_people" class=" modal-action modal-close waves-effect waves-red btn-flat">Apagar
-		<i class="material-icons right">delete_forever</i></a>
+        <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Cancelar</a>
+		<a href="#!" id="delete_people" class=" modal-action modal-close red btn">Apagar</a>
     </div>
   </div>
 		</table>
