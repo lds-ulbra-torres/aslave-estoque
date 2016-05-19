@@ -1,7 +1,11 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+
 class MovimentationController extends CI_Controller {
+
+	var $sess = 'login';
+	
 	public function __construct()
 	{
 		parent::__construct();
@@ -17,21 +21,28 @@ class MovimentationController extends CI_Controller {
 
 		foreach($data['movimentations'] as $movimentation) :
 
-			if($movimentation['type_mov'] == 'e'){
+			if($movimentation['type_mov'] == 'E'){
 				$data['total'] += $movimentation['value'];
 			}else{
 				$data['total'] -= $movimentation['value'];
 			}
 
 		endforeach;
-
-		$this->template->load('template/templateMenu', 'movimentation/movimentationView', $data);
+        if($this->session->userdata($this->sess)){
+		    $this->template->load('template/templateMenu', 'movimentation/movimentationView', $data);
+		}else{
+			redirect('login');
+		}
 	}
 
 	public function createMovimentationForm(){
 		$data['peoples'] = $this->peopleModel->get();
 		$data['classifications'] = $this->classificationModel->get();
-		$this->template->load('template/templateMenu', 'movimentation/createMovimentationFormView', $data);
+		if($this->session->userdata($this->sess)){  
+		    $this->template->load('template/templateMenu', 'movimentation/createMovimentationFormView', $data);
+		}else{
+			redirect('login');
+		}
 	
 	}
 
@@ -80,7 +91,11 @@ class MovimentationController extends CI_Controller {
 
 	public function updateMovimentationForm($idMovimentation){
 		$data['movimentation'] = $this->movimentationModel->getUpdateData($idMovimentation);
-		$this->template->load('template/templateMenu', 'movimentation/updateMovimentationView', $data);			
+		if($this->session->userdata($this->sess)){
+		    $this->template->load('template/templateMenu', 'movimentation/updateMovimentationView', $data);		
+		}else{
+			redirect('login');
+		}	
 	}
 
 	public function updateMovimentation($idMovimentation){

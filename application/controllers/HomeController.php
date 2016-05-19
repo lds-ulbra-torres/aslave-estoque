@@ -5,7 +5,13 @@ class HomeController extends CI_Controller {
 
 	public function index()
 	{
-		$this->template->load('template/templateMenu','home');
+		if($this->session->userdata('login')){
+			$data['login_user'] = $this->session->userdata('login');
+			$this->template->load('template/templateMenu','home', $data);
+		}else{
+			redirect('login');
+		}
+		
 	}
 }
 

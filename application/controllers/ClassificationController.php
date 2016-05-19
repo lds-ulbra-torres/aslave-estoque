@@ -3,6 +3,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class ClassificationController extends CI_Controller {
 
+    var $sess = 'login';
+
 	public function __construct()
 	{
 		parent::__construct();
@@ -14,11 +16,19 @@ class ClassificationController extends CI_Controller {
 	public function index()
 	{
 		$data['classifications'] = $this->classificationModel->get();
-		$this->template->load('template/templateMenu', 'classification/classificationView', $data);
+		if($this->session->userdata($this->sess)){
+		    $this->template->load('template/templateMenu', 'classification/classificationView', $data);
+		}else{
+			redirect('login');
+		}
 	}
 
 	public function createForm(){
-		$this->template->load('template/templateMenu', 'classification/createClassificationView');
+		if($this->session->userdata($this->sess)){
+		    $this->template->load('template/templateMenu', 'classification/createClassificationView');
+		}else{
+			redirect('login');
+		}
 	}
 
 	public function create(){
@@ -34,7 +44,11 @@ class ClassificationController extends CI_Controller {
 
 	public function updateForm($idClassification){
 		$data['classification']=$this->classificationModel->getDataClassification($idClassification); 
-		$this->template->load('template/templateMenu', 'classification/updateClassificationView', $data);
+		if($this->session->userdata($this->sess)){
+		    $this->template->load('template/templateMenu', 'classification/updateClassificationView', $data);
+		}else{
+			redirect('login');
+		}
 	}
 
 	public function update($id){
@@ -53,16 +67,18 @@ class ClassificationController extends CI_Controller {
 		if(!$this->classificationModel->getItemByForeign($data)){
 
 			if($this->classificationModel->delete($data)){
-				redirect('classification','refresh');
-			}else{
-				echo "deu ruim";
+				echo TRUE;
 			}
 		}else{
-			echo "<script>alert('A classificação está sendo utilizada.')</script>";
-			redirect('classification','refresh');
+			echo FALSE;
 		}
-		
-		
+	}
+
+	public function searchPerType(){
+		$type = $this->input->post('type');
+		$data['classifications'] = $this->classificationModel->getPerType($type);
+
+		echo json_encode($data['classifications']);
 	}
 
 	public function searchClassification(){

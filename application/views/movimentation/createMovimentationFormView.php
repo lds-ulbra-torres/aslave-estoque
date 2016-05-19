@@ -3,16 +3,16 @@ date_default_timezone_set('America/Sao_Paulo');
 $datePick = date('Y-m-d');
 $monPick = date('Y-m');
 ?>
-<a class="modal-trigger waves-effect waves-light btn" href="<?= base_url('financial-movimentation') ?>" >Voltar</a>
 <div class="container">
+    <a href="<?= base_url('financial-movimentation') ?>" >< Voltar para lançamentos</a>
 	<form action="create-movimentation" method="POST" >
 		<div class="row">
 			<div class="col s6">
 				<label for="type">Tipo:</label>
 				<select class="browser-default" required name="type" id="type"> 
 					<option value="" disabled selected>Selecione</option>
-					<option value="e">Entrada</option>
-					<option value="s">Saida</option>
+					<option value="E">Entrada</option>
+					<option value="S">Saida</option>
 				</select>
 			</div>
 			<div class="col s6">
@@ -22,13 +22,16 @@ $monPick = date('Y-m');
 				</select>
 			</div>
 			
-			<a class="col s12 waves-effect waves-light  modal-trigger openSearchModal"  href="#searchModal">
-				<div>
+			
+				<div class="col s12">
 					<label for="inputPerson">Pessoa:</label>
-					<input type="text" name="people" id="inputPerson" placeholder="Clique aqui para escolher uma pessoa." value="" disabled required></input>
+					<input type="text" name="people" id="inputPerson" placeholder="Pesquise uma pessoa aqui." value="" required></input>
 					<input type="hidden" name="idPeople" id="idPeople" ></input>
+
+					<a href="#" id="found">
+						
+					</a>
 				</div>
-			</a>
 
 
 				<div class="col s6">
@@ -43,7 +46,7 @@ $monPick = date('Y-m');
 
 				<div class="col s6">
 					<label for="date">Data da competência: </label>
-					<input type="month" class="datepicker" value="" required name="date" >
+					<input class="typeMonth" type="month" class="datepicker" value="" required name="date" >
 				</div>
 				<div class="col s6">
 					<label for="movimentationDate">Data do lançamento:</label>
@@ -54,47 +57,16 @@ $monPick = date('Y-m');
 
 				<div class="col s12">
 					<label for="historic">Histórico</label>
-					<textarea class="materialize-textarea" name="historic" maxlength="255" cols="30" rows="10"></textarea>
-					<button type="submit" class="btn green">Salvar 
+					<textarea class="materialize-textarea" required name="historic" maxlength="255" cols="30" rows="10"></textarea>
+					<button type="submit" class="btn green right">Salvar 
 						<i class="material-icons right">send</i>
 					</button>
 				</div>
 		</div>
 	</form>
 
-	<!-- Modal Structure -->
-		<div id="searchModal" class="modal">
-			<div class="modal-content">
-				<nav>
-					<div class="nav-wrapper color">
-						<div class="input-field">
-							<input id="search" name="search" type="search" required placeholder="Pesquisar...">
-							<label for="search"><i class="material-icons">search</i></label>
-						</div>
-					</div>
-				</nav>
 
-				<br><br>
-
-				<table class="striped hightlight">
-					<thead>
-						<tr>
-
-						</tr>
-					</thead>
-					<tbody id="finalResult">
-						<tr>
-						
-						</tr>
-					</tbody>
-				</table>
-					<div class="modal-footer">
-						<a href=" <?= base_url('/PeopleController/create') ?>" class=" modal-action "><button class="waves-effect waves-green btn">Adicionar Nova Pessoa</button></a>
-					</div>
-			</div>
-		</div>
 </div>
-
 <script type="text/javascript">
 	  
 	$(document).ready(function(){
@@ -118,33 +90,34 @@ $monPick = date('Y-m');
 			});
 		});
 
-		$(".openSearchModal").click(function(){
-       		$('#searchModal').openModal();
-       		document.getElementById('search').value="";
-     	});
+		$(document).on('click','option', function(){
+	      	document.getElementById('idPeople').value=$(this).attr('id');
+	      	document.getElementById('inputPerson').value=$(this).attr('value');
+	      	$('#found').empty();
+   		});
 
-		$("input[name=search]").keyup(function(){
+		$("#inputPerson").keyup(function(){
 			if($(this).val() != ''){
 				$.ajax({
-					url: "<?php echo site_url('/SearchController/buscar')?>",
+					url: "<?= site_url('/SearchController/buscar'); ?>",
 					type: "POST",
 					cache: false,
 					data: {name_people: $(this).val()},
 					success: function(data){
-						$('#finalResult').html("");
+						$('#found').html("");
 						var obj = JSON.parse(data);
 						if(obj.length>0){
 							try{
 								var items=[];   
 								$.each(obj, function(i,val){                      
-									items.push($('<tr><td>' + val.name + '<button class="right btn button" id="'+ val.id_people +'" name ="'+ val.name +'" >SELECIONAR</button></td></tr>'));
+									items.push($('<option id="'+ val.id_people +'" value="'+ val.name +'"> ' + val.name + '  </option>'));
 								}); 
-								$('#finalResult').append.apply($('#finalResult'), items);
+								$('#found').append.apply($('#found'), items);
 							}catch(e) {   
 								alert('Exception while request..');
 							}   
 						}else{
-							$('#finalResult').html($('<span/>').text("Nenhum nome encontrado"));    
+							$('#found').html($('<span/>').text("Nenhum nome encontrado"));    
 						}   
 					},
 					error: function(){
@@ -152,18 +125,9 @@ $monPick = date('Y-m');
 					}
 				});
 			}else{
-				$('#finalResult').empty();
+				$('#found').empty();
 			}
-		});
-
-	$(document).on('click','.button', function(){
-        document.getElementById('inputPerson').value=$(this).attr('name');
-        document.getElementById('idPeople').value=$(this).attr('id');
-        $('#searchModal').closeModal();	
-        $('#finalResult').empty();
-
-    });
-
+		}); 
 
 		var mask = {
 			money: function() {

@@ -3,6 +3,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class StockController extends CI_Controller {
 
+	var $sess = 'login';
+	
 	public function __construct() {
 		parent::__construct();
 		$this->load->model('stock/GroupModel');
@@ -13,7 +15,11 @@ class StockController extends CI_Controller {
 
 	public function index(){   
 		$data['view'] = null;
-		$this->template->load('template/templateMenu','stock/stock/HomeView', $data);
+		if($this->session->userdata($this->sess)){
+		$this->template->load('template/templateMenu','stock/stock/StartView', $data);
+		}else{
+			redirect('login');
+		}
 	}
 
 	/* CATEGORIAS */
@@ -21,18 +27,30 @@ class StockController extends CI_Controller {
 		$data['groups'] = $this->GroupModel->getGroups();
 		$data['view'] = 'groups';
 		$data['search_string'] = null;
-		$this->template->load('template/templateMenu','stock/stock/HomeView', $data);
+		if($this->session->userdata($this->sess)){
+		$this->template->load('template/templateMenu','stock/group/GroupView', $data);
+		}else{
+			redirect('login');
+		}
 	}
 
 	public function createGroupView() {
 		$data['view'] = 'groups/create';
-		$this->template->load('template/templateMenu','stock/stock/HomeView', $data);
+		if($this->session->userdata($this->sess)){
+		$this->template->load('template/templateMenu','stock/group/CreateGroupView', $data);
+		}else{
+			redirect('login');
+		}
 	}
 
 	public function updateGroupView() {
 		$data['group_data'] = $this->GroupModel->getGroupById($this->uri->segment(4));
 		$data['view'] = 'groups/update';
-		$this->template->load('template/templateMenu','stock/stock/HomeView', $data);
+		if($this->session->userdata($this->sess)){
+		$this->template->load('template/templateMenu','stock/group/UpdateGroupView', $data);
+		}else{
+			redirect('login');
+		}
 	}
 
 	public function createGroup() {
@@ -82,20 +100,32 @@ class StockController extends CI_Controller {
 		$data['groups'] = $this->GroupModel->getGroups();
 		$data['products'] = $this->ProductModel->getProducts();
 		$data['view'] = 'products';
-		$this->template->load('template/templateMenu','stock/stock/HomeView', $data);
+		if($this->session->userdata($this->sess)){
+		$this->template->load('template/templateMenu','stock/product/ProductView', $data);
+		}else{
+			redirect('login');
+		}
 	}
 
 	public function createProductView() {
 		$data['groups'] = $this->GroupModel->getGroups();
 		$data['view'] = 'products/create';
-		$this->template->load('template/templateMenu','stock/stock/HomeView', $data);
+		if($this->session->userdata($this->sess)){
+		$this->template->load('template/templateMenu','stock/product/CreateProductView', $data);
+		}else{
+			redirect('login');
+		}
 	}
 
 	public function updateProductView() {
 		$data['groups'] = $this->GroupModel->getGroups();
 		$data['product_data'] = $this->ProductModel->getProductById($this->uri->segment(4));
 		$data['view'] = 'products/update';
-		$this->template->load('template/templateMenu','stock/stock/HomeView', $data);
+		if($this->session->userdata($this->sess)){
+		$this->template->load('template/templateMenu','stock/product/UpdateProductView', $data);
+		}else{
+			redirect('login');
+		}
 	}
 
 	public function createProduct() {
@@ -235,23 +265,66 @@ class StockController extends CI_Controller {
 			echo "Todos os campos são obrigatórios";
 		}
 	}
+	public function searchInputStockByAll(){
+		$this->form_validation->set_rules('dateFrom', 'de', 'required');
+		$this->form_validation->set_rules('dateTo', 'a', 'required');
+		if($this->form_validation->run()){
+			$from = new DateTime($this->input->post('dateFrom'));
+			$to = new DateTime($this->input->post('dateTo'));
+			if($from > $to){
+				echo "-1";
+			}else if($to >  new DateTime("now")){
+				echo "-2";
+			}else{
+				$StringFrom = $from->format("Y-m-d");
+				$StringTo = $to->format("Y-m-d");
+				$data = array(
+					'people' => $this->input->post('people'),
+					'input_type' => $this->input->post('input_type'),
+					'from' => $StringFrom,
+					'to' => $StringTo
+					);
+				$query =  $this->StockModel->searchStockByAllWithDate($data);
+				echo json_encode($query);
+			}
+		}else{
+			$data = array(
+				'people' => $this->input->post('people'),
+				'input_type' => $this->input->post('input_type')
+				);
+			$query1 =  $this->StockModel->searchStockByAllWithoutDate($data);
+			echo json_encode($query1);
+		}
+	}
 	/* ENTRADAS DE ESTOQUE */
 	public function entriesView(){
 		$data['input_stocks'] = $this->StockModel->getInputStocks();
 		$data['view'] = 'stock/entries';
-		$this->template->load('template/templateMenu','stock/stock/HomeView', $data);
+		if($this->session->userdata($this->sess)){
+		$this->template->load('template/templateMenu','stock/stock/in/EntriesView', $data);
+		}else{
+			redirect('login');
+		}
 	}
 
 	public function createEntryView(){
 		$data['view'] = 'stock/entries/create';
-		$this->template->load('template/templateMenu','stock/stock/HomeView', $data);
+		if($this->session->userdata($this->sess)){
+		$this->template->load('template/templateMenu','stock/stock/in/CreateEntryView', $data);
+		}else{
+			redirect('login');
+		}
 	}
 
 	public function detailedEntryView() {
 		$id_stock = $this->uri->segment(3);
 		$data['view'] = 'stock/entries/detailed';
 		$data['entry_data'] = $this->StockModel->getDetailedEntry($id_stock);
-		$this->template->load('template/templateMenu','stock/stock/HomeView', $data);
+		if($this->session->userdata($this->sess)){
+		$this->template->load('template/templateMenu','stock/stock/in/DetailedEntryView', $data);
+		}else{
+			redirect('login');
+		}
 	}
 
 	public function createInputStock() {
@@ -339,19 +412,31 @@ class StockController extends CI_Controller {
 	public function outputsView(){
 		$data['output_stocks'] = $this->StockModel->getOutputStocks();
 		$data['view'] = 'stock/outputs';
-		$this->template->load('template/templateMenu','stock/stock/HomeView', $data);
+		if($this->session->userdata($this->sess)){
+		$this->template->load('template/templateMenu','stock/stock/out/OutputsView', $data);
+		}else{
+			redirect('login');
+		}
 	}
 
 	public function createOutputView() {
 		$data['view'] = 'stock/outputs/create';
-		$this->template->load('template/templateMenu','stock/stock/HomeView', $data);
+		if($this->session->userdata($this->sess)){
+		$this->template->load('template/templateMenu','stock/stock/out/CreateOutputView', $data);
+		}else{
+			redirect('login');
+		}
 	}
 
 	public function detailedOutputView() {
 		$id_stock = $this->uri->segment(3);
 		$data['view'] = 'stock/outputs/detailed';
 		$data['output_data'] = $this->StockModel->getDetailedOutput($id_stock);
-		$this->template->load('template/templateMenu','stock/stock/HomeView', $data);
+		if($this->session->userdata($this->sess)){
+		$this->template->load('template/templateMenu','stock/stock/out/DetailedOutputView', $data);
+		}else{
+			redirect('login');
+		}
 	}
 
 	public function createOutputStock() {

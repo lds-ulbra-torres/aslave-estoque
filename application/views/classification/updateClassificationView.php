@@ -1,7 +1,5 @@
-<div class="input-field col s3">
-<a class="modal-trigger waves-effect waves-light btn" href="<?= base_url("classification") ?>" style="margin-left: 5px;">Voltar</a>
-</div>
 <div class="container">
+<a href="<?= base_url("classification") ?>" >< Voltar para classificações</a>
 	<h4 class=" center">Alterar classificação</h4>
 	<?php $id = $classification[0]['id_classification'];?>
 	<form action="<?= base_url("update-classification/$id") ?>" method="POST">
@@ -22,7 +20,7 @@
 			</li>
 			<hr>
 			<li>
-				<button id="sendClassification" class="btn green" type="submit" name="action">Salvar 
+				<button id="sendClassification" class="btn green right" type="submit" name="action">Salvar 
 					<i class="material-icons right">send</i>
 				</button>    
 			</li>

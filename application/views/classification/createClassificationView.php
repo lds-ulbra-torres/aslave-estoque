@@ -1,7 +1,5 @@
-<div class="input-field col s3">
-<a class="modal-trigger waves-effect waves-light btn" href="<?= base_url("classification") ?>" style="margin-left: 5px;">Voltar</a>
-</div>
 <div class="container">
+<a href="<?= base_url("classification") ?>" >< Voltar para classificações</a>
 <h4 class="center">Cadastrar classificação</h4>
 	<form action="create-classification" method="POST">
 	<div class="row">
@@ -30,7 +28,7 @@
 		<div class="row conter">
 			<div class="col s12 ">
 						<hr>
-				<button id="sendClassification" class="btn green" type="submit" name="action">Salvar 
+				<button id="sendClassification" class="btn green right" type="submit" name="action">Salvar 
 					<i class="material-icons right">send</i>
 				</button>    
 			</div>

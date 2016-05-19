@@ -1,6 +1,8 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+var $sess ='login';
+
 class FinancialController extends CI_Controller {
 
 	public function __construct()
@@ -10,7 +12,11 @@ class FinancialController extends CI_Controller {
 
 	public function index()
 	{
-		$this->template->load('template/templateMenu', 'financial/financialView');
+		if($this->session->userdata($this->sess)){
+		    $this->template->load('template/templateMenu', 'financial/financialView');
+		}else{
+			redirect('login');
+		}
 	}
 
 }

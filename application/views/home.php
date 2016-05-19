@@ -1,14 +1,7 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>TESTE</title>
-  <script type="text/javascript"  src="<?= base_url('assets/js/jquery-2.2.2.js')?>"></script>
-</script>
-</head>
-<body>
-
-
-</body>
-</html>
+		<div class="container">
+			<div class="row">
+			    <div class="card-panel">
+				    <h6>Você esta logado como:  <strong class="blue-text"><?= $login_user; ?></strong></h6>
+				</div>
+			</div>
+		</div>

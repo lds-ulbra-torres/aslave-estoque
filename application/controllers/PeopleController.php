@@ -1,8 +1,9 @@
-<?php
+﻿<?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class PeopleController extends CI_Controller {
 	
+    var $sess = 'login';
 
 	public function __construct(){
 		parent:: __construct();
@@ -15,7 +16,7 @@ class PeopleController extends CI_Controller {
 	{
 		//Paginação
 		$this->load->library('pagination');
-        $max = 2;
+        $max = 10;
         $init = (!$this->uri->segment('2')) ? 0 : $this->uri->segment('2');
         $config['base_url'] = base_url('people');
         $config['total_rows'] = $this->peopleModel->count_register();
@@ -24,7 +25,7 @@ class PeopleController extends CI_Controller {
 
     
         $config['full_tag_open'] = '<div class="pagination">
-                                        <ul class="pagination right-align">';
+                                        <ul class="pagination center-align">';
         $config['full_tag_close'] = '   </ul>
                                     </div>';
 
@@ -36,11 +37,11 @@ class PeopleController extends CI_Controller {
         $config['last_tag_open'] = '<li class="waves-effect">';
         $config['last_tag_close'] = '</li>';
 
-        $config['next_link'] = '<i class="active material-icons">chevron_right</i>';
+        $config['next_link'] = '<i class="active material-icons">arrow_forward</i>';
         $config['next_tag_open'] = '<li class="waves-effect">';
         $config['next_tag_close'] = '</li>';
 
-        $config['prev_link'] = '<i class="active material-icons">chevron_left</i>';
+        $config['prev_link'] = '<i class="active material-icons">arrow_back</i>';
         $config['prev_tag_open'] = '<li class="waves-effect">';
         $config['prev_tag_close'] = '</li>';
 
@@ -54,7 +55,11 @@ class PeopleController extends CI_Controller {
 
         $data['pagination_show'] =  $this->pagination->create_links();
     	$data['peoples'] = $this->peopleModel->get_pagination($max, $init);
-		$this->template->load('template/templateMenu', 'people/peopleView', $data);
+		if($this->session->userdata($this->sess)){
+		    $this->template->load('template/templateMenu', 'people/peopleView', $data);
+		}else{
+			redirect('login');
+		}
 	}
 
 
@@ -98,7 +103,11 @@ class PeopleController extends CI_Controller {
 
 		}else{
 			$data['states'] = $this->peopleModel->states();
-			$this->template->load('template/templateMenu', 'people/peopleCreateView',$data);
+			if($this->session->userdata($this->sess)){
+			    $this->template->load('template/templateMenu', 'people/peopleCreateView',$data);
+			}else{
+			    redirect('login');
+		    }
 		}
 		
 	}
@@ -166,7 +175,11 @@ class PeopleController extends CI_Controller {
 			$data['states'] = $this->peopleModel->states();
 			$data['dados_pessoa'] = $this->peopleModel->listPeople($id);
 			$data['alter_states'] = $this->peopleModel->alterStates($id);
-			$this->template->load('template/templateMenu', 'people/peopleUpdateView', $data);
+			if($this->session->userdata($this->sess)){
+			    $this->template->load('template/templateMenu', 'people/peopleUpdateView', $data);
+			}else{
+				redirect('login');
+			}
 		}
 	}
 
@@ -216,6 +229,17 @@ class PeopleController extends CI_Controller {
 						</option>
 				<?php
 			}
+		}
+	}
+
+	public function searchPeople(){
+		$this->form_validation->set_rules('search_string', 'people', 'required');
+		if($this->form_validation->run()){
+			$people = $this->input->post('search_string');
+			$result = $this->peopleModel->search($people);
+			echo json_encode($result);	
+		}else{
+			echo "O campo de busca esta vazio";
 		}
 	}
 
