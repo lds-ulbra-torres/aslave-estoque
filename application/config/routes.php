@@ -52,7 +52,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $route['default_controller'] = 'homeController';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
-
+/* RORAS LOGIN */
+$route['login'] = 'UserController';
 /* ROTAS FINANCEIRO */
 $route['financial'] = 'financialController';
 $route['classification'] = 'classificationController';

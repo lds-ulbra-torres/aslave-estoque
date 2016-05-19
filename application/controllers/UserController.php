@@ -35,7 +35,7 @@ class UserController extends CI_Controller {
 				$this->session->set_userdata('login', $login);
 				echo "1";
 			}else{
-				echo "Usuário não encontrado";
+				echo "Nome de usuário ou senha incorretos.";
 			}
 		}else{
 			echo "Todos os campos são obrigatórios.";

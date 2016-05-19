@@ -44,12 +44,8 @@
   </script>
   </head>
   <body class="blue">
-    <div class="container">
-      <div class="row">
-        <div class="col s12 m5 l5">
-            <h1 class="white-text">Aslave</h1>
-        </div>
-        <div class="col s12 m5 l5 card-panel z-depth-4 right">
+    <div class="row">
+        <div class="col s12 m4 offset-m4 l4 offset-l4 card-panel" >
             <form id="form_login">
                 <div class="row">
                   <div class="input-field col s12 center">
@@ -81,6 +77,7 @@
             <div class="row">
                 <div class="input-field col s12">
                    <button class="btn waves-effect waves-light col s12" type="submit">Entrar</button>
+                </div>
             </div>
             <div class="row">
                 <div class="col s12">
@@ -95,6 +92,5 @@
           </form>
         </div>
       </div>
-    </div>
   </body>
 </html>
