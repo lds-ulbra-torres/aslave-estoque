@@ -72,7 +72,9 @@
 					data: {name_product: $(this).val()},
 					success: function(data){
 						$('#loadProduct').html("");
+						console.log(data);
 						var obj = JSON.parse(data);
+						console.log(obj);
 						if(obj.length>0){
 							try{
 								var items=[]; 	
@@ -80,7 +82,7 @@
 									items.push($("<option id="+ val.id_product +">"+ val.name_product +"</option>"));
 								});	
 								$('#loadProduct').append.apply($('#loadProduct'), items);
-							}catch(e) {		
+							}catch(e){		
 								alert('Ocorreu algum erro ao carregar os Produto!');
 							}		
 						}else{
@@ -88,6 +90,7 @@
 						}		
 					},
 					error: function(data){
+						console.log(data);
 						alert("Ocorreu algum erro ao carregar os Produtos");
 					}
 				});

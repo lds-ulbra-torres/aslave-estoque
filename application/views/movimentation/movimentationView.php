@@ -1,4 +1,4 @@
-<?php 
+﻿<?php 
 date_default_timezone_set('America/Sao_Paulo');
 $datePick = date('Y-m-d');
 $monPick = date('Y-m');
@@ -56,13 +56,14 @@ $monPick = date('Y-m');
 		// Achar a bendita
 		$("#toFound").submit(function(e){
 			e.preventDefault();
-			console.log($("#searchPeopleId").val(),$("#searchDate").val(),$("#typeSearch").val());
+			
 			$.ajax({
 				url: "<?= site_url('search-movimentation'); ?>",
 				type: "POST",
 				data: {id_people:$("#searchPeopleId").val(),date_financial_release:$("#searchDate").val(),type_mov:$("#typeSearch").val()},
 				success:function(data){
-					document.getElementById('searchPeopleId').value="";
+
+				document.getElementById('searchPeopleId').value="";
 					document.getElementById('searchPeople').value="";
 					document.getElementById('searchDate').value="";
 					document.getElementById('typeSearch').value="";

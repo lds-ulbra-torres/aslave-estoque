@@ -1,4 +1,4 @@
-<script type="text/javascript">
+﻿<script type="text/javascript">
 	$(document).ready(function(){
 		function reloadTableProduct(){
 			$.ajax({
@@ -116,8 +116,8 @@
 			<input type="text" name="search" placeholder=" Buscar produto..." required>
 		</div>
 		<div class="input-field col s2">
-			<button href="#" id="search_button" class="btn grey">
-				<i class="material-icons">search</i>
+			<button href="#" id="search_button" class="btn green">
+				Buscar
 			</button>
 		</div>
 		<div class="input-field col s3">

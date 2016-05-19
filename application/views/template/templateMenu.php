@@ -10,11 +10,11 @@
   <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="<?= base_url('assets/css/templateMenu.css'); ?>">
   <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+  <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.js"></script>
   <script type="text/javascript" src="<?= base_url('assets/js/jquery.maskedinput.js');?>"></script>
   <script type="text/javascript" src="<?= base_url('assets/js/jquery.validate.js'); ?>"></script>
 
-  <script type="text/javascript" src="http://www.technicalkeeda.com/js/javascripts/plugin/json2.js"></script>
+
 </head>
 <body>
 
