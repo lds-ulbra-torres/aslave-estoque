@@ -84,7 +84,15 @@ class PeopleModel extends CI_Model {
 		return $query->result();
 
 	}
-
+	public function checkCPF($cpf){
+		$this->db->where("cpf_cnpj", $cpf);
+		$query = $this->db->get('people');
+		if($query->num_rows() > 0){
+			return true;
+		}else{
+			return false;
+		}
+	}
 
 }
 

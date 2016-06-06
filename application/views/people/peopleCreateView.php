@@ -96,7 +96,7 @@
 							    <label style="color:black;">* campos obrigatórios</label>
 							</div>
 							<div class="col s6" align="right">
-							<button type="submit" class="waves-green btn green">Salvar 
+							<button type="submit" id="sendPeople" class="waves-green btn green">Salvar 
 						        <i class="material-icons right">send</i>
 					        </button>
 					        </div>
@@ -104,8 +104,8 @@
 					</form>
 			</div>
 		</div>
-<script type="text/javascript">
-$(document).ready(function(){
+	<script type="text/javascript">
+		$(document).ready(function(){
 //Mascaras
 $('.cpf').mask("999.999.999-99",{placeholder:" "});
 $(".cnpj").mask("99.999.999/9999-99",{placeholder:" "});
@@ -115,65 +115,115 @@ $(".rg").mask("99.999.999-99",{placeholder:" "});
 $(".cep").mask("99999/999",{placeholder:" "}); 
 //Validações
 jQuery.validator.addMethod("isString", function(value, element) {
-                var regExp = /[0-9]/;
-                if(regExp.test(value)) return false;
-                else return true
-            }, "Por favor insira somente caracteres alfabeticos<br>");
+	var regExp = /[0-9]/;
+	if(regExp.test(value)) return false;
+	else return true
+}, "<p class='col s6' style='color: red; margin-top:1px;'>Por favor insira somente letras</p><br>");
 
 $('#formPeople').validate({  
- 
-            rules: {  
-                peopleName: { required: true, minlength: 5,isString: true},  
-                peopleAdress: { required: true,}, 
-                peopleNeighborhood:{ required:true,},
-                peopleDateBirth: { required: true, maxlength: 10}, 
-                peopleCep: { required: true,},
-                peopleNumber: { required: true, digits:true,},  
-                state: {required: true,},
-                peopleCnpj: { required: true,},  
-                peopleInscricao: { required: true,}, 
-                peopleCpf: { required: true,},  
-                peopleRg: { required: true,},
-                peopleCitie: {required: true,},
-            },  
-            messages: {  
-                peopleName: { required: '<span class="col s6" style="color: red; margin-top:1px;">Preencha o campo Nome<br>', minlength: '<p class="col s6" style="color: red; margin-top:1px;">No mínimo 5 letras <br>'}, 
-                peopleAdress: { required: '<p class="col s6" style="color: red; margin-top:1px;">Preencha o campo Endereco <br>'},
-                peopleNeighborhood: {required:'<p class="col s6" style="color: red; margin-top:1px;">Preencha o campo Bairro<br>'},
-                peopleDateBirth: { required: '<p class="col s6" style="color: red; margin-top:1px;">Preencha a Data de Nascimento<br>',maxlength:'<p style="color: red; margin-top:1px;">Informe uma data válida<br>'}, 
-                peopleCep: { required: '<p class="col s6" style="color: red; margin-top:1px;">Preencha o campo CEP<br>',}, 
-                peopleNumber: { required: '<p class="col s6" style="color: red; margin-top:1px;">Preencha o campo Numero <br>', digits:'<p class="col s6" style="color: red; margin-top:1px;">Apenas numeros <br>'}, 
-                state: {required: '<p class="col s6" style="color: red; margin-top:1px;">Escolha um estado <br>',},
-                peopleCnpj: { required: '<p class="col s6" style="color: red; margin-top:1px;">Preencha o campo CNPJ <br>'}, 
-                peopleInscricao: { required: '<p class="col s8" style="color: red; margin-top:1px;">Preencha o campo Inscrição Estadual <br>'},
-                peopleCpf: { required: '<p class="col s6" style="color: red; margin-top:1px;">Preencha o campo CPF<br>',},  
-                peopleRg: { required: '<p class="col s6" style="color: red; margin-top:1px;">Preencha o campo RG<br>',},
-                peopleCitie :{required: '<p class="col s6" style="color: red; margin-top:1px;">Escolha uma cidade <br>',},
-            },
-       
+
+	rules: {  
+		peopleName: { required: true, minlength: 5,isString: true},  
+		peopleAdress: { required: true,}, 
+		peopleNeighborhood:{ required:true,},
+		peopleDateBirth: { required: true, maxlength: 10}, 
+		peopleCep: { required: true,},
+		peopleNumber: { required: true, digits:true,},  
+		state: {required: true,},
+		peopleCnpj: { required: true,},  
+		peopleInscricao: { required: true,}, 
+		peopleCpf: { required: true,},  
+		peopleRg: { required: true,},
+		peopleCitie: {required: true,},
+	},  
+	messages: {  
+		peopleName: { required: '<span class="col s6" style="color: red; margin-top:1px;">Preencha o campo Nome<br>', minlength: '<p class="col s6" style="color: red; margin-top:1px;">No mínimo 5 letras <br>'}, 
+		peopleAdress: { required: '<p class="col s6" style="color: red; margin-top:1px;">Preencha o campo Endereco <br>'},
+		peopleNeighborhood: {required:'<p class="col s6" style="color: red; margin-top:1px;">Preencha o campo Bairro<br>'},
+		peopleDateBirth: { required: '<p class="col s6" style="color: red; margin-top:1px;">Preencha a Data de Nascimento<br>',maxlength:'<p style="color: red; margin-top:1px;">Informe uma data válida<br>'}, 
+		peopleCep: { required: '<p class="col s6" style="color: red; margin-top:1px;">Preencha o campo CEP<br>',}, 
+		peopleNumber: { required: '<p class="col s6" style="color: red; margin-top:1px;">Preencha o campo Numero <br>', digits:'<p class="col s6" style="color: red; margin-top:1px;">Apenas numeros <br>'}, 
+		state: {required: '<p class="col s6" style="color: red; margin-top:1px;">Escolha um estado <br>',},
+		peopleCnpj: { required: '<p class="col s6" style="color: red; margin-top:1px;">Preencha o campo CNPJ <br>'}, 
+		peopleInscricao: { required: '<p class="col s8" style="color: red; margin-top:1px;">Preencha o campo Inscrição Estadual <br>'},
+		peopleCpf: { required: '<p class="col s6" style="color: red; margin-top:1px;">Preencha o campo CPF<br>',},  
+		peopleRg: { required: '<p class="col s6" style="color: red; margin-top:1px;">Preencha o campo RG<br>',},
+		peopleCitie :{required: '<p class="col s6" style="color: red; margin-top:1px;">Escolha uma cidade <br>',},
+	},
+
 
 });
 //Procura cidade atraves do estado
 $("#state").change(function(){
-			var state = $('#state option:selected').val();
-			$.ajax({
-				url: "<?php echo site_url('/PeopleController/searchLocalidade/') ?>",
-				type: "POST",
-				dataType: "html",
-				data:{
-				state : state
-				},
-				success: function(data){
-					$("#localidade").append().html(data);
-					console.log(data);
-				},
-				error: function(data){
-					console.log(data);
-				}
-			});
-		});
+	var state = $('#state option:selected').val();
+	$.ajax({
+		url: "<?php echo site_url('/PeopleController/searchLocalidade/') ?>",
+		type: "POST",
+		dataType: "html",
+		data:{
+			state : state
+		},
+		success: function(data){
+			$("#localidade").append().html(data);
+			console.log(data);
+		},
+		error: function(data){
+			console.log(data);
+		}
+	});
+});
+//06/06/2016, Caciano Verifica se o CPF já existe
+$("input[name=peopleCpf]").blur(function(e){
+	e.preventDefault();
+	$.ajax({
+		url: "<?php echo site_url('/PeopleController/checkCPF')?>",
+		type: "POST",
+		data: $("#formPeople").serialize(),
+		success: function(data){
+			if(data == "1"){
+				$("input[name=peopleCpf]").css("border-bottom", "1px solid green");
+				$("#sendPeople").attr("disabled", false);
+				return true;
+			}else{
+				Materialize.toast("Este CPF já está sendo usado.",2000);
+				$("input[name=peopleCpf]").css("border-bottom", "1px solid red");
+				$("#sendPeople").attr("disabled", true);
+				return false;
+			}
+		},	
+		error: function(data){
+			console.log(data);
+			Materialize.toast("Ocorreu algum erro", 4000);
+		}
+	});
 
+});
+// 06/06/2016, Caciano Verifica se o CNPJ já existe
+$("input[name=peopleCnpj]").blur(function(e){
+	e.preventDefault();
+	$.ajax({
+		url: "<?php echo site_url('/PeopleController/checkCPF')?>",
+		type: "POST",
+		data: $("#formPeople").serialize(),
+		success: function(data){
+			if(data == "1"){
+				$("input[name=peopleCnpj]").css("border-bottom", "1px solid green");
+				$("#sendPeople").attr("disabled", false);
+				return true;
+			}else{
+				Materialize.toast("Este CNPJ já está sendo usado.",2000);
+				$("input[name=peopleCnpj]").css("border-bottom", "1px solid red");
+				$("#sendPeople").attr("disabled", true);
+				return false;
+			}
+		},	
+		error: function(data){
+			console.log(data);
+			Materialize.toast("Ocorreu algum erro", 4000);
+		}
+	});
 
+});
 });
 
 //Validação Pessoa fisica e juridica
@@ -187,16 +237,16 @@ $(function() {
 	function showInput(id) {
 		peopleRegistration.show();
 		if(id == 'fisica') {
-			  $(":text").each(function () {
-            $(this).val("");
-        });
+			$(":text").each(function () {
+				$(this).val("");
+			});
 			documentJuridic.hide();
 			documentFisic.show();
 		}
 		else if(id == 'juridica') {
-			  $(":text").each(function () {
-            $(this).val("");
-        });
+			$(":text").each(function () {
+				$(this).val("");
+			});
 			documentFisic.hide();
 			documentJuridic.show();
 		}

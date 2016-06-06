@@ -7,7 +7,6 @@ class PeopleController extends CI_Controller {
 
 	public function __construct(){
 		parent:: __construct();
-		$this->load->library('form_validation');
 		$this->load->model('people/peopleModel');
 	}
 
@@ -242,6 +241,12 @@ class PeopleController extends CI_Controller {
 			echo "O campo de busca esta vazio";
 		}
 	}
-
+	public function checkCPF(){
+		if($this->peopleModel->checkCPF($this->input->post("peopleCpf")) || $this->peopleModel->checkCPF($this->input->post("peopleCnpj")) || $this->peopleModel->checkCPF($this->input->post("updatePeopleCpf")) || $this->peopleModel->checkCPF($this->input->post("updatePeopleCnpj"))){
+			echo "-1";
+		}else{
+			echo "1";
+		}
+	}
 
 }
