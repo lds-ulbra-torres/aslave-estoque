@@ -1,111 +1,111 @@
 		<div class="container">
-		<a href="<?= base_url('people') ?>" >< Voltar para pessoas</a>
-		<div class="row card-panel">
-			<h4 align="center">Alterar Dados</h4>
+			<a href="<?= base_url('people') ?>" >< Voltar para pessoas</a>
+			<div class="row card-panel">
+				<h4 align="center">Alterar Dados</h4>
 
-			<form class="col s12" action="<?= base_url("update-people/$id")?>" id="update-form" method="POST">
-				<div>
-					<input type="hidden" name="updatePeopleId" id="id" value="<?= $id ?>" >
+				<form class="col s12" action="<?= base_url("update-people/$id")?>" id="update-form" method="POST">
+					<div>
+						<input type="hidden" name="updatePeopleId" id="id" value="<?= $id ?>" >
 
-					<div class="col s12">
-						<label>Nome *</label>
-						<input type="text" name="updatePeopleName" value="<?php echo $dados_pessoa[0]->name; ?>" >
-
-					</div>
-					<div class="col s6">
-						<div class="documentFisic">
-							<label>CPF *</label>
-							<input type="text" class="cpf" value="<?php echo $dados_pessoa[0]->cpf_cnpj; ?>" name="updatePeopleCpf">
+						<div class="col s12">
+							<label>Nome *</label>
+							<input type="text" name="updatePeopleName" value="<?php echo $dados_pessoa[0]->name; ?>" >
 
 						</div>
-						<div class="documentJuridic">
-							<label>CNPJ *</label>
-							<input type="text" class="cnpj" id="teste" value="<?php echo $dados_pessoa[0]->cpf_cnpj; ?>" name="updatePeopleCnpj">
+						<div class="col s6">
+							<div class="documentFisic">
+								<label>CPF *</label>
+								<input type="text" class="cpf" value="<?php echo $dados_pessoa[0]->cpf_cnpj; ?>" name="updatePeopleCpf">
+
+							</div>
+							<div class="documentJuridic">
+								<label>CNPJ *</label>
+								<input type="text" class="cnpj" id="teste" value="<?php echo $dados_pessoa[0]->cpf_cnpj; ?>" name="updatePeopleCnpj">
+
+							</div>
+						</div>
+						<div class="col s6">
+							<div class="documentFisic">
+								<label>RG </label>
+								<input type="text" class="rg" value="<?php echo $dados_pessoa[0]->documment; ?>" name="updatePeopleRg">
+
+							</div>
+							<div class="documentJuridic">
+								<label>Inscrição Estadual </label>
+								<input type="text" class="inscEstadual" value="<?php echo $dados_pessoa[0]->documment; ?>" name="updatePeopleInsc">
+
+							</div>
+						</div>
+						<div class="col s12">
+							<label>Endereço </label>
+							<input type="text" name="updatePeopleAdress" value="<?php echo $dados_pessoa[0]->adress; ?>">
 
 						</div>
-					</div>
-					<div class="col s6">
-						<div class="documentFisic">
-							<label>RG *</label>
-							<input type="text" class="rg" value="<?php echo $dados_pessoa[0]->documment; ?>" name="updatePeopleRg">
+						<div class="col s6">
+							<label>Numero </label>
+							<input type="text" name="updatePeopleNumber" value="<?php echo $dados_pessoa[0]->number; ?>">
 
 						</div>
-						<div class="documentJuridic">
-							<label>Inscrição Estadual *</label>
-							<input type="text" class="inscEstadual" value="<?php echo $dados_pessoa[0]->documment; ?>" name="updatePeopleInsc">
+						<div class="col s6">
+							<label>Bairro </label>
+							<input type="text" name="updatePeopleNeighborhood" value="<?php echo $dados_pessoa[0]->neighborhood; ?>">
 
 						</div>
-					</div>
-					<div class="col s12">
-						<label>Endereço *</label>
-						<input type="text" name="updatePeopleAdress" value="<?php echo $dados_pessoa[0]->adress; ?>" required="required">
-						
+						<div class="col s6">
+							<label>Estado *</label>
+							<select class="browser-default" name="state" id="state">
+								<?php 
+								foreach($states as $fila)
+								{
+									?>
+									<option 
+									value="<?php echo $fila->id_states ?>"
+									<?php echo $fila->id_states==$alter_states[0]->id_states ?'selected':'';?>
+									>
+									<?=$fila -> name . " / (" . $fila -> uf . ")"?>
+								</option>
+								<?php
+							}
+							?>		
+						</select>
 					</div>
 					<div class="col s6">
-						<label>Numero *</label>
-						<input type="text" name="updatePeopleNumber" value="<?php echo $dados_pessoa[0]->number; ?>" required="required">
-						
-					</div>
-					<div class="col s6">
-						<label>Bairro *</label>
-						<input type="text" name="updatePeopleNeighborhood" value="<?php echo $dados_pessoa[0]->neighborhood; ?>" required="required">
-						
-					</div>
-					<div class="col s6">
-						<label>Estado *</label>
-						<select class="browser-default" name="state" id="state">
-							<?php 
-							foreach($states as $fila)
-							{
-								?>
-								<option 
-								value="<?php echo $fila->id_states ?>"
-								<?php echo $fila->id_states==$alter_states[0]->id_states ?'selected':'';?>
-								>
-								<?=$fila -> name . " / (" . $fila -> uf . ")"?>
-							</option>
-							<?php
-						}
-						?>		
+						<label>Cidade *</label>
+						<select class="browser-default" name="updatePeopleCitie" id="localidade">
+						</select>
 					</select>
 				</div>
 				<div class="col s6">
-					<label>Cidade *</label>
-					<select class="browser-default" name="updatePeopleCitie" id="localidade">
-					</select>
-				</select>
-			</div>
-			<div class="col s6">
-				<label>CEP *</label>
-				<input type="text" class="cep" value="<?php echo $dados_pessoa[0]->cep; ?>" name="updatePeopleCep" required="required">
+					<label>CEP </label>
+					<input type="text" class="cep" value="<?php echo $dados_pessoa[0]->cep; ?>" name="updatePeopleCep">
 
-			</div>
-			<div class="col s6">
-				<label>Data de Nascimento *</label>
-				<input type="date" name="updatePeopleDateBirth" value="<?php echo $dados_pessoa[0]->date_birth; ?>" class="datepicker">
-			</div>
-			<div class="col s6">
-				<label>Telefone</label>
-				<input type="text" class="phone" name="updatePeoplePhone1" value="<?php echo $dados_pessoa[0]->phone1; ?>">
+				</div>
+				<div class="col s6">
+					<label>Data de Nascimento </label>
+					<input type="date" name="updatePeopleDateBirth" value="<?php echo $dados_pessoa[0]->date_birth; ?>" class="datepicker">
+				</div>
+				<div class="col s6">
+					<label>Telefone</label>
+					<input type="text" class="phone" name="updatePeoplePhone1" value="<?php echo $dados_pessoa[0]->phone1; ?>">
 
-			</div>
-			<div class="col s6">
-				<label>Telefone 2</label>
-				<input type="text" class="phone" name="updatePeoplePhone2" value="<?php echo $dados_pessoa[0]->phone2; ?>">
+				</div>
+				<div class="col s6">
+					<label>Telefone 2</label>
+					<input type="text" class="phone" name="updatePeoplePhone2" value="<?php echo $dados_pessoa[0]->phone2; ?>">
 
+				</div>
+				<div class="col s6" align="left">
+					<label style="color:black;">* campos obrigatórios</label>
+				</div>
+				<div class="col s12" align="right">
+					<button type="submit" id="sendPeople" class="waves-green btn green">Salvar 
+						<i class="material-icons right">send</i>
+					</button>
+				</div>
 			</div>
-			<div class="col s6" align="left">
-				<label style="color:black;">* campos obrigatórios</label>
-			</div>
-			<div class="col s12" align="right">
-				<button type="submit" id="sendPeople" class="waves-green btn green">Salvar 
-					<i class="material-icons right">send</i>
-				</button>
-			</div>
-		</div>
-	</form>
+		</form>
 
-</div>
+	</div>
 </div>
 </div>
 </div>
@@ -128,9 +128,7 @@ $(function() {
 //Mascaras
 $('.cpf').mask("999.999.999-99",{placeholder:" "});
 $(".cnpj").mask("99.999.999/9999-99",{placeholder:" "});
-$('.inscEstadual').mask("9999-99999",{placeholder:" "});
-$(".phone").mask("(99) 9999-9999",{placeholder:" "});
-$(".rg").mask("99.999.999-99",{placeholder:" "});
+$(".phone").mask("(99) 99999-9999",{placeholder:" "});
 $(".cep").mask("99999/999",{placeholder:" "}); 
 //Validações
 jQuery.validator.addMethod("isString", function(value, element) {
@@ -141,37 +139,29 @@ jQuery.validator.addMethod("isString", function(value, element) {
 $('#update-form').validate({  
 	rules: {  
 		updatePeopleName: { required: true, minlength: 5,isString: true},  
-		updatePeopleAdress: { required: true,}, 
-		updatePeopleNeighborhood:{ required:true,},
-		updatePeopleDateBirth: { required: true,maxlength: 10}, 
-		updatePeopleCep: { required: true,},
-		updatePeopleNumber: { required: true, digits:true,},  
+		updatePeopleDateBirth: {maxlength: 10}, 
+		updatePeopleNumber: {digits:true,},  
 		state: {required: true,},
 		updatePeopleCnpj: { required: true,},  
-		updatePeopleInsc: { required: true,}, 
 		updatePeopleCpf: { required: true,},  
-		updatePeopleRg: { required: true,},
+		updatePeopleRg:{ maxlength: 14, digits:true,},
 		updatePeopleCitie: {required: true,},
 	},  
 	messages: {  
 		updatePeopleName: { required: '<p class="col s6" style="color: red; margin-top:1px;">Preencha o campo Nome<br>', minlength: '<p class="col s6" style="color: red; margin-top:1px;">No mínimo 5 letras <br>'}, 
-		updatePeopleAdress: { required: '<p class="col s6" style="color: red; margin-top:1px;">Preencha o campo Endereco <br>'},
-		updatePeopleNeighborhood: {required:'<p class="col s6" style="color: red; margin-top:1px;">Preencha o campo Bairro<br>'},
-		updatePeopleDateBirth:  { required: '<p class="col s6" style="color: red; margin-top:1px;">Preencha a Data de Nascimento<br>',maxlength:'<p style="color: red; margin-top:1px;">Informe uma data válida<br>'}, 
-		updatePeopleCep: { required: '<p class="col s6" style="color: red; margin-top:1px;">Preencha o campo CEP<br>',}, 
-		updatePeopleNumber:  { required: '<p class="col s6" style="color: red; margin-top:1px;">Preencha o campo Numero <br>', digits:'<p class="col s6" style="color: red; margin-top:1px;">Apenas numeros <br>'}, 
+		updatePeopleDateBirth:  {maxlength:'<p style="color: red; margin-top:1px;">Informe uma data válida<br>'}, 
+		updatePeopleNumber:  {digits:'<p class="col s6" style="color: red; margin-top:1px;">Apenas números <br>'}, 
 		state: {required: '<p class="col s6" style="color: red; margin-top:1px;">Escolha um estado <br>',},
 		updatePeopleCnpj: { required: '<p class="col s6" style="color: red; margin-top:1px;">Preencha o campo CNPJ <br>'}, 
-		updatePeopleInsc: { required: '<p class="col s6" style="color: red; margin-top:1px;">Preencha o campo Inscrição Estadual <br>'},
 		updatePeopleCpf: { required: '<p class="col s6" style="color: red; margin-top:1px;">Preencha o campo CPF<br>',}, 
-		updatePeopleRg: { required: '<p class="col s6" style="color: red; margin-top:1px;">Preencha o campo RG<br>',},
+		updatePeopleRg:{ maxlength: '<p class="col s6" style="color: red; margin-top:1px;">No máximo 14 digitos<br>', digits:'<p class="col s6" style="color: red; margin-top:1px;">Apenas números<br>'},
 		updatePeopleCitie: {required: '<p class="col s6" style="color: red; margin-top:1px;">Escolha uma cidade <br>',},
 	},
 });
 $("#state").change(function(){
 	var state = $('#state option:selected').val();
 	$.ajax({
-		url: "<?php echo site_url('/PeopleController/searchLocalidade/') ?>",
+		url: "<?php echo site_url('/CityStateController/searchLocalidade/') ?>",
 		type: "POST",
 		dataType: "html",
 		data:{
@@ -187,7 +177,7 @@ $("#state").change(function(){
 	});
 });
 var validateCpfCnpj = "<?php echo $dados_pessoa[0]->cpf_cnpj; ?>";
-$("input[name=updatePeopleCpf]").blur(function(e){
+$("input[name=updatePeopleCpf]").keyup(function(e){
 	e.preventDefault();
 	if($(this).val() == validateCpfCnpj){
 		$("#sendPeople").attr("disabled", false);
@@ -216,33 +206,33 @@ $("input[name=updatePeopleCpf]").blur(function(e){
 		});
 	}
 });
-$("input[name=updatePeopleCnpj]").blur(function(e){
+$("input[name=updatePeopleCnpj]").keyup(function(e){
 	e.preventDefault();
 	if($(this).val() == validateCpfCnpj){
 		$("#sendPeople").attr("disabled", false);
 		$("input[name=updatePeopleCnpj]").css("border-bottom", "1px solid green");
 	}else{
-	$.ajax({
-		url: "<?php echo site_url('/PeopleController/checkCPF')?>",
-		type: "POST",
-		data: $("#update-form").serialize(),
-		success: function(data){
-			if(data == "1"){
-				$("input[name=updatePeopleCnpj]").css("border-bottom", "1px solid green");
-				$("#sendPeople").attr("disabled", false);
-				return true;
-			}else{
-				Materialize.toast("Este CNPJ já está sendo usado.",2000);
-				$("input[name=updatePeopleCnpj]").css("border-bottom", "1px solid red");
-				$("#sendPeople").attr("disabled", true);
-				return false;
+		$.ajax({
+			url: "<?php echo site_url('/PeopleController/checkCPF')?>",
+			type: "POST",
+			data: $("#update-form").serialize(),
+			success: function(data){
+				if(data == "1"){
+					$("input[name=updatePeopleCnpj]").css("border-bottom", "1px solid green");
+					$("#sendPeople").attr("disabled", false);
+					return true;
+				}else{
+					Materialize.toast("Este CNPJ já está sendo usado.",2000);
+					$("input[name=updatePeopleCnpj]").css("border-bottom", "1px solid red");
+					$("#sendPeople").attr("disabled", true);
+					return false;
+				}
+			},	
+			error: function(data){
+				console.log(data);
+				Materialize.toast("Ocorreu algum erro", 4000);
 			}
-		},	
-		error: function(data){
-			console.log(data);
-			Materialize.toast("Ocorreu algum erro", 4000);
-		}
-	});
+		});
 	}
 });
 });

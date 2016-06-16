@@ -34,7 +34,7 @@
 	<div class="row">
 		<a href="<?=base_url('users') ?>">< Voltar para usuários</a>
 		<div div class="row card-panel">
-		<h4>Novo Usuário</h4>
+		<h4 class="center">Novo Usuário</h4>
 			<form id="new-user">
 				<div>
 					<label for="user-name">Nome *</label>

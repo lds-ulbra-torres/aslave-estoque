@@ -52,7 +52,7 @@
             <form id="form_login">
                 <div class="row">
                   <div class="input-field col s12 center">
-                        <img src="<?= base_url('assets/img/vovo_cadeira.jpg');?>" class="responsive-img">
+                        <img src="<?= base_url('assets/img/logo_slave.jpg');?>" class="responsive-img">
                 </div>
                 <div class="row margin">
                     <div class="input-field col s12">
@@ -88,11 +88,6 @@
             <div class="row">
                 <div class="col s12">
                   <hr>
-                </div>
-            </div>
-            <div class="row">
-                <div class="center col s12">
-                  <img class="responsive-img" src="<?= base_url('assets/img/logo_computacao.jpg');?>">
                 </div>
             </div>
           </form>

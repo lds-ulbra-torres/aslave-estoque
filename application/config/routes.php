@@ -106,3 +106,7 @@ $route['stock/outputs/(:num)'] = 'StockController/detailedOutputView';
 $route['user/create'] = 'UserController/createUserView';
 $route['users'] = 'UserController/usersView';
 $route['user/update/(:num)'] = 'UserController/updateUserView/$1';
+
+/* ROTAS CONTROLE DE INTERNOS */
+$route['internal'] = 'InternalController';
+$route['internal/create'] = 'InternalController/internalCreateView';
