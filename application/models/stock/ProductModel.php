@@ -13,7 +13,7 @@ class ProductModel extends CI_Model {
 		//Do your magic here
 	}
 
-	
+
 	public function create($product) {
 		return $this->db->insert($this->table, $product);
 	}
@@ -27,17 +27,16 @@ class ProductModel extends CI_Model {
 		return $this->db->delete($this->table, $product);
 	}
 
-	public function count() {
+	public function getRowsCount() {
 		return $this->db->get($this->table)->num_rows();
 	}
 
-	public function getProducts() {
-		$this->db->from($this->table);
+	public function getProducts($max=null,$init=null) {
 		$this->db->join('stock_product_groups', 'stock_products.id_group = stock_product_groups.id_group', 'inner');
 		$this->db->order_by('name_product', 'asc');
 		$this->db->group_by('stock_products.id_product');
-
-		return $this->db->get()->result_array();
+		$query = $this->db->get($this->table, $max, $init);
+		return $query->result_array();
 	}
 
 	public function getProductById($id) {
@@ -54,7 +53,7 @@ class ProductModel extends CI_Model {
 		$query = $this->db->get_where($this->table, $group_id, 1);
 		if ($query->num_rows() > 0){
 			return true;
-		} 
+		}
 		return false;
 	}
 	public function search($product){

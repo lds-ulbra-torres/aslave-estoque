@@ -11,13 +11,13 @@
 				},
 				error: function(){
 					console.log(data);
-					Materialize.toast('Erro ao recarregar a tabela, atualize a pagina!', 4000);	
+					Materialize.toast('Erro ao recarregar a tabela, atualize a pagina!', 4000);
 				}
 			});
 		}
 		var idProduct;
 		$("table").on("click",".delete_product", function(){
-			$('#delete_product_modal').openModal();	
+			$('#delete_product_modal').openModal();
 			idProduct = $(this).attr("id");
 		});
 
@@ -31,12 +31,12 @@
 						Materialize.toast(data, 4000);
 					}else{
 						Materialize.toast(data, 4000);
-						reloadTableProduct();	
+						reloadTableProduct();
 					}
 				},
 				error: function(data){
 					console.log(data);
-					Materialize.toast('Ação não permitida.', 4000);	
+					Materialize.toast('Ação não permitida.', 4000);
 				}
 			});
 		});
@@ -57,15 +57,15 @@
 						try{
 							$('#product > tbody').html("");
 							$("#pagination").html("");
-							var items=[]; 	
-							$.each(obj, function(i,val){											
+							var items=[];
+							$.each(obj, function(i,val){
 								items.push($("<tr><td>" + val.name_product + "</td><td>"+val.name_group+"</td><td>"+val.amount+"</td><td><a href='<?= base_url('stock/products/update/');?>/"+ val.id_product +"'>Alterar</a> | <a id="+ val.id_product +" href='#' class='delete_product'>Apagar</a></td>"));
-							});	
+							});
 							$('#product > tbody').append.apply($('#product > tbody'), items);
-						}catch(e) {		
+						}catch(e) {
 							alert('Ocorreu algum erro ao carregar os Produtos!');
-						}			
-					}	
+						}
+					}
 				},
 				error: function(){
 					Materialize.toast("Ocorreu algum erro", 2000);
@@ -88,15 +88,15 @@
 						try{
 							$('#product > tbody').html("");
 							$("#pagination").html("");
-							var items=[]; 	
-							$.each(obj, function(i,val){											
+							var items=[];
+							$.each(obj, function(i,val){
 								items.push($("<tr><td>" + val.name_product + "</td><td>"+$('#group_id option:selected').text()+"</td><td>"+ val.amount +"</td><td><a href='<?= base_url('stock/products/update/');?>/"+ val.id_product +"'>Alterar</a> | <a id="+ val.id_product +" href='#' class='delete_product'>Apagar</a></td>"));
-							});	
+							});
 							$('#product > tbody').append.apply($('#product > tbody'), items);
-						}catch(e) {		
+						}catch(e) {
 							alert('Ocorreu algum erro ao carregar os Produtos!');
-						}			
-					}	
+						}
+					}
 				},
 				error: function(){
 					Materialize.toast("Ocorreu algum erro", 2000);
@@ -129,7 +129,7 @@
 				</select>
 			</div>
 		</div>
-	</div>	
+	</div>
 	<div class="row">
 		<div class="col s12 collection">
 			<table id="product" class="bordered highlight">
@@ -153,9 +153,11 @@
 					<?php endforeach; ?>
 				</tbody>
 			</table>
-	</div>	
+	</div>
 </div>
-
+<div class="container row right">
+	<?php echo $pagination_show;  ?>
+</div>
 
 <div id="delete_product_modal" class="modal">
 	<div class="modal-content">

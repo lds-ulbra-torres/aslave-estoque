@@ -4,16 +4,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class StockController extends CI_Controller {
 
 	var $sess = 'login';
-	
+
 	public function __construct() {
 		parent::__construct();
 		$this->load->model('stock/GroupModel');
 		$this->load->model('stock/ProductModel');
 		$this->load->model('stock/StockModel');
-		$this->load->library('form_validation');
+		//$this->load->library('form_validation');
+		//$this->load->library('pagination');
 	}
 
-	public function index(){   
+	public function index(){
 		$data['view'] = null;
 		if($this->session->userdata($this->sess)){
 		$this->template->load('template/templateMenu','stock/stock/StartView', $data);
@@ -23,8 +24,43 @@ class StockController extends CI_Controller {
 	}
 
 	/* CATEGORIAS */
-	public function groups() {
-		$data['groups'] = $this->GroupModel->getGroups();
+	public function groups($init = 0) {
+		$max = 10;
+		$init = (!$this->uri->segment('3')) ? 0 : $this->uri->segment('3');
+		$config['base_url'] = base_url('stock/groups');
+		$config['total_rows'] = $this->GroupModel->getRowsCount();
+		$config['per_page'] = $max;
+		$config['full_tag_open'] = '<div class="pagination">
+		<ul class="pagination center-align">';
+			$config['full_tag_close'] = '   </ul>
+		</div>';
+
+		$config['first_link'] = 'Primeiro';
+		$config['first_tag_open'] = '<li class="waves-effect">';
+		$config['first_tag_close'] = '</li>';
+
+		$config['last_link'] = 'Último';
+		$config['last_tag_open'] = '<li class="waves-effect">';
+		$config['last_tag_close'] = '</li>';
+
+		$config['next_link'] = '<i class="active material-icons">arrow_forward</i>';
+		$config['next_tag_open'] = '<li class="waves-effect">';
+		$config['next_tag_close'] = '</li>';
+
+		$config['prev_link'] = '<i class="active material-icons">arrow_back</i>';
+		$config['prev_tag_open'] = '<li class="waves-effect">';
+		$config['prev_tag_close'] = '</li>';
+
+		$config['cur_tag_open'] = '<li style="color:#blue;  font-size: 200%;" class="waves-effect">';
+		$config['cur_tag_close'] = '</li>';
+
+		$config['num_tag_open'] = '<li class="waves-effect">';
+		$config['num_tag_close'] = '</li>';
+
+		$this->pagination->initialize($config);
+		$data['pagination_show'] =  $this->pagination->create_links();
+
+		$data['groups'] = $this->GroupModel->getGroups($max, $init);
 		$data['view'] = 'groups';
 		$data['search_string'] = null;
 		if($this->session->userdata($this->sess)){
@@ -59,11 +95,11 @@ class StockController extends CI_Controller {
 
 			$group = array('name_group' => $this->input->post('group_name'));
 
-			if ($this->GroupModel->create($group)) { 
+			if ($this->GroupModel->create($group)) {
 				echo 'Categoria salva.';
-			} 
+			}
 			else { echo  'Ocorreu um problema interno. Tente novamente'; }
-		} 
+		}
 		else { echo 'Todos campos são obrigatórios.'; }
 	}
 
@@ -74,7 +110,7 @@ class StockController extends CI_Controller {
 				'id_group' => $this->input->post('group_id'),
 				'name_group' => $this->input->post('group_name'));
 
-			if($this->GroupModel->update($group)) { 
+			if($this->GroupModel->update($group)) {
 				echo 'Categoria salva.';
 			}
 			else { echo 'Ocorreu algum problema interno. Tente novamente'; }
@@ -86,20 +122,57 @@ class StockController extends CI_Controller {
 		$group = array('id_group' => $this->input->post('id_group'));
 		if ($this->ProductModel->findProductByForeign($group)){
 			echo 'Há produtos cadastrados com esta categoria. Não foi possível apagar';
-		} 
+		}
 		else {
 			if($this->GroupModel->delete($group)){
 				echo 'Categoria apagada.';
-			} 
+			}
 			else { echo 'Ocorreu algum problema interno. Tente novamente'; }
 		}
 	}
 
 	/* PRODUTOS */
-	public function products() {
+	public function products($init=0) {
+		$max = 20;
+		$init = (!$this->uri->segment('3')) ? 0 : $this->uri->segment('3');
+		$config['base_url'] = base_url('stock/products');
+		$config['total_rows'] = $this->ProductModel->getRowsCount();
+		$config['per_page'] = $max;
+		$config['full_tag_open'] = '<div class="pagination">
+		<ul class="pagination center-align">';
+			$config['full_tag_close'] = '   </ul>
+		</div>';
+
+		$config['first_link'] = 'Primeiro';
+		$config['first_tag_open'] = '<li class="waves-effect">';
+		$config['first_tag_close'] = '</li>';
+
+		$config['last_link'] = 'Último';
+		$config['last_tag_open'] = '<li class="waves-effect">';
+		$config['last_tag_close'] = '</li>';
+
+		$config['next_link'] = '<i class="active material-icons">arrow_forward</i>';
+		$config['next_tag_open'] = '<li class="waves-effect">';
+		$config['next_tag_close'] = '</li>';
+
+		$config['prev_link'] = '<i class="active material-icons">arrow_back</i>';
+		$config['prev_tag_open'] = '<li class="waves-effect">';
+		$config['prev_tag_close'] = '</li>';
+
+		$config['cur_tag_open'] = '<li style="color:#blue;  font-size: 200%;" class="waves-effect">';
+		$config['cur_tag_close'] = '</li>';
+
+		$config['num_tag_open'] = '<li class="waves-effect">';
+		$config['num_tag_close'] = '</li>';
+
+		$this->pagination->initialize($config);
+		$data['pagination_show'] =  $this->pagination->create_links();
+
 		$data['groups'] = $this->GroupModel->getGroups();
-		$data['products'] = $this->ProductModel->getProducts();
+		$data['products'] = $this->ProductModel->getProducts($max, $init);
 		$data['view'] = 'products';
+		$data['search_string'] = null;
+
 		if($this->session->userdata($this->sess)){
 		$this->template->load('template/templateMenu','stock/product/ProductView', $data);
 		}else{
@@ -137,7 +210,7 @@ class StockController extends CI_Controller {
 				'name_product' => $this->input->post('product_name'),
 				'id_group' => $this->input->post('group_id'));
 
-			if ($this->ProductModel->create($product)) { 
+			if ($this->ProductModel->create($product)) {
 				echo 'Produto salvo.';
 			}
 			else { echo 'Ocorreu algum problema interno. Tente novamente'; }
@@ -166,11 +239,11 @@ class StockController extends CI_Controller {
 		$product = array('id_product' => $this->input->post('id_product'));
 		if ($this->StockModel->findStockByForeign($product)){
 			echo 'Este produto está sendo usado.';
-		} 
+		}
 		else {
 			if($this->ProductModel->delete($product)){
 				echo 'Produto apagado.';
-			} 
+			}
 			else { echo 'Ocorreu algum problema interno. Tente novamente'; }
 		}
 	}
@@ -186,7 +259,7 @@ class StockController extends CI_Controller {
 		if($this->form_validation->run()){
 			$group = $this->input->post('search_string');
 			$result = $this->GroupModel->search($group);
-			echo json_encode($result);	
+			echo json_encode($result);
 		}else{
 			echo "O campo de busca esta vazio";
 		}
@@ -196,7 +269,7 @@ class StockController extends CI_Controller {
 		if($this->form_validation->run()){
 			$product = $this->input->post('search_string');
 			$result = $this->ProductModel->search($product);
-			echo json_encode($result);	
+			echo json_encode($result);
 		}else{
 			echo "O campo de busca esta vazio";
 		}
@@ -206,7 +279,7 @@ class StockController extends CI_Controller {
 		if($this->form_validation->run()){
 			$group = $this->input->post('id_group');
 			$result = $this->ProductModel->searchByGroup($group);
-			echo json_encode($result);	
+			echo json_encode($result);
 		}else{
 			echo "Você esta tentando sabotar site?";
 		}
@@ -222,7 +295,7 @@ class StockController extends CI_Controller {
 		if($this->form_validation->run()){
 			$people = $this->input->post('search_string');
 			$result = $this->StockModel->searchInputByPeople($people);
-			echo json_encode($result);	
+			echo json_encode($result);
 		}else{
 			echo "O campo de busca esta vazio";
 		}
@@ -232,7 +305,7 @@ class StockController extends CI_Controller {
 		if($this->form_validation->run()){
 			$type = $this->input->post('input_type');
 			$result = $this->StockModel->searchByType($type);
-			echo json_encode($result);	
+			echo json_encode($result);
 		}else{
 			echo "Você esta tentando sabotar site?";
 		}
@@ -242,7 +315,7 @@ class StockController extends CI_Controller {
 		if($this->form_validation->run()){
 			$people = $this->input->post('search_string');
 			$result = $this->StockModel->searchOutputByPeople($people);
-			echo json_encode($result);	
+			echo json_encode($result);
 		}else{
 			echo "O campo de busca esta vazio";
 		}
@@ -466,7 +539,7 @@ class StockController extends CI_Controller {
 					else { echo "Erro ao salvar os produtos."; }
 				}
 				else { echo "Erro ao salvar o fornecedor."; }
-			} 
+			}
 			else { echo "Nenhum produto adicionado."; }
 		}
 		else { echo "Todos os campos são obrigatórios."; }

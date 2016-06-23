@@ -85,13 +85,15 @@ $route['templateSearch'] = 'searchController';
 /* ROTAS DO SOBRE */
 $route['sobre'] = 'AboutController';
 
-/* ROTAS CONTROLE DE ESTOQUE */ 
+/* ROTAS CONTROLE DE ESTOQUE */
 $route['stock'] = 'StockController';
 $route['stock/groups'] = 'StockController/groups';
+$route['stock/groups/(:num)'] = 'StockController/groups/$1';
 $route['stock/groups/create'] = 'StockController/createGroupView';
 $route['stock/groups/update/(:num)'] = 'StockController/updateGroupView/$1';
 $route['stock/groups/delete'] = 'StockController/deleteGroupView';
 $route['stock/products'] = 'StockController/products';
+$route['stock/products/(:num)'] = 'StockController/products/$1';
 $route['stock/products/create'] = 'StockController/createProductView';
 $route['stock/products/update/(:num)'] = 'StockController/updateProductView/$1';
 $route['stock/products/delete'] = 'StockController/deleteProductView';

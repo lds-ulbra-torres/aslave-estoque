@@ -26,14 +26,13 @@ class GroupModel extends CI_Model {
 		return $this->db->delete($this->table, $group);
 	}
 
-	public function count() {
+	public function getRowsCount() {
 		return $this->db->get($this->table)->num_rows();
 	}
 
-	public function getGroups() {
-		$this->db->from($this->table);
+	public function getGroups($max=null, $init=null) {
 		$this->db->order_by('name_group', 'asc');
-		$query = $this->db->get();
+	  $query = $this->db->get($this->table, $max, $init);
 		return $query->result_array();
 	}
 

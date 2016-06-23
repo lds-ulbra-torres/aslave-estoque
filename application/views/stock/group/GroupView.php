@@ -10,13 +10,13 @@
 				},
 				error: function(){
 					console.log(data);
-					Materialize.toast('Erro ao recarregar a tabela, atualize a pagina!', 4000);	
+					Materialize.toast('Erro ao recarregar a tabela, atualize a pagina!', 4000);
 				}
 			});
 		}
 		var idGroup;
 		$("table").on("click",".delete_group", function(){
-			$('#delete_group_modal').openModal();	
+			$('#delete_group_modal').openModal();
 			idGroup = $(this).attr("id");
 		});
 
@@ -31,7 +31,7 @@
 				},
 				error: function(data){
 					console.log(data);
-					Materialize.toast('Erro interno.', 3000);	
+					Materialize.toast('Erro interno.', 3000);
 				}
 			});
 		});
@@ -52,15 +52,15 @@
 						try{
 							$('#group > tbody').html("");
 							$("#pagination").html("");
-							var items=[]; 	
-							$.each(obj, function(i,val){											
+							var items=[];
+							$.each(obj, function(i,val){
 								items.push($("<tr><td>" + val.name_group + "</td><td><a href='<?= base_url('stock/groups/update/');?>/"+ val.id_group +"'>Alterar</a> | <a id="+ val.id_group +" href='#' class='delete_group'>Apagar</a>"));
-							});	
+							});
 							$('#group > tbody').append.apply($('#group > tbody'), items);
-						}catch(e) {		
+						}catch(e) {
 							alert('Ocorreu algum erro ao carregar as Categorias!');
-						}			
-					}	
+						}
+					}
 				},
 				error: function(){
 					Materialize.toast("Ocorreu algum erro", 2000);
@@ -83,7 +83,7 @@
 				<button href="#" id="search_button" class="btn green">Buscar</button>
 			</div>
 		</div>
-	</div>	
+	</div>
 	<div class="row">
 		<div class="col s12 collection">
 			<table id="group" class="bordered highlight">
@@ -104,6 +104,7 @@
 					<?php endforeach; ?>
 				</tbody>
 			</table>
+
 		<!-- <div id="pagination" class="pagination">
 			<ul class="pagination right-align">
 				<li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
@@ -116,7 +117,9 @@
 			</ul>
 		</div> -->
 	</div>
-
+	<div class="container row right">
+		<?php echo $pagination_show;  ?>
+	</div>
 	<div id="delete_group_modal" class="modal">
 		<div class="modal-content">
 			<h4>Aviso</h4>
@@ -128,6 +131,6 @@
 			<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Cancelar</a>
 			<a href="#!" id="delete_group" class="modal-action modal-close waves-effect waves-red btn-flat">Apagar</a>
 		</div>
-	</div>	
+	</div>
 </div>
 </div>
