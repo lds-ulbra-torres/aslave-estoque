@@ -265,16 +265,12 @@ class StockController extends CI_Controller {
 		}
 	}
 	public function searchProduct(){
-		$this->form_validation->set_rules('search_string', 'produto', 'required');
-		if($this->form_validation->run()){
 			$product = $this->input->post('search_string');
-			$result = $this->ProductModel->search($product);
+			$group = $this->input->post('group');
+			$result = $this->ProductModel->search($product, $group);
 			echo json_encode($result);
-		}else{
-			echo "O campo de busca esta vazio";
-		}
 	}
-	public function searchProductByGroup(){
+	/*public function searchProductByGroup(){
 		$this->form_validation->set_rules('id_group', 'grupo', 'required');
 		if($this->form_validation->run()){
 			$group = $this->input->post('id_group');
@@ -283,7 +279,7 @@ class StockController extends CI_Controller {
 		}else{
 			echo "Você esta tentando sabotar site?";
 		}
-	}
+	}*/
 
 	public function searchProductStock() {
 		$search = $this->input->post('name_product');

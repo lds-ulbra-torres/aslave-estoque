@@ -45,7 +45,10 @@
 			$.ajax({
 				url: "<?php echo site_url('/StockController/searchProduct'); ?>",
 				type: "POST",
-				data: {search_string: $("input[name=search]").val()},
+				data: {
+					search_string: $("input[name=search]").val(),
+					group: $("#group_id").val()
+				},
 				success: function(data){
 					if(data == 'O campo de busca esta vazio'){
 						reloadTableProduct();
@@ -72,7 +75,7 @@
 				}
 			});
 		});
-		$("#group_id").change(function(){
+		/*$("#group_id").change(function(){
 			$.ajax({
 				url: "<?php echo site_url('/StockController/searchProductByGroup'); ?>",
 				type: "POST",
@@ -102,7 +105,7 @@
 					Materialize.toast("Ocorreu algum erro", 2000);
 				}
 			});
-		});
+		});*/
 	});
 </script>
 <div class="container">
@@ -115,9 +118,6 @@
 			<div class="input-field col s12 m3">
 				<input type="text" name="search" placeholder=" Buscar produto..." required>
 			</div>
-			<div class="input-field col s12 m2">
-				<button href="#" id="search_button" class="btn green">Buscar</button>
-			</div>
 			<div class="input-field col s12 m4">
 				<select id="group_id">
 					<option disabled selected> Filtrar por categorias</option>
@@ -127,6 +127,9 @@
 					echo "</option>";
 					endforeach; ?>
 				</select>
+			</div>
+			<div class="input-field col s12 m2">
+				<button href="#" id="search_button" class="btn green">Buscar</button>
 			</div>
 		</div>
 	</div>
