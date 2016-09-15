@@ -47,6 +47,12 @@
 *  */
 *  function validaCep($cep) {}
 
+##Controller
+<code>
+index()
+{ }
+</code>
+
 
 
 
