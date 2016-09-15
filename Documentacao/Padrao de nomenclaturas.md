@@ -3,8 +3,8 @@
 ##Nomes de arquivos
 * utiliza notação camelCase
 * nome do arquivo deve ser igual ao nome do Model, Controller e conter letra maiuscula no começo.
-* nome do model sempre deve ser NomeModel. Ex. UserModel.
-* nome do controller sempre deve ser NomeController. Ex. UserController
+* nome do model sempre deve ser NomeModel. Ex. UserModel. (singular)
+* nome do controller sempre deve ser NomeController. Ex. UsersController (plural)
 
 * Evitar acentos, mesmo que o contexto permita como em nomes de arquivos. 
 
@@ -12,7 +12,7 @@
 * Evite abreviar a não ser em casos já conhecidos. ex. CPF, UF.
 * Preposições devem normalmente ser omitidas.
 * Comentar código quando necessário!
-* 
+
 ##Variáveis
 * Nome da variável deve dizer claramente o que a variável é e faz
 * Variáveis do tipo boolean devem receber nomes que impliquem verdadeiro ou falso acabou, ok, feito, sucesso
