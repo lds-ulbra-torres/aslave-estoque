@@ -41,10 +41,11 @@
 * Comentar códigos. Formato: data, autor e comentario
 * Estilo de comentário: 
 * /**
-*  * Gabriel - 10-10-2016 - Validação de Cep
+*  * @author Gabriel - 10-10-2016 - Validação de Cep
 *  * @param cpf - O cpf que será validado
 *  * @return - se o cpf é válido ou não
 *  */
+
 *  function validaCep($cep) {}
 
 ##Controller
