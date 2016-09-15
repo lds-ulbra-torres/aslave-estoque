@@ -49,8 +49,19 @@
 
 ##Controller
 <code>
-index()
-{ }
+index(){ }
+
+New(){ }
+
+Create(){ }
+
+Edit(){ }
+
+Update(){ }
+
+Delete(){ }
+
+
 </code>
 
 
