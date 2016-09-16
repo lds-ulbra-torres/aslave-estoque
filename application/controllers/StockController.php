@@ -433,6 +433,17 @@ class StockController extends CI_Controller {
 		else { echo "Todos os campos são obrigatórios."; }
 	}
 
+	public function updateEntryView(){
+		$id_stock = $this->uri->segment(4);
+		$data['view'] = 'stock/entries/detailed';
+		$data['entry_data'] = $this->StockModel->getDetailedEntry($id_stock);
+		if($this->session->userdata($this->sess)){
+		$this->template->load('template/templateMenu','stock/stock/in/UpdateEntryView', $data);
+		}else{
+			redirect('login');
+		}
+	}
+
 	public function deleteInputStock() {
 		$id_stock = array('id_stock' => $this->input->post('id_stock'));
 		if ($this->StockModel->deleteInputStockProduct($id_stock)) {
@@ -469,13 +480,23 @@ class StockController extends CI_Controller {
 					array_push($product_array, $row);
 				}
 				if ($this->StockModel->createInputStockProduct($product_array)) {
-					echo 2;
+					echo 1;
 				}
 				else { echo "Erro ao salvar os produtos."; }
 			}
 			else { echo "Nenhum produto adicionado."; }
 		}
 		else { echo "Ocorreu algum problema interno."; }
+		$delete_products = ($this->input->post('delete_produto'));
+		if($delete_products > 0){
+			foreach ($delete_products as $key => $delete_product) {
+				$id_produto = preg_replace("/[^0-9]/", "", $delete_product);
+				if ($this->StockModel->removeProductStock($id_produto)) {
+					echo 1;
+				}else { echo "Erro ao remover os produtos"; }
+			}
+			
+		}
 	}
 	/* SAÍDAS DE ESTOQUE */
 	public function outputsView(){

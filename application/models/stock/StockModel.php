@@ -104,7 +104,8 @@ class StockModel extends CI_Model {
 		return $this->db->get($this->input)->result_array();
 	}
 	public function removeProductStock($id_product){
-		return $this->db->delete($this->input_has_products, $id_product);
+		$this->db->where("id_product", $id_product);
+		return $this->db->delete($this->input_has_products);
 	}
 	public function searchStockByAllWithDate($data){
 		$this->db->join('people', 'stock_input.id_people = people.id_people', 'inner');

@@ -28,7 +28,7 @@
 								$.each(obj, function(i,val){
 									if(val.input_type == "1"){val.input_type = "Compra";}else{val.input_type = "Doação";}
 									explode = val.input_date.split("-");		
-									items.push($("<tr><td><a href='<?= base_url('stock/entries/'); ?>/"+val.id_stock+"'>"+val.name+"</a></td><td>"+explode.reverse().join("/")+"</td><td>R$  "+val.sum_value+"</td><td class='input_type_search'>"+val.input_type+"</td><td><a id="+ val.id_stock +" href='#' class='delete_stock_btn'>Apagar</a></td></tr>"));
+									items.push($("<tr><td><a title='Visualizar Entrada' href='<?= base_url('stock/entries/'); ?>/"+val.id_stock+"'>"+val.name+"</a></td><td>"+explode.reverse().join("/")+"</td><td>R$  "+val.sum_value+"</td><td class='input_type_search'>"+val.input_type+"</td><td><a href='<?= base_url('stock/entries/update/'); ?>/"+val.id_stock+"''>Alterar</a> | <a id="+ val.id_stock +" href='#' class='delete_stock_btn'>Apagar</a></td></tr>"));
 								});	
 								$('#input > tbody').append.apply($('#input > tbody'), items);
 							}catch(e) {		
@@ -254,11 +254,11 @@
 				<form id="dateInputStock">
 					<div class="col s12 m3">
 						<label for="from" class="black-text">Data inicio:</label>
-						<input  type="date" name="from">
+						<input  type="date" title="dd/mm/AAAA" pattern="[0-9]{2}\/[0-9]{2}\/[0-9]{4}$" maxlength="10" name="from">
 					</div>
 					<div class=" col s12 m3">
 						<label for="to" class="black-text">Data final:</label>
-						<input type="date" name="to">
+						<input type="date" title="dd/mm/AAAA" pattern="[0-9]{2}\/[0-9]{2}\/[0-9]{4}$" maxlength="10" name="to">
 					</div>
 					<div class="col s12 m2">
 						<button href="#" id="search_button" class="btn green">Buscar</button>
@@ -281,7 +281,7 @@
 				<tbody>
 					<?php foreach($input_stocks as $row) :?>
 						<tr>
-							<td><a href="<?= base_url('stock/entries/'.$row['id_stock']); ?>"><?= $row['name'] ?></a></td>
+							<td><a href="<?= base_url('stock/entries/'.$row['id_stock']); ?>" title="Visualizar entrada"><?= $row['name'];?></a></td>
 							<td><?= date('d/m/Y', strtotime($row['input_date'])); ?></td>
 							<td><?='R$ ' . number_format($row['sum_value'], 2, ',', '.');?></td>
 							<td><?php switch ($row['input_type']) {
@@ -294,6 +294,7 @@
 								break;
 							} ?></td>
 							<td>
+								<a href="<?= base_url('stock/entries/update/'.$row['id_stock']); ?>" id="<?= $row['id_stock']; ?>" href="#">Alterar</a> |
 								<a class="delete_stock_btn" id="<?= $row['id_stock']; ?>" href="#">Apagar</a>
 							</td>
 						</tr>

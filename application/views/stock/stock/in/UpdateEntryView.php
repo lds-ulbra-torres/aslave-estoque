@@ -1,5 +1,6 @@
-﻿<script type="text/javascript">
+<script type="text/javascript">
 	$(document).ready(function(){
+		var delete_produto = [];
 		var total = 0
 		$(".total").each(function(){
 			total += Number($(this).text().replace(/[^0-9.,]/g,''));
@@ -38,8 +39,19 @@
 				}
 			});
 		}
-		$("#productInput").on("click", ".deleteProductBtn", function(){
-			$.ajax({
+		$("#productInput").on("change", ":checkbox", function(){
+			if($(this).is(':checked')){
+				delete_produto.push($(this).attr("id"));
+				$("#add_product_input_stock_final_btn").attr("disabled", false);
+				$(this).parent().parent().css("background-color", "#d9d9d9");
+			}else{
+				delete_produto.splice(delete_produto.indexOf($(this).attr("id")), 1);
+				$(this).parent().parent().css("background-color", "white");
+			}
+			if(total === 0 && delete_produto.length === 0){
+				$("#add_product_input_stock_final_btn").attr("disabled", true);
+			}
+			/*$.ajax({
 				url: "<?php echo site_url('/StockController/removeProductInputStock')?>",
 				type: "POST",
 				data: {id_product: $(this).attr("id")},
@@ -55,7 +67,7 @@
 					console.log(data);
 					Materialize.toast("Ocorreu algum erro ao retirar este produto", 4000);
 				}
-			});
+			});*/
 		});
 
 		$("#add_product_btn").click(function(){
@@ -142,6 +154,7 @@
 				$("input[name=product_name]").val("");
 				$('#loadProduct').html(" ");
 				$("#product").html(" ");
+				$("#add_product_input_stock_final_btn").attr("disabled", false);
 
 			}
 
@@ -154,45 +167,48 @@
 			total = total - valueRemove;
 			$("#total").html("Total: R$ "+ total.toFixed(2));
 			$(this).parents('tr').remove();
-		});
-		$("#add_product_input_stock_final_btn").click(function(e){
-			e.preventDefault();
-			$("#add_product_input_stock_final_btn").attr("disabled", true);
-
-			var productsData = [];
-			$(".productRow").each(function(i){
-				var pData = { 
-					id_product: $(this).find(".tdProductId").attr("id"),
-					amount:  $(this).find(".tdProductAmount").text(),
-					price: Number($(this).find(".tdProductPrice").text().replace(/[^0-9.,]/g,''))
-				};
-				productsData.push(pData);
+			if(total === 0 && delete_produto.length === 0 && $("#total").text() == "Total: R$ "){
+				$("#add_product_input_stock_final_btn").attr("disabled", true);
+			}
 			});
+
+		$("#add_product_input_stock_final_btn").click(function(e){
+				e.preventDefault();
+				$("#add_product_input_stock_final_btn").attr("disabled", true);
+
+				var productsData = [];
+				$(".productRow").each(function(i){
+					var pData = { 
+						id_product: $(this).find(".tdProductId").attr("id"),
+						amount:  $(this).find(".tdProductAmount").text(),
+						price: Number($(this).find(".tdProductPrice").text().replace(/[^0-9.,]/g,''))
+					};
+					productsData.push(pData);
+				});
 
 			$.ajax({
 				url: "<?php echo site_url('/StockController/insertProductsInputStock')?>",
 				type: "POST",
 				data: {
-					id_stock: "<?= $this->uri->segment(3) ?>",
-					products: JSON.stringify(productsData)
+					id_stock: "<?= $this->uri->segment(4) ?>",
+					products: JSON.stringify(productsData),
+					delete_produto: delete_produto
 				},
 				success: function(data){
-					if(data == '2'){
+					if(!isNaN(data)){
 						$("#total").html("Total: R$:");
 						setTimeout(reloadTableProductInputAfterInsert(), 3000);
 						$(".productRow").addClass("transition");
-						Materialize.toast("Produto(s) adicionado(s)!", 4000);
-						$("#add_product_input_stock_final_btn").attr("disabled", false); 
+						Materialize.toast("Operação realizada com sucesso!", 4000);
 					}
 					else{
 						Materialize.toast(data, 4000);
-						$("#add_product_input_stock_final_btn").attr("disabled", false); 
 					}
+					setTimeout(reloadTableProductInputAfterInsert(), 3000);
 				},
 				error: function(data){
 					console.log(data);
 					Materialize.toast('Erro ao adicionar um novo produto!', 4000);
-					$("#add_product_input_stock_final_btn").attr("disabled", false); 
 				}
 			});
 		});
@@ -252,6 +268,17 @@
 				</ul>
 			</div>
 		</div>
+		<div class="card-panel col s12 m12 l10">
+			<div class="col s12 m6">
+				<p><a id="add_product_btn" class="btn green">Adicionar produto</a></p>
+			</div>
+			<div class="right-align col s12 m6">
+				<p id="total" class="btn grey" disabled>Total: R$ </p>
+			</div>
+		</div>
+		<div class="container right-align col s12 m12 l10">
+			<button id="add_product_input_stock_final_btn" type="submit" disabled="true" class="green btn-large">Finalizar<i class="material-icons right">send</i></button>
+		</div>
 		<div class="col s12 m12 l8">
 			<div class="collection responsive-table">
 				<table id="productInput" class="bordered highlight">
@@ -260,6 +287,7 @@
 						<td><strong>Valor unitário</strong></td>
 						<td><strong>Quantidade</strong></td>
 						<td><strong>Total</strong></td>
+						<td><strong>Apagar</strong></td>
 					</thead>
 					<tbody id="newProduct">
 						
@@ -272,6 +300,10 @@
 							<td><?= $prod['amount_input'] ?></td>
 							<td class="total" hidden><?= $prod['unit_price_input']*$prod['amount_input'] ?></td>
 							<td><?='R$ ' . number_format($prod['unit_price_input']*$prod['amount_input'], 2, ',', '.');?></td>
+							<td id="<?= $prod['id_product'] ?>">
+							      <input type="checkbox" class="filled-in" class="deleteProductBtn" id="ck<?= $prod['id_product'] ?>"/>
+							      <label for="ck<?= $prod['id_product'] ?>"> </label>
+							</td>
 						</tr>
 						<?php } ?>
 					</tbody>
