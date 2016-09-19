@@ -3,7 +3,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class PeopleModel extends CI_Model {
 
-	public $table = "people";
+	var $table = "people";
+
+	public function getPerson($id_person) {
+		//$this->db->join('cities', 'people.id_cities = cities.id_cities', 'inner');
+		//$this->db->join('states', 'people.id_states = states.id_states', 'inner');
+		$person = $this->db->get_where($this->table, array('id_people' => $id_person))->result_array();
+		//$city = $this->db->get_where('cities', array('id_cities' => $person[0]));
+		return $person;
+
+	}
 
 	public function create($people){
 	return $this->db->insert($this->table, $people);
@@ -46,7 +55,7 @@ class PeopleModel extends CI_Model {
 			return $citie->result();
 		}
 	}
-	
+
 	public function localidades($state)
 	{
 		$this->db->where('id_states',$state);
@@ -62,9 +71,9 @@ class PeopleModel extends CI_Model {
 	{
 	    return $this->db->query("call SP_people_cities($id)")->result();
 	}
-    
+
     public function get_pagination($max, $init){
-        
+
 		$this->db->order_by('name','asc');
 		$query = $this->db->get('people', $max, $init);
         return $query->result();

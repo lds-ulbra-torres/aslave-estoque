@@ -54,11 +54,11 @@
 						<div class="col s6">
 							<label>Estado *</label>
 							<select class="browser-default" name="state" id="state">
-								<?php 
+								<?php
 								foreach($states as $fila)
 								{
 									?>
-									<option 
+									<option
 									value="<?php echo $fila->id_states ?>"
 									<?php echo $fila->id_states==$alter_states[0]->id_states ?'selected':'';?>
 									>
@@ -66,7 +66,7 @@
 								</option>
 								<?php
 							}
-							?>		
+							?>
 						</select>
 					</div>
 					<div class="col s6">
@@ -98,7 +98,7 @@
 					<label style="color:black;">* campos obrigatórios</label>
 				</div>
 				<div class="col s12" align="right">
-					<button type="submit" id="sendPeople" class="waves-green btn green">Salvar 
+					<button type="submit" id="sendPeople" class="waves-green btn green">Salvar
 						<i class="material-icons right">send</i>
 					</button>
 				</div>
@@ -129,31 +129,31 @@ $(function() {
 $('.cpf').mask("999.999.999-99",{placeholder:" "});
 $(".cnpj").mask("99.999.999/9999-99",{placeholder:" "});
 $(".phone").mask("(99) 99999-9999",{placeholder:" "});
-$(".cep").mask("99999/999",{placeholder:" "}); 
+$(".cep").mask("99999/999",{placeholder:" "});
 //Validações
 jQuery.validator.addMethod("isString", function(value, element) {
 	var regExp = /[0-9]/;
 	if(regExp.test(value)) return false;
 	else return true
 }, "<p class='col s6' style='color: red; margin-top:1px;'>Por favor insira somente letras</p><br>");
-$('#update-form').validate({  
-	rules: {  
-		updatePeopleName: { required: true, minlength: 5,isString: true},  
-		updatePeopleDateBirth: {maxlength: 10}, 
-		updatePeopleNumber: {digits:true,},  
+$('#update-form').validate({
+	rules: {
+		updatePeopleName: { required: true, minlength: 5,isString: true},
+		updatePeopleDateBirth: {maxlength: 10},
+		updatePeopleNumber: {digits:true,},
 		state: {required: true,},
-		updatePeopleCnpj: { required: true,},  
-		updatePeopleCpf: { required: true,},  
+		updatePeopleCnpj: { required: true,},
+		updatePeopleCpf: { required: true,},
 		updatePeopleRg:{ maxlength: 14, digits:true,},
 		updatePeopleCitie: {required: true,},
-	},  
-	messages: {  
-		updatePeopleName: { required: '<p class="col s6" style="color: red; margin-top:1px;">Preencha o campo Nome<br>', minlength: '<p class="col s6" style="color: red; margin-top:1px;">No mínimo 5 letras <br>'}, 
-		updatePeopleDateBirth:  {maxlength:'<p style="color: red; margin-top:1px;">Informe uma data válida<br>'}, 
-		updatePeopleNumber:  {digits:'<p class="col s6" style="color: red; margin-top:1px;">Apenas números <br>'}, 
+	},
+	messages: {
+		updatePeopleName: { required: '<p class="col s6" style="color: red; margin-top:1px;">Preencha o campo Nome<br>', minlength: '<p class="col s6" style="color: red; margin-top:1px;">No mínimo 5 letras <br>'},
+		updatePeopleDateBirth:  {maxlength:'<p style="color: red; margin-top:1px;">Informe uma data válida<br>'},
+		updatePeopleNumber:  {digits:'<p class="col s6" style="color: red; margin-top:1px;">Apenas números <br>'},
 		state: {required: '<p class="col s6" style="color: red; margin-top:1px;">Escolha um estado <br>',},
-		updatePeopleCnpj: { required: '<p class="col s6" style="color: red; margin-top:1px;">Preencha o campo CNPJ <br>'}, 
-		updatePeopleCpf: { required: '<p class="col s6" style="color: red; margin-top:1px;">Preencha o campo CPF<br>',}, 
+		updatePeopleCnpj: { required: '<p class="col s6" style="color: red; margin-top:1px;">Preencha o campo CNPJ <br>'},
+		updatePeopleCpf: { required: '<p class="col s6" style="color: red; margin-top:1px;">Preencha o campo CPF<br>',},
 		updatePeopleRg:{ maxlength: '<p class="col s6" style="color: red; margin-top:1px;">No máximo 14 digitos<br>', digits:'<p class="col s6" style="color: red; margin-top:1px;">Apenas números<br>'},
 		updatePeopleCitie: {required: '<p class="col s6" style="color: red; margin-top:1px;">Escolha uma cidade <br>',},
 	},
@@ -198,7 +198,7 @@ $("input[name=updatePeopleCpf]").keyup(function(e){
 					$("#sendPeople").attr("disabled", true);
 					return false;
 				}
-			},	
+			},
 			error: function(data){
 				console.log(data);
 				Materialize.toast("Ocorreu algum erro", 4000);
@@ -227,7 +227,7 @@ $("input[name=updatePeopleCnpj]").keyup(function(e){
 					$("#sendPeople").attr("disabled", true);
 					return false;
 				}
-			},	
+			},
 			error: function(data){
 				console.log(data);
 				Materialize.toast("Ocorreu algum erro", 4000);

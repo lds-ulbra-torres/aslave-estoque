@@ -2,7 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class PeopleController extends CI_Controller {
-	
+
 	var $sess = 'login';
 
 	public function __construct(){
@@ -11,8 +11,7 @@ class PeopleController extends CI_Controller {
 	}
 
 
-	public function index($init = 0)
-	{
+	public function index($init = 0) {
 		//Paginação
 		$this->load->library('pagination');
 		$max = 10;
@@ -22,7 +21,7 @@ class PeopleController extends CI_Controller {
 		$config['per_page'] = $max;
 
 
-		
+
 		$config['full_tag_open'] = '<div class="pagination">
 		<ul class="pagination center-align">';
 			$config['full_tag_close'] = '   </ul>
@@ -61,6 +60,15 @@ class PeopleController extends CI_Controller {
 		}
 	}
 
+	public function detailedPerson() {
+		$id_person = $this->uri->segment(2);
+		$data['person_data'] = $this->peopleModel->getPerson($id_person);
+		if($this->session->userdata($this->sess)){
+		$this->template->load('template/templateMenu','people/peopleDetailedView', $data);
+		}else{
+			redirect('login');
+		}
+	}
 
 	public function create(){
 
@@ -104,13 +112,13 @@ class PeopleController extends CI_Controller {
 				redirect('login');
 			}
 		}
-		
+
 	}
 
 	public function update($id){
 		$peoples = $this->peopleModel->get();
 
-		
+
 		$this->form_validation->set_rules('updatePeopleName','updateNome','required|min_length[5]');
 		$this->form_validation->set_rules('updatePeopleNumber','updateNumber','numeric');
 		$this->form_validation->set_rules('updatePeopleCitie','updateCitie','required');
@@ -178,10 +186,10 @@ class PeopleController extends CI_Controller {
 		$data = array('id_people' => $this->input->post('id_people'));
 		if($this->peopleModel->delete($data)){
 			echo  'Cadastro Excluido!';
-		}else { 
-			echo 'Ocorreu algum erro. Tente novamente'; 
+		}else {
+			echo 'Ocorreu algum erro. Tente novamente';
 		}
-		
+
 	}
 
 	public function searchLocalidade()
@@ -211,8 +219,8 @@ class PeopleController extends CI_Controller {
 			foreach($localidades as $fila)
 			{
 				?>
-				
-				<option 
+
+				<option
 				value="<?php echo $fila->id_cities ?>"
 				<?php echo $fila->id_cities==$data['alter_states'][0]->id_cities ?'selected':'';?>
 				>
@@ -228,7 +236,7 @@ public function searchPeople(){
 	if($this->form_validation->run()){
 		$people = $this->input->post('search_string');
 		$result = $this->peopleModel->search($people);
-		echo json_encode($result);	
+		echo json_encode($result);
 	}else{
 		echo "O campo de busca esta vazio";
 	}
