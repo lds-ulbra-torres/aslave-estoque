@@ -71,7 +71,12 @@
 </script>
 <div class="container">
 	<div class="row">
-		<h4>Categorias</h4>
+		<div class="card-panel blue-text">
+			<h4>Categorias [<?= count($groups) ?>]</h4>
+			<div class="right-align">
+				<a class="green btn" id="" href="<?= base_url('stock/groups/create'); ?>">Adicionar nova</a>
+			</div>
+		</div>
 		<div class="card-panel col s12 m12">
 			<div class="input-field col s12 m3">
 				<a class="btn green" id="" href="<?= base_url('stock/groups/create'); ?>">Adicionar nova</a>
@@ -97,25 +102,19 @@
 						<tr>
 							<td><?= $row['name_group'] ?></td>
 							<td>
-								<a href="<?= base_url('stock/groups/update/'.$row['id_group']); ?>">Alterar</a> |
-								<a class="delete_group" id="<?php echo $row['id_group']; ?>" href="#">Apagar</a>
+								<a id="<?= $row['id_group']; ?>"
+									href="<?= base_url('stock/groups/update/'.$row['id_group']); ?>"
+									title="Editar Categoria">
+									<i class="material-icons">edit</i></a>
+
+								<a id="<?= $row['id_group']; ?>" href="#"
+									class="delete_group" title="Apagar Categoria">
+									<i class="material-icons">delete</i></a>
 							</td>
 						</tr>
 					<?php endforeach; ?>
 				</tbody>
 			</table>
-
-		<!-- <div id="pagination" class="pagination">
-			<ul class="pagination right-align">
-				<li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
-				<li class="active grey"><a href="#!">1</a></li>
-				<li class="waves-effect"><a href="#!">2</a></li>
-				<li class="waves-effect"><a href="#!">3</a></li>
-				<li class="waves-effect"><a href="#!">4</a></li>
-				<li class="waves-effect"><a href="#!">5</a></li>
-				<li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
-			</ul>
-		</div> -->
 	</div>
 	<div class="container row right">
 		<?php echo $pagination_show;  ?>
@@ -129,7 +128,7 @@
 		</div>
 		<div class="modal-footer">
 			<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Cancelar</a>
-			<a href="#!" id="delete_group" class="modal-action modal-close waves-effect waves-red btn-flat">Apagar</a>
+			<a href="#!" id="delete_group" class="modal-action mo	dal-close btn red">Apagar</a>
 		</div>
 	</div>
 </div>

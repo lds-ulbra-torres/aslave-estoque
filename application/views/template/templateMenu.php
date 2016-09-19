@@ -8,6 +8,7 @@
 	<link rel="stylesheet" type="text/css" href="<?= base_url ('assets/css/materialize.css');?>">
 	<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="<?= base_url('assets/css/templateMenu.css'); ?>">
+	<link rel="stylesheet" type="text/css" href="<?= base_url('assets/css/main.css'); ?>">
 	<link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
 	<script type="text/javascript" src="https://code.jquery.com/jquery-2.2.2.js"></script>
 	<script type="text/javascript" src="<?= base_url('assets/js/jquery.maskedinput.js');?>"></script>
@@ -36,7 +37,7 @@
 						<li><a href="<?= base_url('stock/groups'); ?>">Categorias</a></li>
 						<li class="divider"></li>
 						<li><a href="<?= base_url('stock/entries'); ?>">Entradas</a></li>
-						<li><a href="<?= base_url('stock/outputs'); ?>">Saídas</a></li>         
+						<li><a href="<?= base_url('stock/outputs'); ?>">Saídas</a></li>
 					</ul>
 				</li>
 				<li>
@@ -44,12 +45,12 @@
 					<ul id="nav_financial" class="dropdown-content">
 						<li><a href="<?= base_url('people'); ?>">Pessoas</a></li>
 						<li class="divider"></li>
-						<li><a href="<?= base_url('classification'); ?>">Classificações</a></li>                
-						<li><a href="<?= base_url('financial-movimentation'); ?>">Lançamentos</a></li>                
+						<li><a href="<?= base_url('classification'); ?>">Classificações</a></li>
+						<li><a href="<?= base_url('financial-movimentation'); ?>">Lançamentos</a></li>
 					</ul>
 				</li>
 				<li>
-					<a class="dropdown-button blue-text" data-activates="nav_internal" href="#">INTERNOS</a> 
+					<a class="dropdown-button blue-text" data-activates="nav_internal" href="#">INTERNOS</a>
 					<ul id="nav_internal" class="dropdown-content">
 						<li><a href="<?= base_url('internal');?>">Gerenciar</a></li>
 					</ul>
@@ -58,10 +59,10 @@
 					<a class="dropdown-button blue-text" data-activates="nav_user" href="#">USUÁRIOS</a>
 					<ul id="nav_user" class="dropdown-content">
 						<li><a href="<?= base_url('user/create'); ?>">Cadastrar</a></li>
-						<li><a href="<?= base_url('users/'); ?>">Gerenciar</a></li>                              
+						<li><a href="<?= base_url('users/'); ?>">Gerenciar</a></li>
 					</ul>
 				</li>
-				
+
 				<li>
 					<a class="blue-text"  href="<?= base_url('UserController/logout'); ?>">SAIR</a>
 				</li>
@@ -70,7 +71,7 @@
 
 
 
-			<div class="hide-on-large-only center nav-wrapper"> 
+			<div class="hide-on-large-only center nav-wrapper">
 				<nav class="color" role="navigation">
 					<label class="white-text labelLogo fontUt"><strong>PROJETO ASLAVE</strong></label>
 					<a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
@@ -83,7 +84,7 @@
 					<a href="<?= base_url() ?>" class="aColor">
 						<li class="liclass"><p class="fontUt strMenu " style="vertical-align: middle;">HOME</p>
 						</li>
-					</a>  
+					</a>
 					<a class="aColor dropdown-button" data-activates="estoque_buttons" href="#">
 						<li class="liclass">
 							<p class="fontUt strMenu " style="vertical-align: middle;">ESTOQUE

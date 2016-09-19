@@ -110,11 +110,13 @@
 </script>
 <div class="container">
 	<div class="row">
-		<h4>Produtos</h4>
-		<div class="card-panel col s12">
-			<div class="input-field col s12 m3">
+		<div class="card-panel blue-text">
+			<h4>Produtos [<?= count($products) ?>]</h4>
+			<div class="right-align">
 				<a class="green btn" id="" href="<?= base_url('stock/products/create'); ?>">Adicionar novo</a>
 			</div>
+		</div>
+		<div class="card-panel col s12">
 			<div class="input-field col s12 m3">
 				<input type="text" name="search" placeholder=" Buscar produto..." required>
 			</div>
@@ -149,16 +151,23 @@
 							<td><?= $row['name_group'] ?></td>
 							<td><?= $row['amount'] ?></td>
 							<td>
-								<a href="<?= base_url('stock/products/update/'.$row['id_product']); ?>">Alterar</a> |
-								<a class="delete_product" id="<?php echo $row['id_product']; ?>" href="#">Apagar</a>
-							</td>
+								<a id="<?= $row['id_product']; ?>"
+									href="<?= base_url('stock/products/update/'.$row['id_product']); ?>"
+									title="Editar Produto">
+									<i class="material-icons">edit</i></a>
+
+								<a id="<?= $row['id_product']; ?>" href="#"
+									class="delete_product" title="Apagar Produto">
+									<i class="material-icons">delete</i></a>
+
+								</td>
 						</tr>
 					<?php endforeach; ?>
 				</tbody>
 			</table>
 	</div>
 </div>
-<div class="container row right">
+<div class="container right-align">
 	<?php echo $pagination_show;  ?>
 </div>
 

@@ -4,7 +4,7 @@
 		var total = 0
 		$(".total").each(function(){
 			total += Number($(this).text().replace(/[^0-9.,]/g,''));
-			
+
 		});
 		$("#totalHeader").text("R$ "+ total);
 
@@ -20,7 +20,7 @@
 				},
 				error: function(){
 					console.log(data);
-					Materialize.toast('Erro ao recarregar a tabela, atualize a pagina!', 4000);	
+					Materialize.toast('Erro ao recarregar a tabela, atualize a pagina!', 4000);
 				}
 			});
 		}
@@ -35,7 +35,7 @@
 				},
 				error: function(){
 					console.log(data);
-					Materialize.toast('Erro ao recarregar a tabela, atualize a pagina!', 4000);	
+					Materialize.toast('Erro ao recarregar a tabela, atualize a pagina!', 4000);
 				}
 			});
 		}
@@ -71,7 +71,7 @@
 		});
 
 		$("#add_product_btn").click(function(){
-			$('#add_product_modal').openModal();	
+			$('#add_product_modal').openModal();
 		});
 
 		$("input[name=product_name]").keyup(function(){
@@ -86,17 +86,17 @@
 						var obj = JSON.parse(data);
 						if(obj.length>0){
 							try{
-								var items=[]; 	
-								$.each(obj, function(i,val){											
+								var items=[];
+								$.each(obj, function(i,val){
 									items.push($("<option id="+ val.id_product +">"+ val.name_product +"</option>"));
-								});	
+								});
 								$('#loadProduct').append.apply($('#loadProduct'), items);
-							}catch(e) {		
+							}catch(e) {
 								alert('Ocorreu algum erro ao carregar os Produto!');
-							}		
+							}
 						}else{
 							$('#loadProduct').html($('<span/>').text("Nenhum Produto encontrado!"));
-						}		
+						}
 					},
 					error: function(data){
 						alert("Ocorreu algum erro ao carregar os Produtos");
@@ -140,13 +140,13 @@
 				cols += '<td class="tdProductAmount">'+ $("input[name=amount]").val() +'</td>';
 				cols += '<td class="tdProductTotal">'+'R$ '+ ($("input[name=price]").val() * $("input[name=amount]").val()).toFixed(2) +'</td>';
 				cols += '<td>';
-				cols += '<a href="#" class="removeProduct">Apagar</a>';
+				cols += '<a href="#" class="removeProduct btn red"><i class="material-icons">delete</i></a>';
 				cols += '</td>';
 
 				newRow.append(cols);
 				$("#newProduct").prepend(newRow);
 
-				total = total + ($("input[name=price]").val() * $("input[name=amount]").val());	
+				total = total + ($("input[name=price]").val() * $("input[name=amount]").val());
 
 				$("#total").html("Total: R$" +total.toFixed(2));
 				$("input[name=amount]").val("");
@@ -178,7 +178,7 @@
 
 				var productsData = [];
 				$(".productRow").each(function(i){
-					var pData = { 
+					var pData = {
 						id_product: $(this).find(".tdProductId").attr("id"),
 						amount:  $(this).find(".tdProductAmount").text(),
 						price: Number($(this).find(".tdProductPrice").text().replace(/[^0-9.,]/g,''))
@@ -216,7 +216,7 @@
 </script>
 <style type="text/css">
 	.productRow{
-		background: green;
+		background: #33CC33;
 	}
 	.transition{
 		background-color: white;
@@ -228,46 +228,102 @@
 	}
 </style>
 <div class="container">
-	<a href="<?=base_url('stock/entries') ?>">< Voltar para entradas</a>
+	<div class="card-panel blue-text">
+		<h4>Alterar entrada [<?= $entry_data['entry'][0]['id_stock']; ?>]</h4>
+		<div class="right-align">
+			<a class="btn teal" href="<?=base_url('stock/entries') ?>"><i class="material-icons">input</i> Voltar</a>
+			<button id="add_product_input_stock_final_btn" class="btn green" type="submit" disabled="true">Finalizar<i class="material-icons right">send</i></button>
+			<!-- mas que belo ID -->
+		</div>
+	</div>
 	<div class="row">
-		<?php //var_dump($entry_data) ?>
-		<h4>Detalhes de entrada</h4>
-		<div class="card-panel col s12 m12 l10">
-			<div class="col s12 m12">
-				<ul class="col s12 m6">
-					<h6><strong>Fornecido por</strong></h6>
-					<h5 class="lead blue-text"><?= $entry_data['people'][0]['name'] ?></h5>
+		<div class="card-panel">
+			<dl class="dl-horizontal">
+				<dt>Fornecedor</dt>
+				<dd><?= $entry_data['people'][0]['name'] ?></dd>
 
-					<h6><strong>CPF/CNPJ: </strong> <?= $entry_data['people'][0]['cpf_cnpj'] ?></h6>
+				<dt>CPF/CNPJ</dt>
+				<dd><?= $entry_data['people'][0]['cpf_cnpj'] ?></dd>
 
-				</ul>
-				<ul class="col s12 m2">
-					<li class="collection-item">
-						<?php switch ($entry_data['entry'][0]['input_type']) {
-							case '1':
-							echo '<div class="chip">Compra</div>';
-							break;
-							
-							case '2':
-							echo '<div class="chip">Doação</div>';
-							break;
-						}?>
-					</li>
-				</ul>
-				<ul class="col s12 m12 l4 collection">
-					<li class="collection-item padding-correction">
-						<strong>Data de entrada</strong>
-						<strong class="chip"><?= date('d/m/Y', strtotime($entry_data['entry'][0]['input_date'])); ?></strong>
-					</li>
+				<dt>Tipo</dt>
+				<dd>
+					<?php echo $entry_data['entry'][0]['input_type'] == 1 ? "Compra": "Doação"; ?>
+				</dd>
 
-					<li class="collection-item padding-correction">
-						<strong>Total da nota: </strong>
-						<strong id="sum_value" class="chip"><?='R$ ' . number_format($entry_data['entry'][0]['sum_value'], 2, ',', '.');?></strong>
-					</li>
-					
-				</ul>
+				<dt>Data de Entrada</dt>
+				<dd><?= date('d/m/Y', strtotime($entry_data['entry'][0]['input_date'])); ?></dd>
+
+				<dt>Total da Nota</dt>
+				<dd id="sum_value"><?='R$ '. number_format($entry_data['entry'][0]['sum_value'], 2, ',', '.');?></dd>
+			</dl>
+		</div>
+	</div>
+
+	<div class="card-panel">
+		<div class="right-align">
+			<a id="add_product_btn" class="btn green">Adicionar produto</a>
+			<p id="total" class="btn grey" disabled>Total: R$ </p>
+		</div>
+		<div class="collection responsive-table">
+			<table id="productInput" class="bordered highlight">
+				<thead>
+					<td><strong>Produto</strong></td>
+					<td><strong>Valor unitário</strong></td>
+					<td><strong>Quantidade</strong></td>
+					<td><strong>Total</strong></td>
+					<td><strong>Apagar</strong></td>
+				</thead>
+				<tbody id="newProduct">
+
+				</tbody>
+				<tbody id="enteredProducts">
+					<?php foreach ($entry_data['entry'] as $prod) { ?>
+					<tr>
+						<td><?= $prod['name_product'] ?></td>
+						<td><?='R$ ' . number_format($prod['unit_price_input'], 2, ',', '.');?></td>
+						<td><?= $prod['amount_input'] ?></td>
+						<td class="total" hidden><?= $prod['unit_price_input']*$prod['amount_input'] ?></td>
+						<td><?='R$ ' . number_format($prod['unit_price_input']*$prod['amount_input'], 2, ',', '.');?></td>
+						<td id="<?= $prod['id_product'] ?>">
+									<input type="checkbox" class="filled-in" class="deleteProductBtn" id="ck<?= $prod['id_product'] ?>"/>
+									<label for="ck<?= $prod['id_product'] ?>"> </label>
+						</td>
+					</tr>
+					<?php } ?>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+
+<div id="add_product_modal" class="modal">
+	<form id="generate_table_product">
+		<div class="modal-content row bodyModal">
+			<h4>Adicionar produto</h4>
+			<div class="input-field col s12 m4">
+				<input name="product_name" autocomplete="off" type="text" maxlength="45" placeholder="Produto">
+				<div id="products" class="col s12 m12">
+					<a href="#" id="loadProduct" class="col s12 m6"></a>
+					<h5 id="product" class="col s12 m6"></h5>
+				</div>
+			</div>
+			<div class="input-field col s12 m4">
+				<input name="amount" required="required" type="number" placeholder="Quantia">
+			</div>
+			<div class="input-field col s12 m2">
+				<input name="price" required="required" type="number" placeholder="Preço" step="0.00" min="0.00">
 			</div>
 		</div>
+		<div class="modal-footer">
+			<a href="#" class="btn-flat modal-action modal-close">Cancelar</a>
+			<button id="add_product_input_stock_btn" class="btn green">Adicionar<i class="material-icons right">send</i> </button>
+		</div>
+	</form>
+</div>
+
+
+
+<!--
 		<div class="card-panel col s12 m12 l10">
 			<div class="col s12 m6">
 				<p><a id="add_product_btn" class="btn green">Adicionar produto</a></p>
@@ -290,7 +346,7 @@
 						<td><strong>Apagar</strong></td>
 					</thead>
 					<tbody id="newProduct">
-						
+
 					</tbody>
 					<tbody id="enteredProducts">
 						<?php foreach ($entry_data['entry'] as $prod) { ?>
@@ -315,7 +371,7 @@
 		<form id="generate_table_product">
 			<div class="modal-content row bodyModal">
 				<h4>Adicionar produto</h4>
-				<div class="input-field col s12 m4">	
+				<div class="input-field col s12 m4">
 					<input name="product_name" autocomplete="off" type="text" maxlength="45" placeholder="Produto">
 					<div id="products" class="col s12 m12">
 						<a href="#" id="loadProduct" class="col s12 m6"></a>
@@ -326,7 +382,7 @@
 					<input name="amount" required="required" type="number" placeholder="Quantia">
 				</div>
 				<div class="input-field col s12 m2">
-					<input name="price" required="required" type="number" placeholder="Preço" step="0.01" min="0.01">
+					<input name="price" required="required" type="number" placeholder="Preço" step="0.00" min="0.00">
 				</div>
 			</div>
 			<div class="modal-footer">
@@ -335,4 +391,4 @@
 			</div>
 		</form>
 	</div>
-</div>
+</div>-->

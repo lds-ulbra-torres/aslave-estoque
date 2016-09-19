@@ -1,5 +1,5 @@
 ﻿<script type="text/javascript">
-	$(document).ready(function(){ 
+	$(document).ready(function(){
 		function reloadTableProduct(){
 			$.ajax({
 				url: "<?= base_url('stock/outputs/');?>",
@@ -11,13 +11,13 @@
 				},
 				error: function(){
 					console.log(data);
-					Materialize.toast('Erro ao recarregar a tabela, atualize a pagina!', 4000);	
+					Materialize.toast('Erro ao recarregar a tabela, atualize a pagina!', 4000);
 				}
 			});
 		}
 		var id_stock;
 		$("table").on("click",".delete_stock_btn", function(){
-			$('#delete_stock_modal').openModal();	
+			$('#delete_stock_modal').openModal();
 			id_stock = $(this).attr("id");
 		});
 		$("#delete_stock").on("click", function(){
@@ -34,7 +34,7 @@
 				error: function(data){
 					$("#delete_stock").attr("disabled", false);
 					console.log(data);
-					Materialize.toast('Ação não permitida.', 3000);	
+					Materialize.toast('Ação não permitida.', 3000);
 				}
 			});
 		});
@@ -54,15 +54,15 @@
 						try{
 							$('#output > tbody').html("");
 							$("#pagination").html("");
-							var items=[]; 	
+							var items=[];
 							$.each(obj, function(i,val){
-								explode = val.output_date.split("-");								
+								explode = val.output_date.split("-");
 								items.push($("<tr><td><a href='<?= base_url('stock/outputs/'); ?>/"+val.id_stock+"'>"+val.name+"</a></td><td>"+explode.reverse().join("/")+"</td><td>R$  "+val.sum_value+"</td><td><a class='delete_stock_btn' id='"+val.id_stock+"' href='#'>Apagar</a></td></tr>"));
-							});	
+							});
 							$('#output > tbody').append.apply($('#output > tbody'), items);
-						}catch(e) {		
+						}catch(e) {
 							alert('Ocorreu algum erro ao carregar as saidas de estoque!');
-						}			
+						}
 					}
 				},
 				error: function(data){
@@ -83,17 +83,17 @@
 						var obj = JSON.parse(data);
 						if(obj.length>0){
 							try{
-								var items=[]; 	
-								$.each(obj, function(i,val){											
+								var items=[];
+								$.each(obj, function(i,val){
 									items.push($("<a class='people' id="+ val.id_people +" href='#'>"+ val.name +"</a><br>"));
-								});	
+								});
 								$('#loadPeople').append.apply($('#loadPeople'), items);
-							}catch(e) {		
+							}catch(e) {
 								alert('Ocorreu algum erro ao carregar os Fornecedores!');
-							}		
+							}
 						}else{
-							$('#loadPeople').html($('<span/>').text("Nenhum Fornecedor encontrado!"));		
-						}		
+							$('#loadPeople').html($('<span/>').text("Nenhum Fornecedor encontrado!"));
+						}
 					},
 					error: function(data){
 						alert("Ocorreu algum erro ao carregar os Fornecedores");
@@ -112,11 +112,14 @@
 </script>
 <div class="container">
 	<div class="row">
-		<h4>Saídas de Estoque</h4>
-		<div class="card-panel col s12 m12">
-			<div class="input-field col s12 m3">
+		<div class="card-panel blue-text">
+			<h4>Saídas de Estoque [<?= count($output_stocks) ?>]</h4>
+			<div class="right-align">
 				<a class="green btn" href="<?=base_url('stock/outputs/create') ?>">Adicionar nova</a>
 			</div>
+		</div>
+		<div class="card-panel col s12 m12">
+
 			<div class="input-field col s12 m6">
 				<input type="text" name="search" placeholder=" Fornecedor..." autocomplete="off" required>
 				<div style="min-height: 30px;" id="loadPeople" class="col s12" style="position: relative; bottom: 0;">
@@ -126,10 +129,8 @@
 				<button href="#" id="search_button" class="btn green">Buscar</button>
 			</div>
 		</div>
-	</div>
 
-	<div class="row">
-		<div class="col s12 m12 collection responsive-table">
+		<div class="collection responsive-table">
 			<table id="output" class="bordered highlight">
 				<thead>
 					<td><strong>Entidade</strong></td>
@@ -140,17 +141,30 @@
 				<tbody>
 					<?php foreach($output_stocks as $row) :?>
 						<tr>
-							<td><a href="<?= base_url('stock/outputs/'.$row['id_stock']); ?>"><?= $row['name'] ?></a></td>
+							<td><a href="<?= base_url('people/'.$row['id_people']); ?>" title="Visualizar Pessoa"><?= $row['name'];?></a></td>
 							<td><?= date('d/m/Y', strtotime($row['output_date'])); ?></td>
-							<td><?='R$ ' . number_format($row['sum_value'], 2, ',', '.');?></td>
+							<td><?='R$ '. number_format($row['sum_value'], 2, ',', '.');?></td>
 							<td>
-								<a class="delete_stock_btn" id="<?= $row['id_stock']; ?>" href="#">Apagar</a>
+								<a id="<?= $row['id_stock']; ?>"
+									href="<?= base_url('stock/outputs/'.$row['id_stock']); ?>"
+									title="Vizualizar Saída">
+									<i class="material-icons">visibility</i></a>
+
+								<a id="<?= $row['id_stock']; ?>"
+									href="<?= base_url('stock/outputs/update/'.$row['id_stock']); ?>"
+									title="Editar Saída">
+									<i class="material-icons">edit</i></a>
+
+								<a id="<?= $row['id_stock']; ?>" href="#"
+									class="delete_stock_btn" title="Apagar Saída">
+									<i class="material-icons">delete</i></a>
 							</td>
 						</tr>
 					<?php endforeach; ?>
 				</tbody>
 			</table>
 		</div>
+		
 		<div id="delete_stock_modal" class="modal">
 			<div class="modal-content">
 				<h4>Atenção</h4>

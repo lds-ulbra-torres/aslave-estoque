@@ -31,26 +31,30 @@
 <div class="container">
 	<div class="row">
 		<div class="col s12 m7">
-			<a href="<?=base_url('StockController/products') ?>">< Voltar para produtos</a>
+			<div class="card-panel blue-text">
+				<h4>Alterar produto [<?= $product_data[0]['id_product'] ?>]</h4>
+			</div>
 			<form method="post" id="update_form">
-				<h4>Alterar produto</h4>
 				<div class="card-panel">
 					<?php foreach ($product_data as $name){ ?>
 					<input required="required" placeholder="Nome" value="<?php echo $name['name_product']; ?>" name="product_name" type="text"></input>
 					<select id="group_id">
 						<?php foreach($groups as $row){
-							$id_product = $name['id_group']; 
+							$id_product = $name['id_group'];
 							?>
 							<option <?php if($id_product == $row['id_group']){ ?> selected  <?php } ?>  value="<?php echo $row['id_group']; ?>"> <?php echo $row['name_group']; ?></option>
 							<?php } ?>
 
 						</select>
 						<?php } ?>
-						<button class="btn green" id="update_product_btn" type="submit">Salvar
-							<i class="material-icons right">send</i>
-						</button>
 					</div>
 				</form>
+				<div class="right-align">
+					<a class="btn teal" href="<?=base_url('stock/products') ?>"><i class="material-icons">input</i> Voltar</a>
+					<button class="btn green" id="update_product_btn" type="submit">Salvar
+						<i class="material-icons right">send</i>
+					</button>
+				</div>
 			</div>
 		</div>
 	</div>

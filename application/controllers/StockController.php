@@ -10,20 +10,20 @@ class StockController extends CI_Controller {
 		$this->load->model('stock/GroupModel');
 		$this->load->model('stock/ProductModel');
 		$this->load->model('stock/StockModel');
-		//$this->load->library('form_validation');
-		//$this->load->library('pagination');
 	}
 
 	public function index(){
-		$data['view'] = null;
 		if($this->session->userdata($this->sess)){
-		$this->template->load('template/templateMenu','stock/stock/StartView', $data);
+			$data = null;
+			$this->template->load('template/templateMenu','stock/stock/StartView', $data);
 		}else{
 			redirect('login');
 		}
 	}
 
-	/* CATEGORIAS */
+/** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** **
+* CATEGORIAS
+**/
 	public function groups($init = 0) {
 		$max = 10;
 		$init = (!$this->uri->segment('3')) ? 0 : $this->uri->segment('3');
@@ -61,7 +61,6 @@ class StockController extends CI_Controller {
 		$data['pagination_show'] =  $this->pagination->create_links();
 
 		$data['groups'] = $this->GroupModel->getGroups($max, $init);
-		$data['view'] = 'groups';
 		$data['search_string'] = null;
 		if($this->session->userdata($this->sess)){
 		$this->template->load('template/templateMenu','stock/group/GroupView', $data);
@@ -81,7 +80,6 @@ class StockController extends CI_Controller {
 
 	public function updateGroupView() {
 		$data['group_data'] = $this->GroupModel->getGroupById($this->uri->segment(4));
-		$data['view'] = 'groups/update';
 		if($this->session->userdata($this->sess)){
 		$this->template->load('template/templateMenu','stock/group/UpdateGroupView', $data);
 		}else{
@@ -131,7 +129,9 @@ class StockController extends CI_Controller {
 		}
 	}
 
-	/* PRODUTOS */
+/** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** **
+* PRODUTOS
+**/
 	public function products($init=0) {
 		$max = 20;
 		$init = (!$this->uri->segment('3')) ? 0 : $this->uri->segment('3');
@@ -248,12 +248,15 @@ class StockController extends CI_Controller {
 		}
 	}
 
-	/* FILTROS */
+/** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** **
+* FILTROS
+**/
 	public function searchPeople(){
 		$search = $this->input->post('name_people');
 		$result = $this->StockModel->getPeople($search);
 		echo json_encode($result);
 	}
+
 	public function searchGroup(){
 		$this->form_validation->set_rules('search_string', 'grupo', 'required');
 		if($this->form_validation->run()){
@@ -264,6 +267,7 @@ class StockController extends CI_Controller {
 			echo "O campo de busca esta vazio";
 		}
 	}
+
 	public function searchProduct(){
 			$product = $this->input->post('search_string');
 			$group = $this->input->post('group');
@@ -286,6 +290,7 @@ class StockController extends CI_Controller {
 		$result = $this->StockModel->getProductSearch($search);
 		echo json_encode($result);
 	}
+
 	public function searchStockInputByPeople(){
 		$this->form_validation->set_rules('search_string', 'pessoa', 'required');
 		if($this->form_validation->run()){
@@ -296,6 +301,7 @@ class StockController extends CI_Controller {
 			echo "O campo de busca esta vazio";
 		}
 	}
+
 	public function searchInputStockByType(){
 		$this->form_validation->set_rules('input_type', 'tipo', 'required');
 		if($this->form_validation->run()){
@@ -306,6 +312,7 @@ class StockController extends CI_Controller {
 			echo "Você esta tentando sabotar site?";
 		}
 	}
+
 	public function searchStockOutputByPeople(){
 		$this->form_validation->set_rules('search_string', 'pessoa', 'required');
 		if($this->form_validation->run()){
@@ -316,6 +323,7 @@ class StockController extends CI_Controller {
 			echo "O campo de busca esta vazio";
 		}
 	}
+
 	public function searchInputStockByDate(){
 		$this->form_validation->set_rules('from', 'de', 'required');
 		$this->form_validation->set_rules('to', 'a', 'required');
@@ -334,6 +342,7 @@ class StockController extends CI_Controller {
 			echo "Todos os campos são obrigatórios";
 		}
 	}
+
 	public function searchInputStockByAll(){
 		$this->form_validation->set_rules('dateFrom', 'de', 'required');
 		$this->form_validation->set_rules('dateTo', 'a', 'required');
@@ -365,10 +374,12 @@ class StockController extends CI_Controller {
 			echo json_encode($query1);
 		}
 	}
-	/* ENTRADAS DE ESTOQUE */
+
+/** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** **
+* ENTRADAS DE ESTOQUE
+**/
 	public function entriesView(){
 		$data['input_stocks'] = $this->StockModel->getInputStocks();
-		$data['view'] = 'stock/entries';
 		if($this->session->userdata($this->sess)){
 		$this->template->load('template/templateMenu','stock/stock/in/EntriesView', $data);
 		}else{
@@ -377,7 +388,6 @@ class StockController extends CI_Controller {
 	}
 
 	public function createEntryView(){
-		$data['view'] = 'stock/entries/create';
 		if($this->session->userdata($this->sess)){
 		$this->template->load('template/templateMenu','stock/stock/in/CreateEntryView', $data);
 		}else{
@@ -387,7 +397,6 @@ class StockController extends CI_Controller {
 
 	public function detailedEntryView() {
 		$id_stock = $this->uri->segment(3);
-		$data['view'] = 'stock/entries/detailed';
 		$data['entry_data'] = $this->StockModel->getDetailedEntry($id_stock);
 		if($this->session->userdata($this->sess)){
 		$this->template->load('template/templateMenu','stock/stock/in/DetailedEntryView', $data);
@@ -438,8 +447,9 @@ class StockController extends CI_Controller {
 		$data['view'] = 'stock/entries/detailed';
 		$data['entry_data'] = $this->StockModel->getDetailedEntry($id_stock);
 		if($this->session->userdata($this->sess)){
-		$this->template->load('template/templateMenu','stock/stock/in/UpdateEntryView', $data);
-		}else{
+			$this->template->load('template/templateMenu','stock/stock/in/UpdateEntryView', $data);
+		}
+		else{
 			redirect('login');
 		}
 	}
@@ -454,12 +464,14 @@ class StockController extends CI_Controller {
 		}
 		else { echo "Erro ao apagar esta entrada. "; }
 	}
+
 	public function removeProductInputStock(){
 		$id_product = array('id_product' => $this->input->post('id_product'));
 		if ($this->StockModel->removeProductStock($id_product)) {
 			echo true;
 		}else { echo "Erro ao remover este produto"; }
 	}
+
 	public function insertProductsInputStock(){
 		$this->form_validation->set_rules('id_stock', 'estoque', 'required');
 		if ($this->form_validation->run()) {
@@ -495,13 +507,15 @@ class StockController extends CI_Controller {
 					echo 1;
 				}else { echo "Erro ao remover os produtos"; }
 			}
-			
+
 		}
 	}
-	/* SAÍDAS DE ESTOQUE */
+
+/** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** **
+* SAÍDAS DE ESTOQUE
+**/
 	public function outputsView(){
 		$data['output_stocks'] = $this->StockModel->getOutputStocks();
-		$data['view'] = 'stock/outputs';
 		if($this->session->userdata($this->sess)){
 		$this->template->load('template/templateMenu','stock/stock/out/OutputsView', $data);
 		}else{
@@ -510,7 +524,6 @@ class StockController extends CI_Controller {
 	}
 
 	public function createOutputView() {
-		$data['view'] = 'stock/outputs/create';
 		if($this->session->userdata($this->sess)){
 		$this->template->load('template/templateMenu','stock/stock/out/CreateOutputView', $data);
 		}else{
@@ -520,11 +533,21 @@ class StockController extends CI_Controller {
 
 	public function detailedOutputView() {
 		$id_stock = $this->uri->segment(3);
-		$data['view'] = 'stock/outputs/detailed';
 		$data['output_data'] = $this->StockModel->getDetailedOutput($id_stock);
 		if($this->session->userdata($this->sess)){
 		$this->template->load('template/templateMenu','stock/stock/out/DetailedOutputView', $data);
 		}else{
+			redirect('login');
+		}
+	}
+
+	public function updateOutputView(){
+		$id_stock = $this->uri->segment(4);
+		$data['output_data'] = $this->StockModel->getDetailedOutput($id_stock);
+		if($this->session->userdata($this->sess)){
+			$this->template->load('template/templateMenu','stock/stock/out/UpdateOutputView', $data);
+		}
+		else{
 			redirect('login');
 		}
 	}
@@ -572,12 +595,14 @@ class StockController extends CI_Controller {
 		}
 		else { echo "Erro ao apagar esta saída. "; }
 	}
+
 	public function removeProductOutputStock(){
 		$id_product = array('id_product' => $this->input->post('id_product'));
 		if ($this->StockModel->removeProductOutputStock($id_product)) {
 			echo true;
 		}else { echo "Erro ao remover este produto"; }
 	}
+
 	public function insertProductsOutputStock(){
 		$this->form_validation->set_rules('id_stock', 'estoque', 'required');
 		if ($this->form_validation->run()) {

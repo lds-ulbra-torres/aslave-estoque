@@ -27,9 +27,10 @@
 <div class="container">
 	<div class="row">
 		<div class="col s12 m7">
-			<a href="<?=base_url('StockController/products') ?>">< Voltar para produtos</a>
-			<form method="post" id="create_product">
+			<div class="card-panel blue-text">
 				<h4>Cadastrar produto</h4>
+			</div>
+			<form method="post" id="create_product">
 				<div class="card-panel">
 					<input required placeholder="Nome" name="product_name" maxlength="45" type="text"></input>
 					<select required id="group_id">
@@ -41,9 +42,13 @@
 						endforeach; ?>
 					</select>
 				</div>
-				<button class="btn green" id="create_product_btn" type="submit">Salvar
-					<i class="material-icons right">send</i>
-				</button>
+				<div class="right-align">
+					<a class="btn teal" href="<?=base_url('stock/products') ?>"><i class="material-icons">input</i> Voltar</a>
+					<button class="btn green" id="create_product_btn" type="submit">Salvar
+						<i class="material-icons right">send</i>
+					</button>
+				</div>
+
 			</form>
 		</div>
 	</div>

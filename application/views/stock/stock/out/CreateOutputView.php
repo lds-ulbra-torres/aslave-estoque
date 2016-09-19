@@ -7,7 +7,7 @@
 	$(document).ready(function(){
 
 		$("#add_product_btn").click(function(){
-			$('#add_product_modal').openModal();	
+			$('#add_product_modal').openModal();
 		});
 		$("input[name=people]").keyup(function(){
 			if($(this).val() != ''){
@@ -21,17 +21,17 @@
 						var obj = JSON.parse(data);
 						if(obj.length>0){
 							try{
-								var items=[]; 	
-								$.each(obj, function(i,val){											
+								var items=[];
+								$.each(obj, function(i,val){
 									items.push($("<option  id="+ val.id_people +">"+ val.name +"</option>"));
-								});	
+								});
 								$('#loadPeople').append.apply($('#loadPeople'), items);
-							}catch(e) {		
+							}catch(e) {
 								alert('Ocorreu algum erro ao carregar os Fornecedores!');
-							}		
+							}
 						}else{
-							$('#loadPeople').html($('<span/>').text("Nenhum Fornecedor encontrado!"));		
-						}		
+							$('#loadPeople').html($('<span/>').text("Nenhum Fornecedor encontrado!"));
+						}
 					},
 					error: function(data){
 						alert("Ocorreu algum erro ao carregar os Fornecedores");
@@ -60,17 +60,17 @@
 						var obj = JSON.parse(data);
 						if(obj.length>0){
 							try{
-								var items=[]; 	
-								$.each(obj, function(i,val){											
+								var items=[];
+								$.each(obj, function(i,val){
 									items.push($("<option name="+val.unit_price+" id="+ val.id_product +">"+ val.name_product +"</option>"));
-								});	
+								});
 								$('#loadProduct').append.apply($('#loadProduct'), items);
-							}catch(e) {		
+							}catch(e) {
 								alert('Ocorreu algum erro ao carregar os Produto!');
-							}		
+							}
 						}else{
 							$('#loadProduct').html($('<span/>').text("Nenhum Produto encontrado!"));
-						}		
+						}
 					},
 					error: function(data){
 						alert("Ocorreu algum erro ao carregar os Produtos");
@@ -104,7 +104,7 @@
 			}
 			if(!check){
 				$("#add_product_modal").closeModal();
-				
+
 				var newRow = $("<tr class='productRow'>");
 				var cols = "";
 
@@ -118,21 +118,21 @@
 
 				newRow.append(cols);
 				$("#output_stock_product").append(newRow);
-				
+
 				total = total + ($("#product option").attr("name") * $("input[name=amount]").val());
-				
+
 				$("#total").html("Total: R$" +total.toFixed(2));
 				$("input[name=amount]").val("");
 				$("#price_product").empty();
 				$("input[name=product_name]").val("");
 				$('#loadProduct').empty();
 				$('#product').empty();
-				
+
 			}
-			
+
 		});
 		$("#output_stock_product").on("click", ".removeProduct", function(e){
-			
+
 			e.preventDefault();
 			var $this = $(this);
 			var valueRemove = $this.parents("tr").find(".tdProductTotal").text().replace(/[^0-9.,]/g,'');
@@ -143,10 +143,10 @@
 		$("#add_output_stock_btn").click(function(e){
 			e.preventDefault();
 			$("#add_output_stock_btn").attr("disabled", true);
-			
+
 			var productsData = [];
 			$(".productRow").each(function(i){
-				var pData = { 
+				var pData = {
 					id_product: $(this).find(".tdProductId").attr("id"),
 					amount:  $(this).find(".tdProductAmount").text(),
 					price: Number($(this).find(".tdProductPrice").text().replace(/[^0-9.,]/g,''))
@@ -165,18 +165,18 @@
 				},
 				success: function(data) {
 					if ($.isNumeric(data)) {
-						$("#add_output_stock_btn").attr("disabled", false); 
+						$("#add_output_stock_btn").attr("disabled", false);
 						document.location.href = "<?= base_url('stock/outputs/'); ?>/" + data;
 					}
 					else {
 						Materialize.toast(data, 4000);
-						$("#add_output_stock_btn").attr("disabled", false); 
+						$("#add_output_stock_btn").attr("disabled", false);
 					}
 				},
 				error: function(data){
 					console.log(data);
 					Materialize.toast('Erro ao adicionar uma nova saída de estoque!', 4000);
-					$("#add_output_stock_btn").attr("disabled", false); 
+					$("#add_output_stock_btn").attr("disabled", false);
 				}
 			});
 		});
@@ -184,27 +184,29 @@
 </script>
 <div class="container">
 	<div class="row">
-		<div class="">
-			<a href="<?=base_url('stock/outputs') ?>">< Voltar para saídas</a>
-			<h4>Nova saída</h4>
-			<div class="card-panel col s12 m12 l8">
-				<div class="input-field col s12 m12">
-					<input name="people" type="text" autocomplete="off" maxlength="45" required placeholder="Pessoa...">
-				</div>
-				<div class="">
-					<a href="#" id="loadPeople" class="col s12 m12"></a>
-					<h5 id="people" class="col s12"></h5>
-				</div>
-				<div class="input-field margin-alter col s12 m6">
-					<input name="descript" type="text" maxlength="250" placeholder="Descrição...">
-				</div>
-				<div class="col s12 m6">
-					<label for="date" class="black-text">Data de saída:</label>
-					<input placeholder="Data" name="date" type="date" required>
-				</div>
+
+		<div class="card-panel blue-text">
+			<h4>Nova Saída</h4>
+			<div class="right-align">
+				<a class="btn teal" href="<?=base_url('stock/outputs') ?>"><i class="material-icons">input</i> Voltar</a>
+				<button id="add_output_stock_btn" type="submit" class="green btn">Finalizar<i class="material-icons right">send</i></button>
 			</div>
-			<div class="container col s12 m12 l3">
-				<button id="add_output_stock_btn" type="submit" class="green btn-large">Finalizar<i class="material-icons right">send</i></button>
+		</div>
+
+		<div class="card-panel col s12 m12 l8">
+			<div class="input-field col s12 m12">
+				<input name="people" type="text" autocomplete="off" maxlength="45" required placeholder="Pessoa...">
+			</div>
+			<div class="">
+				<a href="#" id="loadPeople" class="col s12 m12"></a>
+				<h5 id="people" class="col s12"></h5>
+			</div>
+			<div class="input-field margin-alter col s12 m6">
+				<input name="descript" type="text" maxlength="250" placeholder="Descrição...">
+			</div>
+			<div class="col s12 m6">
+				<label for="date" class="black-text">Data de saída:</label>
+				<input placeholder="Data" name="date" type="date" required>
 			</div>
 		</div>
 
@@ -237,7 +239,7 @@
 		<form>
 			<div class="modal-content row bodyModal">
 				<h4>Adicionar produto</h4>
-				<div class="input-field col s12 m4">	
+				<div class="input-field col s12 m4">
 					<input name="product_name" autocomplete="off" type="text" maxlength="45" placeholder="Produto">
 					<div id="products" class="col s12 m12">
 						<a href="#" id="loadProduct" class="col s6"></a>

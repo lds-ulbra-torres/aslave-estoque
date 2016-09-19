@@ -5,7 +5,7 @@
 			$.ajax({
 				url: "<?php echo site_url('/StockController/searchInputStockByAll'); ?>",
 				type: "POST",
-				data: {	
+				data: {
 					people: $("input[name=search]").val(),
 					input_type: $("#input_type").val(),
 					dateFrom: $("input[name=from]").val(),
@@ -24,16 +24,26 @@
 							try{
 								$('#input > tbody').html("");
 								$("#pagination").html("");
-								var items=[]; 	
+								var items=[];
 								$.each(obj, function(i,val){
 									if(val.input_type == "1"){val.input_type = "Compra";}else{val.input_type = "Doação";}
-									explode = val.input_date.split("-");		
-									items.push($("<tr><td><a title='Visualizar Entrada' href='<?= base_url('stock/entries/'); ?>/"+val.id_stock+"'>"+val.name+"</a></td><td>"+explode.reverse().join("/")+"</td><td>R$  "+val.sum_value+"</td><td class='input_type_search'>"+val.input_type+"</td><td><a href='<?= base_url('stock/entries/update/'); ?>/"+val.id_stock+"''>Alterar</a> | <a id="+ val.id_stock +" href='#' class='delete_stock_btn'>Apagar</a></td></tr>"));
-								});	
+									explode = val.input_date.split("-");
+									/** Caralhow mano essa linha ficou loca */
+									items.push(
+										$("<tr><td><a title='Visualizar Pessoa' href='<?= base_url('people/'); ?>/"+val.id_people+"'>"+val.name+"</a></td>" +
+										"<td>"+explode.reverse().join("/")+"</td>" +
+										"<td>R$ "+val.sum_value+"</td>" +
+										"<td class='input_type_search'>"+val.input_type+"</td>" +
+										"<td>" +
+										"<a href='<?= base_url('stock/entries/'); ?>/"+val.id_stock+"' title='Vizualizar Entrada'><i class='material-icons'>visibility</i></a>" +
+										"<a href='<?= base_url('stock/entries/update/'); ?>/"+val.id_stock+"' title='Editar Entrada'><i class='material-icons'>edit</i></a>" +
+										"<a id="+ val.id_stock +" href='#' class='delete_stock_btn' title='Apagar Entrada'><i class='material-icons'>delete</i></a>" +
+										"</td></tr>"));
+								});
 								$('#input > tbody').append.apply($('#input > tbody'), items);
-							}catch(e) {		
+							}catch(e) {
 								alert('Ocorreu algum erro ao carregar as entrada de estoque!');
-							}			
+							}
 						}
 					}
 				},
@@ -55,17 +65,17 @@
 						var obj = JSON.parse(data);
 						if(obj.length>0){
 							try{
-								var items=[]; 	
-								$.each(obj, function(i,val){											
+								var items=[];
+								$.each(obj, function(i,val){
 									items.push($("<a class='people' id="+ val.id_people +" href='#'>"+ val.name +"</a><br>"));
-								});	
+								});
 								$('#loadPeople').append.apply($('#loadPeople'), items);
-							}catch(e) {		
+							}catch(e) {
 								alert('Ocorreu algum erro ao carregar os Fornecedores!');
-							}		
+							}
 						}else{
-							$('#loadPeople').html($('<span/>').text("Nenhum Fornecedor encontrado!"));		
-						}		
+							$('#loadPeople').html($('<span/>').text("Nenhum Fornecedor encontrado!"));
+						}
 					},
 					error: function(data){
 						alert("Ocorreu algum erro ao carregar os Fornecedores");
@@ -97,18 +107,18 @@
 						try{
 							$('#input > tbody').html("");
 							$("#pagination").html("");
-							var items=[]; 	
+							var items=[];
 
 							$.each(obj, function(i,val){
 								if(val.input_type == "1"){val.input_type = "Compra";}else{val.input_type = "Doação";}
-								explode = val.input_date.split("-");		
+								explode = val.input_date.split("-");
 								items.push($("<tr><td><a href='<?= base_url('stock/entries/'); ?>/"+val.id_stock+"'>"+val.name+"</a></td><td>"+explode.reverse().join("/")+"</td><td>R$  "+val.sum_value+"</td><td class='input_type_search'>"+val.input_type+"</td><td><a id="+ val.id_stock +" href='#' class='delete_stock_btn'>Apagar</a></td></tr>"));
-							});	
+							});
 							$('#input > tbody').append.apply($('#input > tbody'), items);
-						}catch(e) {		
+						}catch(e) {
 							alert('Ocorreu algum erro ao carregar as entrada de estoque!');
-						}			
-					}	
+						}
+					}
 				},
 				error: function(){
 					Materialize.toast("Ocorreu algum erro", 2000);
@@ -131,16 +141,16 @@
 						try{
 							$('#input > tbody').html("");
 							$("#pagination").html("");
-							var items=[]; 	
+							var items=[];
 							$.each(obj, function(i,val){
 								if(val.input_type == "1"){val.input_type = "Compra";}else{val.input_type = "Doação";}
-								explode = val.input_date.split("-");		
+								explode = val.input_date.split("-");
 								items.push($("<tr><td><a href='<?= base_url('stock/entries/'); ?>/"+val.id_stock+"'>"+val.name+"</a></td><td>"+explode.reverse().join("/")	+"</td><td>R$  "+val.sum_value+"</td><td class='input_type_search'>"+val.input_type+"</td><td><a id="+ val.id_stock +" href='#' class='delete_stock_btn'>Apagar</a></td></tr>"));
-							});	
+							});
 							$('#input > tbody').append.apply($('#input > tbody'), items);
-						}catch(e) {		
+						}catch(e) {
 							alert('Ocorreu algum erro ao carregar as entradas de estoque!');
-						}			
+						}
 					}
 				},
 				error: function(){
@@ -169,19 +179,19 @@
 							try{
 								$('#input > tbody').html("");
 								$("#pagination").html("");
-								var items=[]; 	
+								var items=[];
 
 								$.each(obj, function(i,val){
-									if(val.input_type == "1"){val.input_type = "Compra";}else{val.input_type = "Doação";}			
-									explode = val.input_date.split("-");			
+									if(val.input_type == "1"){val.input_type = "Compra";}else{val.input_type = "Doação";}
+									explode = val.input_date.split("-");
 									items.push($("<tr><td><a href='<?= base_url('stock/entries/'); ?>/"+val.id_stock+"'>"+val.name+"</a></td><td>"+explode.reverse().join("/")+"</td><td>R$  "+val.sum_value+"</td><td class='input_type_search'>"+val.input_type+"</td><td><a id="+ val.id_stock +" href='#' class='delete_stock_btn'>Apagar</a></td></tr>"));
-								});	
+								});
 								$('#input > tbody').append.apply($('#input > tbody'), items);
-							}catch(e) {		
+							}catch(e) {
 								alert('Ocorreu algum erro ao carregar as entrada de estoque!');
 							}
 						}
-					}			
+					}
 				},
 				error: function(data){
 					console.log(data);
@@ -200,13 +210,13 @@
 				},
 				error: function(){
 					console.log(data);
-					Materialize.toast('Erro ao recarregar a tabela, atualize a pagina!', 4000);	
+					Materialize.toast('Erro ao recarregar a tabela, atualize a pagina!', 4000);
 				}
 			});
 		}
 		var id_stock;
 		$("table").on("click",".delete_stock_btn", function(){
-			$('#delete_stock_modal').openModal();	
+			$('#delete_stock_modal').openModal();
 			id_stock = $(this).attr("id");
 		});
 		$("#delete_stock").on("click", function(){
@@ -223,20 +233,24 @@
 				error: function(data){
 					$("#delete_stock").attr("disabled", false);
 					console.log(data);
-					Materialize.toast('Ação não permitida.', 3000);	
+					Materialize.toast('Ação não permitida.', 3000);
 				}
 			});
 		});
-
 	});
 </script>
 <div class="container">
 	<div class="row">
-		<h4>Entradas de Estoque</h4>
-		<div class="card-panel col s12 row">
-			<div class="input-field col s12 m3">
+
+		<div class="card-panel blue-text">
+			<h4>Entradas de Estoque [<?= count($input_stocks) ?>]</h4>
+			<div class="right-align">
 				<a class="green btn" href="<?=base_url('stock/entries/create') ?>">Adicionar nova</a>
 			</div>
+		</div>
+
+		<div class="card-panel col s12">
+
 			<div class="input-field col s12 m4">
 				<input type="text" name="search" placeholder=" Fornecedor..." autocomplete="off" required>
 				<div style="min-height: 30px;" id="loadPeople" class="col s12" style="position: relative; bottom: 0;">
@@ -266,10 +280,8 @@
 				</form>
 			</div>
 		</div>
-	</div>
 
-	<div class="row">
-		<div class="col s12 collection responsive-table">
+		<div class="collection responsive-table">
 			<table id="input" class="bordered highlight">
 				<thead>
 					<td><strong>Fornecedor</strong></td>
@@ -281,39 +293,42 @@
 				<tbody>
 					<?php foreach($input_stocks as $row) :?>
 						<tr>
-							<td><a href="<?= base_url('stock/entries/'.$row['id_stock']); ?>" title="Visualizar entrada"><?= $row['name'];?></a></td>
+							<td><a href="<?= base_url('people/'.$row['id_people']); ?>" title="Visualizar Pessoa"><?= $row['name'];?></a></td>
 							<td><?= date('d/m/Y', strtotime($row['input_date'])); ?></td>
-							<td><?='R$ ' . number_format($row['sum_value'], 2, ',', '.');?></td>
-							<td><?php switch ($row['input_type']) {
-								case '1':
-								echo 'Compra';
-								break;
-
-								case '2':
-								echo 'Doação';
-								break;
-							} ?></td>
+							<td><?='R$ '. number_format($row['sum_value'], 2, ',', '.');?></td>
+							<td><?php echo $row['input_type'] == 1 ? "Compra":"Doação"; ?></td>
 							<td>
-								<a href="<?= base_url('stock/entries/update/'.$row['id_stock']); ?>" id="<?= $row['id_stock']; ?>" href="#">Alterar</a> |
-								<a class="delete_stock_btn" id="<?= $row['id_stock']; ?>" href="#">Apagar</a>
+								<a id="<?= $row['id_stock']; ?>"
+									href="<?= base_url('stock/entries/'.$row['id_stock']); ?>"
+									title="Vizualizar Entrada">
+									<i class="material-icons">visibility</i></a>
+
+								<a id="<?= $row['id_stock']; ?>"
+									href="<?= base_url('stock/entries/update/'.$row['id_stock']); ?>"
+									title="Editar Entrada">
+									<i class="material-icons">edit</i></a>
+
+								<a id="<?= $row['id_stock']; ?>" href="#"
+									class="delete_stock_btn" title="Apagar Entrada">
+									<i class="material-icons">delete</i></a>
 							</td>
 						</tr>
 					<?php endforeach; ?>
 				</tbody>
 			</table>
 		</div>
-		<div id="delete_stock_modal" class="modal">
-			<div class="modal-content">
-				<h4>Atenção</h4>
-				<div class="">
-					<p>O estoque retornará ao estado anterior e isto não poderá ser desfeito.</p>
-					<strong><p>Realmente quer apagar esta entrada de estoque? </p></strong>
-				</div>
-			</div>
-			<div class="modal-footer">
-				<a href="#!" class="modal-action modal-close btn-flat">Cancelar</a>
-				<a href="#!" id="delete_stock" class="modal-action modal-close btn red">Apagar</a>
-			</div>
+	</div>
+</div>
+<div id="delete_stock_modal" class="modal">
+	<div class="modal-content">
+		<h4>Atenção</h4>
+		<div class="">
+			<p>O estoque retornará ao estado anterior e isto não poderá ser desfeito.</p>
+			<strong><p>Realmente quer apagar esta entrada de estoque? </p></strong>
 		</div>
+	</div>
+	<div class="modal-footer">
+		<a href="#!" class="modal-action modal-close btn-flat">Cancelar</a>
+		<a href="#!" id="delete_stock" class="modal-action modal-close btn red">Apagar</a>
 	</div>
 </div>

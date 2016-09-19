@@ -1,0 +1,36 @@
+dl {
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+dt,
+dd {
+  margin-bottom: 3px;
+  line-height: 1.42857143;
+  font-size: 17px;
+}
+dt {
+  font-weight: bold;
+}
+dd {
+  margin-left: 0;
+}
+.dl-horizontal dt {
+  float: left;
+  width: 160px;
+  overflow: hidden;
+  clear: left;
+  text-align: right;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.dl-horizontal dd {
+  margin-left: 180px;
+}
+.dl-horizontal dd:before,
+.dl-horizontal dd:after {
+  display : table;
+  content: " ";
+}
+.dl-horizontal dd:after {
+  clear: both;
+}

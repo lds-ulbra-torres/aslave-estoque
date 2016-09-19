@@ -12,7 +12,7 @@
 		<div class="col s4 center">
 			<a href="<?= base_url('stock/groups'); ?>" style="color: #425f9c">
 				<i style="font-size: 80px;" class="material-icons center">group_work</i>
-				<p class="light center"><strong>Grupos</strong></p>			
+				<p class="light center"><strong>Categorias</strong></p>
 			</a>
 		</div>
 		<div class="col s4 center">

@@ -1,9 +1,9 @@
-
 <script type="text/javascript">
 	$(document).ready(function(){
 		$("input[name=group_name]").val("<?php foreach ($group_data as $name){echo $name['name_group'];} ?>");
 
-		$("#update_form").submit(function(e){
+		$('#update_group_btn').on("click", function(e) {
+			
 			$("#update_group_btn").attr("disabled", true);
 			e.preventDefault();
 			$.ajax({
@@ -37,16 +37,20 @@
 <div class="container">
 	<div class="row">
 		<div class="col s12 m7">
-			<a href="<?=base_url('StockController/groups') ?>">< Voltar para categorias</a>
-			<h4>Alterar categoria</h4>
+			<div class="card-panel blue-text">
+				<h4>Alterar categoria [<?= $group_data[0]['id_group'] ?>]</h4>
+			</div>
 			<form method="post" id="update_form">
 				<div class="card-panel">
 					<input type="text" value="" name="group_name" placeholder="Nome">
-					<button class="btn green" id="update_group_btn" type="submit">Salvar
-						<i class="material-icons right">send</i>
-					</button>
 				</div>
 			</form>
+			<div class="right-align">
+				<a class="btn teal" href="<?=base_url('stock/groups') ?>"><i class="material-icons">input</i> Voltar</a>
+				<button class="btn green" id="update_group_btn" type="submit">Salvar
+					<i class="material-icons right">send</i>
+				</button>
+			</div>
 		</div>
 	</div>
 </div>
