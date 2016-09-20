@@ -388,8 +388,9 @@ class StockController extends CI_Controller {
 	}
 
 	public function createEntryView(){
+		$data = null;
 		if($this->session->userdata($this->sess)){
-		$this->template->load('template/templateMenu','stock/stock/in/CreateEntryView', $data);
+			$this->template->load('template/templateMenu','stock/stock/in/CreateEntryView', $data);
 		}else{
 			redirect('login');
 		}

@@ -9,8 +9,8 @@ class PeopleModel extends CI_Model {
 		//$this->db->join('cities', 'people.id_cities = cities.id_cities', 'inner');
 		//$this->db->join('states', 'people.id_states = states.id_states', 'inner');
 		$person = $this->db->get_where($this->table, array('id_people' => $id_person))->result_array();
-		//$city = $this->db->get_where('cities', array('id_cities' => $person[0]));
-		return $person;
+		$city = $this->db->get_where('cities', array('id_cities' => $person[0]['id_cities']))->result_array();
+		return array('person' => $person, 'city' => $city);
 
 	}
 

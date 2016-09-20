@@ -24,12 +24,13 @@ $route['search-movimentation'] = 'movimentationController/searchMovimentation';
 $route['search-classification'] = 'classificationController/searchPerType';
 
 /* ROTAS PESSOAS */
-$route['people'] = 'peopleController';
-$route['people/(:num)'] = 'peopleController/detailedPerson/$1';
-$route['people-create-form'] = 'peopleController/peopleCreateView';
-$route['create-people'] = 'peopleController/create';
-$route['delete-people/(:num)'] = 'peopleController/delete/$1';
-$route['update-people/(:num)'] = 'peopleController/update/$1';
+$route['people'] = 'PeopleController/people';
+$route['people/(:num)'] = 'PeopleController/people/$1';
+$route['detailed-person/(:num)'] = 'PeopleController/detailedPerson/$1';
+$route['create-person-form'] = 'PeopleController/peopleCreateView';
+$route['create-person'] = 'PeopleController/create';
+$route['delete-person/(:num)'] = 'PeopleController/delete/$1';
+$route['update-person/(:num)'] = 'PeopleController/update/$1';
 
 /* ROTAS DO SEARCH */
 $route['templateSearch'] = 'searchController';

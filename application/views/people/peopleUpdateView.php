@@ -1,109 +1,109 @@
 		<div class="container">
-			<a href="<?= base_url('people') ?>" >< Voltar para pessoas</a>
-			<div class="row card-panel">
-				<h4 align="center">Alterar Dados</h4>
+			<div class="row">
+				<div class="card-panel blue-text">
+					<h4>Alterar Pessoa [<?= $id ?>]</h4>
+					<div class="right-align">
+						<button class="btn teal" type="button" name="button" onclick="history.back()"><i class="material-icons">input</i> Voltar</button>
+					</div>
+				</div>
 
-				<form class="col s12" action="<?= base_url("update-people/$id")?>" id="update-form" method="POST">
-					<div>
-						<input type="hidden" name="updatePeopleId" id="id" value="<?= $id ?>" >
+				<div class="card-panel col s12">
+					<form class="col s12" action="<?= base_url("update-people/$id")?>" id="update-form" method="POST">
+
+						<input type="hidden" name="updatePeopleId" id="id" value="<?= $id ?>" />
 
 						<div class="col s12">
-							<label>Nome *</label>
-							<input type="text" name="updatePeopleName" value="<?php echo $dados_pessoa[0]->name; ?>" >
-
+							<label for="updatePeopleName">Nome *</label>
+							<input type="text" name="updatePeopleName" value="<?php echo $dados_pessoa[0]->name ?>" />
 						</div>
+
 						<div class="col s6">
 							<div class="documentFisic">
-								<label>CPF *</label>
+								<label for="updatePeopleCpf">CPF *</label>
 								<input type="text" class="cpf" value="<?php echo $dados_pessoa[0]->cpf_cnpj; ?>" name="updatePeopleCpf">
-
 							</div>
 							<div class="documentJuridic">
-								<label>CNPJ *</label>
+								<label for="updatePeopleCnpj">CNPJ *</label>
 								<input type="text" class="cnpj" id="teste" value="<?php echo $dados_pessoa[0]->cpf_cnpj; ?>" name="updatePeopleCnpj">
-
 							</div>
 						</div>
 						<div class="col s6">
 							<div class="documentFisic">
 								<label>RG </label>
 								<input type="text" class="rg" value="<?php echo $dados_pessoa[0]->documment; ?>" name="updatePeopleRg">
-
 							</div>
 							<div class="documentJuridic">
 								<label>Inscrição Estadual </label>
 								<input type="text" class="inscEstadual" value="<?php echo $dados_pessoa[0]->documment; ?>" name="updatePeopleInsc">
-
 							</div>
 						</div>
-						<div class="col s12">
-							<label>Endereço </label>
-							<input type="text" name="updatePeopleAdress" value="<?php echo $dados_pessoa[0]->adress; ?>">
 
+						<div class="col s12">
+							<label for="updatePeopleAdress">Endereço </label>
+							<input type="text" name="updatePeopleAdress" value="<?php echo $dados_pessoa[0]->adress; ?>">
 						</div>
+
 						<div class="col s6">
 							<label>Numero </label>
 							<input type="text" name="updatePeopleNumber" value="<?php echo $dados_pessoa[0]->number; ?>">
-
 						</div>
+
 						<div class="col s6">
 							<label>Bairro </label>
 							<input type="text" name="updatePeopleNeighborhood" value="<?php echo $dados_pessoa[0]->neighborhood; ?>">
-
 						</div>
+
 						<div class="col s6">
-							<label>Estado *</label>
+							<label for="state">Estado *</label>
 							<select class="browser-default" name="state" id="state">
-								<?php
-								foreach($states as $fila)
-								{
-									?>
-									<option
-									value="<?php echo $fila->id_states ?>"
-									<?php echo $fila->id_states==$alter_states[0]->id_states ?'selected':'';?>
-									>
-									<?=$fila -> name . " / (" . $fila -> uf . ")"?>
-								</option>
-								<?php
-							}
-							?>
-						</select>
+								<?php foreach($states as $fila) : ?>
+									<option	value="<?php echo $fila->id_states ?>"
+										<?= $fila->id_states == $alter_states[0]->id_states ? 'selected':'';?>>
+										<?= $fila->name ." / (" . $fila -> uf .")" ?>
+									</option>
+								<?php endforeach ?>
+							</select>
 					</div>
+
 					<div class="col s6">
-						<label>Cidade *</label>
+						<label for="updatePeopleCitie">Cidade *</label>
 						<select class="browser-default" name="updatePeopleCitie" id="localidade">
 						</select>
 					</select>
 				</div>
-				<div class="col s6">
-					<label>CEP </label>
-					<input type="text" class="cep" value="<?php echo $dados_pessoa[0]->cep; ?>" name="updatePeopleCep">
 
-				</div>
 				<div class="col s6">
-					<label>Data de Nascimento </label>
+					<label for="updatePeopleCep">CEP </label>
+					<input type="text" class="cep" value="<?php echo $dados_pessoa[0]->cep; ?>" name="updatePeopleCep">
+				</div>
+
+				<div class="col s6">
+					<label for="updatePeopleDateBirth">Data de Nascimento </label>
 					<input type="date" name="updatePeopleDateBirth" value="<?php echo $dados_pessoa[0]->date_birth; ?>" class="datepicker">
 				</div>
+
 				<div class="col s6">
-					<label>Telefone</label>
+					<label for="updatePeoplePhone1">Telefone</label>
 					<input type="text" class="phone" name="updatePeoplePhone1" value="<?php echo $dados_pessoa[0]->phone1; ?>">
-
 				</div>
+
 				<div class="col s6">
-					<label>Telefone 2</label>
+					<label for="updatePeoplePhone2">Telefone 2</label>
 					<input type="text" class="phone" name="updatePeoplePhone2" value="<?php echo $dados_pessoa[0]->phone2; ?>">
-
 				</div>
+
 				<div class="col s6" align="left">
 					<label style="color:black;">* campos obrigatórios</label>
 				</div>
-				<div class="col s12" align="right">
-					<button type="submit" id="sendPeople" class="waves-green btn green">Salvar
+
+				<div class="col s12 right-align">
+					<button type="submit" id="sendPeople" class="btn green">Salvar
 						<i class="material-icons right">send</i>
 					</button>
 				</div>
-			</div>
-		</form>
+
+			</form>
+		</div>
 
 	</div>
 </div>

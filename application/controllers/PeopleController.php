@@ -7,20 +7,25 @@ class PeopleController extends CI_Controller {
 
 	public function __construct(){
 		parent:: __construct();
-		$this->load->model('people/peopleModel');
+		$this->load->model('people/PeopleModel');
 	}
 
+	public function index() {
+		if($this->session->userdata($this->sess)){
 
-	public function index($init = 0) {
-		//Paginação
+		}
+		else {
+			redirect('login');
+		}
+	}
+
+	public function people($init = 0) {
 		$this->load->library('pagination');
 		$max = 10;
 		$init = (!$this->uri->segment('2')) ? 0 : $this->uri->segment('2');
 		$config['base_url'] = base_url('people');
-		$config['total_rows'] = $this->peopleModel->count_register();
+		$config['total_rows'] = $this->PeopleModel->count_register();
 		$config['per_page'] = $max;
-
-
 
 		$config['full_tag_open'] = '<div class="pagination">
 		<ul class="pagination center-align">';
@@ -52,17 +57,20 @@ class PeopleController extends CI_Controller {
 		$this->pagination->initialize($config);
 
 		$data['pagination_show'] =  $this->pagination->create_links();
-		$data['peoples'] = $this->peopleModel->get_pagination($max, $init);
-		if($this->session->userdata($this->sess)){
+		$data['peoples'] = $this->PeopleModel->get_pagination($max, $init);
+		if($this->session->userdata($this->sess)) {
 			$this->template->load('template/templateMenu', 'people/peopleView', $data);
-		}else{
+		}
+		else {
 			redirect('login');
 		}
 	}
 
 	public function detailedPerson() {
 		$id_person = $this->uri->segment(2);
-		$data['person_data'] = $this->peopleModel->getPerson($id_person);
+		$array = $this->PeopleModel->getPerson($id_person);
+		$data['person_data'] = $array['person'];
+		$data['city'] = $array['city'];
 		if($this->session->userdata($this->sess)){
 		$this->template->load('template/templateMenu','people/peopleDetailedView', $data);
 		}else{
@@ -101,11 +109,11 @@ class PeopleController extends CI_Controller {
 
 				);
 
-			$this->peopleModel->create($people);
+			$this->PeopleModel->create($people);
 			redirect('people','refresh');
 
 		}else{
-			$data['states'] = $this->peopleModel->states();
+			$data['states'] = $this->PeopleModel->states();
 			if($this->session->userdata($this->sess)){
 				$this->template->load('template/templateMenu', 'people/peopleCreateView',$data);
 			}else{
@@ -116,7 +124,7 @@ class PeopleController extends CI_Controller {
 	}
 
 	public function update($id){
-		$peoples = $this->peopleModel->get();
+		$peoples = $this->PeopleModel->get();
 
 
 		$this->form_validation->set_rules('updatePeopleName','updateNome','required|min_length[5]');
@@ -144,7 +152,7 @@ class PeopleController extends CI_Controller {
 
 							);
 
-						$this->peopleModel->update($data);
+						$this->PeopleModel->update($data);
 						redirect('people','refresh');
 					}else if (strlen($people['cpf_cnpj']) == 14){
 						$data = array(
@@ -163,17 +171,17 @@ class PeopleController extends CI_Controller {
 
 							);
 
-						$this->peopleModel->update($data);
+						$this->PeopleModel->update($data);
 						redirect('people','refresh');
 					}
 				}
 			}
 		}else{
 			$data['id'] = $id;
-			$data['peoples'] = $this->peopleModel->get();
-			$data['states'] = $this->peopleModel->states();
-			$data['dados_pessoa'] = $this->peopleModel->listPeople($id);
-			$data['alter_states'] = $this->peopleModel->alterStates($id);
+			$data['peoples'] = $this->PeopleModel->get();
+			$data['states'] = $this->PeopleModel->states();
+			$data['dados_pessoa'] = $this->PeopleModel->listPeople($id);
+			$data['alter_states'] = $this->PeopleModel->alterStates($id);
 			if($this->session->userdata($this->sess)){
 				$this->template->load('template/templateMenu', 'people/peopleUpdateView', $data);
 			}else{
@@ -184,7 +192,7 @@ class PeopleController extends CI_Controller {
 
 	public function delete(){
 		$data = array('id_people' => $this->input->post('id_people'));
-		if($this->peopleModel->delete($data)){
+		if($this->PeopleModel->delete($data)){
 			echo  'Cadastro Excluido!';
 		}else {
 			echo 'Ocorreu algum erro. Tente novamente';
@@ -198,7 +206,7 @@ class PeopleController extends CI_Controller {
 		if($this->input->post('state'))
 		{
 			$state = $this->input->post('state');
-			$localidades = $this->peopleModel->localidades($state);
+			$localidades = $this->PeopleModel->localidades($state);
 			foreach($localidades as $fila)
 			{
 				?>
@@ -214,8 +222,8 @@ class PeopleController extends CI_Controller {
 		if($this->input->post('state'))
 		{
 			$state = $this->input->post('state');
-			$localidades = $this->peopleModel->localidades($state);
-			$data['alter_states'] = $this->peopleModel->alterStates($id);
+			$localidades = $this->PeopleModel->localidades($state);
+			$data['alter_states'] = $this->PeopleModel->alterStates($id);
 			foreach($localidades as $fila)
 			{
 				?>
@@ -235,14 +243,14 @@ public function searchPeople(){
 	$this->form_validation->set_rules('search_string', 'people', 'required');
 	if($this->form_validation->run()){
 		$people = $this->input->post('search_string');
-		$result = $this->peopleModel->search($people);
+		$result = $this->PeopleModel->search($people);
 		echo json_encode($result);
 	}else{
 		echo "O campo de busca esta vazio";
 	}
 }
 public function checkCPF(){
-	if($this->peopleModel->checkCPF($this->input->post("peopleCpf")) || $this->peopleModel->checkCPF($this->input->post("peopleCnpj")) || $this->peopleModel->checkCPF($this->input->post("updatePeopleCpf")) || $this->peopleModel->checkCPF($this->input->post("updatePeopleCnpj"))){
+	if($this->PeopleModel->checkCPF($this->input->post("peopleCpf")) || $this->PeopleModel->checkCPF($this->input->post("peopleCnpj")) || $this->PeopleModel->checkCPF($this->input->post("updatePeopleCpf")) || $this->PeopleModel->checkCPF($this->input->post("updatePeopleCnpj"))){
 		echo "-1";
 	}else{
 		echo "1";
