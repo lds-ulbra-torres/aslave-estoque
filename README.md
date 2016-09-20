@@ -7,11 +7,9 @@
 * 'test' == Production Test
 * Por motivos óbvios, lembre-se também de colocar o Host+Pass no modo 'prod'.
 
-## Estoque Change notes
-* Valor mínimo pode ser 0
-* Coluna Ações (View, Edit, Delete & View Person)
+## Change notes
+* Valores mínimos podem ser 0
+* Coluna Ações (View, Edit, Delete)
 * (FIX) Add/Remove produtos nas entradas
-
-## TO DO
-* Pagina de Detailed View em people
-* Padronizar o resto dos modulos
+* Detailed Person View
+* Refatoradas (gambi--);
