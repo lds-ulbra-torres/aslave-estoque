@@ -351,8 +351,6 @@ class StockController extends CI_Controller {
 			$to = new DateTime($this->input->post('dateTo'));
 			if($from > $to){
 				echo "-1";
-			}else if($to >  new DateTime("now")){
-				echo "-2";
 			}else{
 				$StringFrom = $from->format("Y-m-d");
 				$StringTo = $to->format("Y-m-d");
