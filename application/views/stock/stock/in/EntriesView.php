@@ -30,7 +30,7 @@
 									explode = val.input_date.split("-");
 									/** Caralhow mano essa linha ficou loca */
 									items.push(
-										$("<tr><td><a title='Visualizar Pessoa' href='<?= base_url('people/'); ?>/"+val.id_people+"'>"+val.name+"</a></td>" +
+										$("<tr><td><a title='Visualizar Pessoa' href='<?= base_url('detailed-person/'); ?>/"+val.id_people+"'>"+val.name+"</a></td>" +
 										"<td>"+explode.reverse().join("/")+"</td>" +
 										"<td>R$ "+val.sum_value+"</td>" +
 										"<td class='input_type_search'>"+val.input_type+"</td>" +
@@ -293,7 +293,7 @@
 				<tbody>
 					<?php foreach($input_stocks as $row) :?>
 						<tr>
-							<td><a href="<?= base_url('people/'.$row['id_people']); ?>" title="Visualizar Pessoa"><?= $row['name'];?></a></td>
+							<td><a href="<?= base_url('detailed-person/'.$row['id_people']); ?>" title="Visualizar Pessoa"><?= $row['name'];?></a></td>
 							<td><?= date('d/m/Y', strtotime($row['input_date'])); ?></td>
 							<td><?='R$ '. number_format($row['sum_value'], 2, ',', '.');?></td>
 							<td><?php echo $row['input_type'] == 1 ? "Compra":"Doação"; ?></td>

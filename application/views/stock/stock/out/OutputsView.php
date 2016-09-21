@@ -57,7 +57,14 @@
 							var items=[];
 							$.each(obj, function(i,val){
 								explode = val.output_date.split("-");
-								items.push($("<tr><td><a href='<?= base_url('stock/outputs/'); ?>/"+val.id_stock+"'>"+val.name+"</a></td><td>"+explode.reverse().join("/")+"</td><td>R$  "+val.sum_value+"</td><td><a class='delete_stock_btn' id='"+val.id_stock+"' href='#'>Apagar</a></td></tr>"));
+								items.push($("<tr><td><a href='<?= base_url('stock/outputs/'); ?>/"+val.id_stock+"'>"+val.name+"</a></td>" +
+								"<td>"+explode.reverse().join("/")+"</td>" +
+								"<td>R$  "+val.sum_value+"</td>" +
+								"<td>" +
+								"<a href='<?= base_url('stock/outputs/'); ?>/"+val.id_stock+"' title='Vizualizar Saida'><i class='material-icons'>visibility</i></a>" +
+								"<a href='<?= base_url('stock/entries/outputs/'); ?>/"+val.id_stock+"' title='Editar Saida'><i class='material-icons'>edit</i></a>" +
+								"<a id="+ val.id_stock +" href='#' class='delete_stock_btn' title='Apagar Saida'><i class='material-icons'>delete</i></a>" +
+								"</td></tr>"));
 							});
 							$('#output > tbody').append.apply($('#output > tbody'), items);
 						}catch(e) {
@@ -141,7 +148,7 @@
 				<tbody>
 					<?php foreach($output_stocks as $row) :?>
 						<tr>
-							<td><a href="<?= base_url('people/'.$row['id_people']); ?>" title="Visualizar Pessoa"><?= $row['name'];?></a></td>
+							<td><a href="<?= base_url('detailed-person/'.$row['id_people']); ?>" title="Visualizar Pessoa"><?= $row['name'];?></a></td>
 							<td><?= date('d/m/Y', strtotime($row['output_date'])); ?></td>
 							<td><?='R$ '. number_format($row['sum_value'], 2, ',', '.');?></td>
 							<td>
@@ -164,7 +171,7 @@
 				</tbody>
 			</table>
 		</div>
-		
+
 		<div id="delete_stock_modal" class="modal">
 			<div class="modal-content">
 				<h4>Atenção</h4>
