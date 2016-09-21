@@ -2,12 +2,12 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 /** $ACTIVE_GROUP -> Não esquecer de alterar para 'dev' ou 'test'
- * JAMAIS realize testes em 'prod', não bagunce o 'test'
+ * JAMAIS realize testes em 'prod', e não bagunce o 'test'.
  * Em memória a Feldens, Peixeira Dropadora de DBs
  *
  * Host+Pass do 'prod' tá no trello
  */
-$active_group = 'test';
+$active_group = 'dev';
 $query_builder = TRUE;
 
 $db['test'] = array(

@@ -26,7 +26,6 @@ class PeopleModel extends CI_Model {
         return $this->db->get('people')->result();
     }
 	public function update($people){
-		$query = $this->db->get('people');
 		$this->db->where('id_people', $people['id_people']);
 		return $this->db->update($this->table, $people);
 	}

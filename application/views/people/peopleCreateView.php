@@ -4,7 +4,7 @@
 			<h4 align="center">Cadastro de pessoa</h4>
 
 
-			<form class="col s12" action="create-people" id="formPeople" method="POST">
+			<form class="col s12" action="create-person" id="formPeople" method="POST">
 				<div class="col s12">
 					<input class="with-gap" type="radio" value="1" name="peopleClassification" id="fisica">
 					<label for="fisica">Pessoa Física</label>
@@ -13,7 +13,7 @@
 					<input class="with-gap" type="radio" value="2" name="peopleClassification" id="juridica">
 					<label for="juridica">Pessoa Jurídica</label>
 				</div>
-				<div class="peopleRegistration">                        
+				<div class="peopleRegistration">
 					<div class="col s12">
 						<label for="nome">Nome *</label>
 						<input type="text" id="nome" name="peopleName">
@@ -24,8 +24,8 @@
 							<input type="text" class="cpf" id="cpf" name="peopleCpf">
 						</div>
 						<div class="documentJuridic">
-							<label>CNPJ *</label>	
-							<input type="text" class="cnpj" id="cnpj" name="peopleCnpj">							    
+							<label>CNPJ *</label>
+							<input type="text" class="cnpj" id="cnpj" name="peopleCnpj">
 						</div>
 					</div>
 					<div class="col s6">
@@ -57,20 +57,20 @@
 						<label>Estado *</label>
 						<select class="browser-default" name="state" id="state">
 							<option disabled selected> Escolha o Estado</option>
-							<?php 
+							<?php
 							foreach($states as $fila)
 							{
 								?>
 								<option value="<?=$fila -> id_states ?>"><?=$fila -> name . " / (" . $fila -> uf . ")"?></option>
 								<?php
 							}
-							?>		
+							?>
 						</select>
 					</div>
 					<div class="col s6">
 						<label>Cidade *</label>
 						<select class="browser-default" name="peopleCitie" id="localidade">
-							<option disabled selected> -- </option>    		                        
+							<option disabled selected> -- </option>
 						</select>
 					</div>
 					<div class="col s6">
@@ -96,7 +96,7 @@
 						<label style="color:black;">* campos obrigatórios</label>
 					</div>
 					<div class="col s6" align="right">
-						<button type="submit" id="sendPeople" class="waves-green btn green">Salvar 
+						<button type="submit" id="sendPeople" class="waves-green btn green">Salvar
 							<i class="material-icons right">send</i>
 						</button>
 					</div>
@@ -110,7 +110,7 @@
 $('.cpf').mask("999.999.999-99",{placeholder:" "});
 $(".cnpj").mask("99.999.999/9999-99",{placeholder:" "});
 $(".phone").mask("(99) 9999-9999",{placeholder:" "});
-$(".cep").mask("99999/999",{placeholder:" "}); 
+$(".cep").mask("99999/999",{placeholder:" "});
 //Validações
 jQuery.validator.addMethod("isString", function(value, element) {
 	var regExp = /[0-9]/;
@@ -118,25 +118,25 @@ jQuery.validator.addMethod("isString", function(value, element) {
 	else return true
 }, "<p class='col s6' style='color: red; margin-top:1px;'>Por favor insira somente letras</p><br>");
 
-$('#formPeople').validate({  
+$('#formPeople').validate({
 
-	rules: {  
-		peopleName: { required: true, minlength: 5,isString: true},  
-		peopleDateBirth: {maxlength: 10}, 
-		peopleNumber: {digits:true,},  
+	rules: {
+		peopleName: { required: true, minlength: 5,isString: true},
+		peopleDateBirth: {maxlength: 10},
+		peopleNumber: {digits:true,},
 		state: {required: true,},
-		peopleCnpj: { required: true,},  
-		peopleCpf: { required: true,},  
+		peopleCnpj: { required: true,},
+		peopleCpf: { required: true,},
 		peopleRg:{maxlength: 14, digits:true},
 		peopleCitie: {required: true,},
-	},  
-	messages: {  
-		peopleName: { required: '<span class="col s6" style="color: red; margin-top:1px;">Preencha o campo Nome<br>', minlength: '<p class="col s6" style="color: red; margin-top:1px;">No mínimo 5 letras <br>'}, 
-		eopleDateBirth: {maxlength:'<p style="color: red; margin-top:1px;">Informe uma data válida<br>'}, 
-		peopleNumber: {digits:'<p class="col s6" style="color: red; margin-top:1px;">Apenas numeros <br>'}, 
+	},
+	messages: {
+		peopleName: { required: '<span class="col s6" style="color: red; margin-top:1px;">Preencha o campo Nome<br>', minlength: '<p class="col s6" style="color: red; margin-top:1px;">No mínimo 5 letras <br>'},
+		eopleDateBirth: {maxlength:'<p style="color: red; margin-top:1px;">Informe uma data válida<br>'},
+		peopleNumber: {digits:'<p class="col s6" style="color: red; margin-top:1px;">Apenas numeros <br>'},
 		state: {required: '<p class="col s6" style="color: red; margin-top:1px;">Escolha um estado <br>',},
-		peopleCnpj: { required: '<p class="col s6" style="color: red; margin-top:1px;">Preencha o campo CNPJ <br>'}, 
-		peopleCpf: { required: '<p class="col s6" style="color: red; margin-top:1px;">Preencha o campo CPF<br>',},  
+		peopleCnpj: { required: '<p class="col s6" style="color: red; margin-top:1px;">Preencha o campo CNPJ <br>'},
+		peopleCpf: { required: '<p class="col s6" style="color: red; margin-top:1px;">Preencha o campo CPF<br>',},
 		peopleRg:{maxlength:'<p class="col s6" style="color: red; margin-top:1px;">No máximo 14 digitos<br>' ,digits:'<p class="col s6" style="color: red; margin-top:1px;">Apenas números<br>' },
 		peopleCitie :{required: '<p class="col s6" style="color: red; margin-top:1px;">Escolha uma cidade <br>',},
 	},
@@ -180,7 +180,7 @@ $("input[name=peopleCpf]").keyup(function(e){
 				$("#sendPeople").attr("disabled", true);
 				return false;
 			}
-		},	
+		},
 		error: function(data){
 			console.log(data);
 			Materialize.toast("Ocorreu algum erro", 4000);
@@ -206,7 +206,7 @@ $("input[name=peopleCnpj]").keyup(function(e){
 				$("#sendPeople").attr("disabled", true);
 				return false;
 			}
-		},	
+		},
 		error: function(data){
 			console.log(data);
 			Materialize.toast("Ocorreu algum erro", 4000);

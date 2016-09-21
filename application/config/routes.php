@@ -27,7 +27,6 @@ $route['search-classification'] = 'classificationController/searchPerType';
 $route['people'] = 'PeopleController/people';
 $route['people/(:num)'] = 'PeopleController/people/$1';
 $route['detailed-person/(:num)'] = 'PeopleController/detailedPerson/$1';
-$route['create-person-form'] = 'PeopleController/peopleCreateView';
 $route['create-person'] = 'PeopleController/create';
 $route['delete-person/(:num)'] = 'PeopleController/delete/$1';
 $route['update-person/(:num)'] = 'PeopleController/update/$1';

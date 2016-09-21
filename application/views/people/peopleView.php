@@ -3,7 +3,7 @@
 	<div class="card-panel blue-text">
 		<h4>Pessoas</h4>
 		<div class="right-align">
-			<a class="margin-alter green btn" id="" href="<?= base_url('create-person-form'); ?>">Adicionar nova</a>
+			<a class="margin-alter green btn" id="" href="<?= base_url('create-person'); ?>">Adicionar nova</a>
 		</div>
 	</div>
 
@@ -119,13 +119,13 @@
 							var items=[];
 							$.each(obj, function(i,val){
 								items.push(
-									$("<tr><td><a href='<?= base_url('detailed-person/'.$person->id_people) ?>' title='Vizualizar Pessoa'>"+ val.name +"</a></td>" +
+									$("<tr><td><a href='<?= base_url('detailed-person/') ?>/"+ val.id_people +"' title='Vizualizar Pessoa'>"+ val.name +"</a></td>" +
 										"<td>"+ val.cpf_cnpj +"</td>"+
 										"<td>"+ val.documment +"</td>" +
 										"<td>" +
 										"<a href='<?= base_url('detailed-person/') ?>/"+ val.id_people +"' title='Vizualizar Pessoa'><i class='material-icons'>visibility</i></a>" +
-										"<a href='<?= base_url('update-people/');?>/"+ val.id_people +"'title='Editar Pessoa'><i class='material-icons'>edit</i></a>"+
-										"<a class='delete_person' id="+ val.id_people +" href='#' title='Apagar Pessoa'><i class='material-icons'>delete</i></a></td></tr>"));
+										"<a href='<?= base_url('update-people/');?>/"+ val.id_people +"' title='Editar Pessoa'><i class='material-icons'>edit</i></a>"+
+										"<a class='delete_person' id='"+ val.id_people +"' href='#' title='Apagar Pessoa'><i class='material-icons'>delete</i></a></td></tr>"));
 							});
 							$('#Tpeople > tbody').append.apply($('#Tpeople > tbody'), items);
 						}catch(e) {
@@ -138,5 +138,5 @@
 				}
 			});
 		});
-	});
+
 </script>
