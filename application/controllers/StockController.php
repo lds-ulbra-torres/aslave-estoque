@@ -252,8 +252,8 @@ class StockController extends CI_Controller {
 * FILTROS
 **/
 	public function searchPeople(){
-		$search = $this->input->post('name_people');
-		$result = $this->StockModel->getPeople($search);
+		$result = $this->StockModel->getPeople();
+		header('Content-type: application/json');
 		echo json_encode($result);
 	}
 
@@ -286,8 +286,8 @@ class StockController extends CI_Controller {
 	}*/
 
 	public function searchProductStock() {
-		$search = $this->input->post('name_product');
-		$result = $this->StockModel->getProductSearch($search);
+		$result = $this->StockModel->getProductSearch();
+		header('Content-type: application/json');
 		echo json_encode($result);
 	}
 

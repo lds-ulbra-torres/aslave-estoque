@@ -44,19 +44,14 @@ class StockModel extends CI_Model {
 		return array('output' => $output, 'people' => $people);
 	}
 
-	public function getPeople($searchString) {
+	public function getPeople() {
 		$this->db->select("id_people, name");
-		$whereCondition = array('name' =>$searchString);
-		$this->db->like($whereCondition);
-		$query = $this->db->get('people', 4);
+		$query = $this->db->get('people');
 		return $query->result();
 	}
-	public function getProductSearch($searchString) {
-		$this->db->select("id_product, name_product, unit_price");
-		$whereCondition = array('name_product' =>$searchString);
-		$this->db->like($whereCondition);
-		$this->db->from('stock_products', 5);
-		$query = $this->db->get();
+	public function getProductSearch() {
+		$this->db->select("id_product, name_product");
+		$query = $this->db->get('stock_products');
 		return $query->result();
 	}
 

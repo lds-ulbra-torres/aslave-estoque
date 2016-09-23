@@ -9,11 +9,15 @@
 	<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="<?= base_url('assets/css/templateMenu.css'); ?>">
 	<link rel="stylesheet" type="text/css" href="<?= base_url('assets/css/main.css'); ?>">
+	<link rel="stylesheet" type="text/css" href="<?= base_url('assets/css/select2.min.css'); ?>">
 	<link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
 	<script type="text/javascript" src="https://code.jquery.com/jquery-2.2.2.js"></script>
 	<script type="text/javascript" src="<?= base_url('assets/js/jquery.maskedinput.js');?>"></script>
 	<script type="text/javascript" src="<?= base_url('assets/js/jquery.validate.js'); ?>"></script>
 	<script type="text/javascript" src="<?= base_url('assets/js/jquery.maskMoney.js'); ?>" ></script>
+	<script type="text/javascript" src="<?= base_url('assets/js/select2.min.js'); ?>" ></script>
+	<script type="text/javascript" src="<?= base_url('assets/js/pt-BR.js'); ?>" ></script>
+	<script type="text/javascript" src="<?= base_url('assets/js/jquery.simpleSelect2Json.js'); ?>" ></script>
 
 
 </head>
