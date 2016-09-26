@@ -74,7 +74,10 @@
 			$('#add_product_modal').openModal();
 		});
 
-		$("input[name=product_name]").keyup(function(){
+		var product_json = "<?php echo site_url('/StockController/searchProductStock')?>";
+		$('#product_name').simpleSelect2Json(product_json,'id_product','name_product');
+
+		/*$("input[name=product_name]").keyup(function(){
 			if($(this).val() != ''){
 				$.ajax({
 					url: "<?php echo site_url('/StockController/searchProductStock')?>",
@@ -111,7 +114,7 @@
 			$("input[name=descript]").val("");
 			$("#product").html($(this));
 			$('#loadProduct').html(" ");
-		});
+		});*/
 
 		var total = 0;
 		$("#generate_table_product").submit(function(e){
@@ -121,7 +124,7 @@
 				Materialize.toast("Selecione algum produto", 4000);
 				check = true;
 			}else{
-			var id = $("#product option").attr("id");
+			var id = $("#product_name option:selected").val();
 			$("#productInput td").each(function(i){
 				if( id == $(this).attr("id")){
 					check = true;
@@ -135,7 +138,7 @@
 				var newRow = $("<tr class='productRow'>");
 				var cols = "";
 
-				cols += '<td class="tdProductId" id='+ $("#product option").attr("id") +'>'+ $("#product option").text() +'</td>';
+				cols += '<td class="tdProductId" id='+ $("#product_name option:selected").val() +'>'+ $("#product_name option:selected").text() +'</td>';
 				cols += '<td class="tdProductPrice">'+'R$ '+ $("input[name=price]").val() +'</td>';
 				cols += '<td class="tdProductAmount">'+ $("input[name=amount]").val() +'</td>';
 				cols += '<td class="tdProductTotal">'+'R$ '+ ($("input[name=price]").val() * $("input[name=amount]").val()).toFixed(2) +'</td>';
@@ -301,11 +304,7 @@
 		<div class="modal-content row bodyModal">
 			<h4>Adicionar produto</h4>
 			<div class="input-field col s12 m4">
-				<input name="product_name" autocomplete="off" type="text" maxlength="45" placeholder="Produto">
-				<div id="products" class="col s12 m12">
-					<a href="#" id="loadProduct" class="col s12 m6"></a>
-					<h5 id="product" class="col s12 m6"></h5>
-				</div>
+				<select style="width: 100% !important" id="product_name" name="people"></select>
 			</div>
 			<div class="input-field col s12 m4">
 				<input name="amount" required="required" type="number" placeholder="Quantia">

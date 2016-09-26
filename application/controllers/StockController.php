@@ -524,7 +524,7 @@ class StockController extends CI_Controller {
 
 	public function createOutputView() {
 		if($this->session->userdata($this->sess)){
-		$this->template->load('template/templateMenu','stock/stock/out/CreateOutputView', $data);
+		$this->template->load('template/templateMenu','stock/stock/out/CreateOutputView');
 		}else{
 			redirect('login');
 		}

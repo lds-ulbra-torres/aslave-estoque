@@ -9,7 +9,14 @@
 		$("#add_product_btn").click(function(){
 			$('#add_product_modal').openModal();
 		});
-		$("input[name=people]").keyup(function(){
+
+		var people_json = "<?php echo site_url('/StockController/searchPeople')?>";
+		$('#people').simpleSelect2Json(people_json,'id_people','name');
+
+		var product_json = "<?php echo site_url('/StockController/searchProductStock')?>";
+		$('#product_name').simpleSelect2Json(product_json,'id_product','name_product');
+
+		/*$("input[name=people]").keyup(function(){
 			if($(this).val() != ''){
 				$.ajax({
 					url: "<?php echo site_url('/StockController/searchPeople')?>",
@@ -85,7 +92,7 @@
 			$("#product").html($(this));
 			$("#price_product").html("Valor: "+$(this).attr("name"));
 			$('#loadProduct').empty();
-		});
+		});*/
 		var total = 0;
 		$("#add_product_output_btn").click(function(e){
 			e.preventDefault();
@@ -94,7 +101,7 @@
 				Materialize.toast("Selecione algum produto", 4000);
 				check = true;
 			}else{
-			var id = $("#product option").attr("id");
+			var id = $("#product_name option:selected").val();
 			$("tbody td").each(function(i){
 				if( id == $(this).attr("id")){
 					check = true;
@@ -108,10 +115,10 @@
 				var newRow = $("<tr class='productRow'>");
 				var cols = "";
 
-				cols += '<td class="tdProductId" id='+ $("#product option").attr("id") +'>'+ $("#product option").text() +'</td>';
+				cols += '<td class="tdProductId" id='+ $("#product_name option:selected").val() +'>'+ $("#product_name option:selected").text() +'</td>';
 				cols += '<td class="tdProductAmount">'+ $("input[name=amount]").val() +'</td>';
-				cols += '<td class="tdProductPrice">'+'R$ '+ $("#product option").attr("name") +'</td>';
-				cols += '<td class="tdProductTotal">'+'R$ '+ ($("#product option").attr("name") * $("input[name=amount]").val()).toFixed(2) +'</td>';
+				cols += '<td class="tdProductPrice">'+'R$ '+ $("#price_product").val() +'</td>';
+				cols += '<td class="tdProductTotal">'+'R$ '+ ($("#price_product").val() * $("input[name=amount]").val()).toFixed(2) +'</td>';
 				cols += '<td>';
 				cols += '<a href="#" class="removeProduct">Remover</a>';
 				cols += '</td>';
@@ -119,12 +126,11 @@
 				newRow.append(cols);
 				$("#output_stock_product").append(newRow);
 
-				total = total + ($("#product option").attr("name") * $("input[name=amount]").val());
+				total = total + ($("#price_product").val() * $("input[name=amount]").val());
 
 				$("#total").html("Total: R$" +total.toFixed(2));
 				$("input[name=amount]").val("");
-				$("#price_product").empty();
-				$("input[name=product_name]").val("");
+				$("#price_product").val("");
 				$('#loadProduct').empty();
 				$('#product').empty();
 
@@ -158,7 +164,7 @@
 				url: "<?php echo site_url('/StockController/createOutputStock'); ?>",
 				type: "POST",
 				data: {
-					id_people: $("#people option").attr("id"),
+					id_people: $("#people option:selected").val(),
 					descript: $("input[name=descript]").val(),
 					date: $("input[name=date]").val(),
 					products: JSON.stringify(productsData)
@@ -195,7 +201,7 @@
 
 		<div class="card-panel col s12 m12 l8">
 			<div class="input-field col s12 m12">
-				<input name="people" type="text" autocomplete="off" maxlength="45" required placeholder="Pessoa...">
+				<select id="people" name="people"></select>
 			</div>
 			<div class="">
 				<a href="#" id="loadPeople" class="col s12 m12"></a>
@@ -240,17 +246,13 @@
 			<div class="modal-content row bodyModal">
 				<h4>Adicionar produto</h4>
 				<div class="input-field col s12 m4">
-					<input name="product_name" autocomplete="off" type="text" maxlength="45" placeholder="Produto">
-					<div id="products" class="col s12 m12">
-						<a href="#" id="loadProduct" class="col s6"></a>
-						<h5 id="product" class="col s12 m6"></h5>
-					</div>
+					<select style="width: 100% !important" id="product_name" name="product_name"></select>
 				</div>
 				<div class="input-field col s12 m2">
-					<input name="amount" required="required" type="number" placeholder="Quantia">
+					<input name="amount" required="true" type="number" placeholder="Quantia">
 				</div>
 				<div class="input-field col s12 m2">
-					<p class="chip" id="price_product"></p>
+					<input type="number" placeholder="Preço" required="true" id="price_product" step="0.00" min="0.00">
 				</div>
 			</div>
 			<div class="modal-footer">
