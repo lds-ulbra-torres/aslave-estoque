@@ -203,8 +203,7 @@
 						setTimeout(reloadTableProductInputAfterInsert(), 3000);
 						$(".productRow").addClass("transition");
 						Materialize.toast("Operação realizada com sucesso!", 4000);
-					}
-					else{
+					}else{
 						Materialize.toast(data, 4000);
 					}
 					setTimeout(reloadTableProductInputAfterInsert(), 3000);

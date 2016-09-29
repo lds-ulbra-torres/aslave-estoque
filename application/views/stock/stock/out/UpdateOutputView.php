@@ -1,5 +1,6 @@
 <script type="text/javascript">
 	$(document).ready(function(){
+		var delete_produto = [];
 		var total = 0
 		$(".total").each(function(){
 			total += Number($(this).text().replace(/[^0-9.,]/g,''));
@@ -38,8 +39,19 @@
 				}
 			});
 		}
-		$("#productOutput").on("click", ".deleteProductBtn", function(){
-			$.ajax({
+		$("#productOutput").on("change", ":checkbox", function(){
+			if($(this).is(':checked')){
+				delete_produto.push($(this).attr("id"));
+				$("#add_product_output_stock_final_btn").attr("disabled", false);
+				$(this).parent().parent().css("background-color", "#d9d9d9");
+			}else{
+				delete_produto.splice(delete_produto.indexOf($(this).attr("id")), 1);
+				$(this).parent().parent().css("background-color", "white");
+			}
+			if(total === 0 && delete_produto.length === 0){
+				$("#add_product_output_stock_final_btn").attr("disabled", true);
+			}
+			/*$.ajax({
 				url: "<?php echo site_url('/StockController/removeProductOutputStock')?>",
 				type: "POST",
 				data: {id_product: $(this).attr("id")},
@@ -55,14 +67,17 @@
 					console.log(data);
 					Materialize.toast("Ocorreu algum erro ao retirar este produto", 4000);
 				}
-			});
+			});*/
 		});
 
 		$("#add_product_btn").click(function(){
 			$('#add_product_modal').openModal();
 		});
 
-		$("input[name=product_name]").keyup(function(){
+		var product_json = "<?php echo site_url('/StockController/searchProductStock')?>";
+		$('#product_name').simpleSelect2Json(product_json,'id_product','name_product');
+
+		/*$("input[name=product_name]").keyup(function(){
 			if($(this).val() != ''){
 				$.ajax({
 					url: "<?php echo site_url('/StockController/searchProductStock')?>",
@@ -99,7 +114,7 @@
 			$("#product").html($(this));
 			$("#price_product").html("Valor: "+$(this).attr("name"));
 			$('#loadProduct').html(" ");
-		});
+		});*/
 
 		var total = 0;
 		$("#generate_table_product").submit(function(e){
@@ -109,7 +124,7 @@
 				Materialize.toast("Selecione algum produto", 4000);
 				check = true;
 			}else{
-			var id = $("#product option").attr("id");
+			var id = $("#product_name option:selected").val();
 			$("#productOutput td").each(function(i){
 				if( id == $(this).attr("id")){
 					check = true;
@@ -123,18 +138,18 @@
 				var newRow = $("<tr class='productRow'>");
 				var cols = "";
 
-				cols += '<td class="tdProductId" id='+ $("#product option").attr("id") +'>'+ $("#product option").text() +'</td>';
-				cols += '<td class="tdProductPrice">'+'R$ '+ $("#price_product").text().replace(/[^0-9.,]/g,'') +'</td>';
+				cols += '<td class="tdProductId" id='+ $("#product_name option:selected").val() +'>'+ $("#product_name option:selected").text() +'</td>';
+				cols += '<td class="tdProductPrice">'+'R$ '+ $("#price_product").val() +'</td>';
 				cols += '<td class="tdProductAmount">'+ $("input[name=amount]").val() +'</td>';
-				cols += '<td class="tdProductTotal">'+'R$ '+ ($("#price_product").text().replace(/[^0-9.,]/g,'') * $("input[name=amount]").val()).toFixed(2) +'</td>';
+				cols += '<td class="tdProductTotal">'+'R$ '+ ( $("#price_product").val()* $("input[name=amount]").val()).toFixed(2) +'</td>';
 				cols += '<td>';
-				cols += '<a href="#" class="removeProduct">Apagar</a>';
+				cols += '<a href="#" class="removeProduct btn red"><i class="material-icons">delete</i></a>';
 				cols += '</td>';
 
 				newRow.append(cols);
 				$("#newProduct").prepend(newRow);
 
-				total = total + ($("#price_product").text().replace(/[^0-9.,]/g,'') * $("input[name=amount]").val());
+				total = total + ( $("#price_product").val() * $("input[name=amount]").val());
 
 				$("#total").html("Total: R$" +total.toFixed(2));
 				$("input[name=amount]").val("");
@@ -142,7 +157,8 @@
 				$("input[name=product_name]").val("");
 				$('#loadProduct').html(" ");
 				$("#product").html(" ");
-				$("#price_product").html(" ");
+				$("#price_product").val(" ");
+				$("#add_product_output_stock_final_btn").attr("disabled", false);
 
 			}
 
@@ -155,10 +171,13 @@
 			total = total - valueRemove;
 			$("#total").html("Total: R$ "+ total.toFixed(2));
 			$(this).parents('tr').remove();
+			if(total === 0 && delete_produto.length === 0){
+				$("#add_product_output_stock_final_btn").attr("disabled", true);
+			}
 		});
-		$("#add_product_input_stock_final_btn").click(function(e){
+		$("#add_product_output_stock_final_btn").click(function(e){
 			e.preventDefault();
-			$("#add_product_input_stock_final_btn").attr("disabled", true);
+			$("#add_product_output_stock_final_btn").attr("disabled", true);
 
 			var productsData = [];
 			$(".productRow").each(function(i){
@@ -174,26 +193,26 @@
 				url: "<?php echo site_url('/StockController/insertProductsOutputStock')?>",
 				type: "POST",
 				data: {
-					id_stock: "<?= $this->uri->segment(3) ?>",
-					products: JSON.stringify(productsData)
+					id_stock: "<?= $this->uri->segment(4) ?>",
+					products: JSON.stringify(productsData),
+					delete_produto: delete_produto
 				},
 				success: function(data){
-					if(data == '2'){
-						$("#total").html("Total: R$: ");
+					if(!isNaN(data)){
+						$("#total").html("Total: R$:");
 						setTimeout(reloadTableProductOutputAfterInsert(), 3000);
 						$(".productRow").addClass("transition");
-						Materialize.toast("Produto(s) adicionado(s)!", 4000);
-						$("#add_product_input_stock_final_btn").attr("disabled", false);
-					}
-					else{
+						Materialize.toast("Operação realizada com sucesso!", 4000);
+					}else{
 						Materialize.toast(data, 4000);
-						$("#add_product_input_stock_final_btn").attr("disabled", false);
+						$("#add_product_output_stock_final_btn").attr("disabled", false);
 					}
+					setTimeout(reloadTableProductOutputAfterInsert(), 3000);
 				},
 				error: function(data){
 					console.log(data);
 					Materialize.toast('Erro ao adicionar um novo produto!', 4000);
-					$("#add_product_input_stock_final_btn").attr("disabled", false);
+					$("#add_product_output_stock_final_btn").attr("disabled", false);
 				}
 			});
 		});
@@ -217,7 +236,7 @@
 		<h4>Alterar Saída [<?= $output_data['output'][0]['id_stock']; ?>]</h4>
 		<div class="right-align">
 			<a class="btn teal" href="<?=base_url('stock/outputs') ?>"><i class="material-icons">input</i> Voltar</a>
-      <button id="add_product_input_stock_final_btn" type="submit" class="green btn">Finalizar<i class="material-icons right">send</i></button>
+      <button id="add_product_output_stock_final_btn" type="submit" disabled="true" class="green btn">Finalizar<i class="material-icons right">send</i></button>
 		</div>
 	</div>
 	<div class="row">
@@ -242,15 +261,11 @@
 			</dl>
 		</div>
 
-		<div class="card-panel col s12 m12 l10">
-			<div class="col s12 m6">
-				<p><a id="add_product_btn" class="btn green">Adicionar produto</a></p>
-			</div>
-			<div class="right-align col s12 m6">
+		<div class="card-panel">
+			<div class="right-align">
+				<a id="add_product_btn" class="btn green">Adicionar produto</a>
 				<p id="total" class="btn grey" disabled>Total: R$ </p>
 			</div>
-		</div>
-		<div class="col s12 m12 l8">
 			<div class="collection responsive-table">
 				<table id="productOutput" class="bordered highlight">
 					<thead>
@@ -271,7 +286,10 @@
 							<td><?= $prod['amount_output'] ?></td>
 							<td class="total" hidden><?= $prod['unit_price_output']*$prod['amount_output'] ?></td>
 							<td><?='R$ ' . number_format($prod['unit_price_output']*$prod['amount_output'], 2, ',', '.');?></td>
-							<td id="<?= $prod['id_product'] ?>"><a class="deleteProductBtn" id="<?= $prod['id_product'] ?>" href="#">Apagar</a></td>
+							<td id="<?= $prod['id_product'] ?>">
+								<input type="checkbox" class="filled-in" class="deleteProductBtn" id="ck<?= $prod['id_product'] ?>"/>
+								<label for="ck<?= $prod['id_product'] ?>"> </label>
+							</td>
 						</tr>
 						<?php } ?>
 					</tbody>
@@ -284,17 +302,13 @@
 			<div class="modal-content row bodyModal">
 				<h4>Adicionar produto</h4>
 				<div class="input-field col s12 m4">
-					<input name="product_name" autocomplete="off" type="text" maxlength="45" placeholder="Produto">
-					<div id="products" class="col s12">
-						<a href="#" id="loadProduct" class="col s6"></a>
-						<h5 id="product" class="col s6"></h5>
-					</div>
+					<select style="width: 100% !important" id="product_name" name="product_name"></select>
 				</div>
 				<div class="input-field col s12 m2">
 					<input name="amount" required="required" type="number" placeholder="Quantia">
 				</div>
 				<div class="input-field col s12 m2">
-					<p class="chip" id="price_product"></p>
+					<input type="number" placeholder="Preço" required="true" id="price_product" step="0.00" min="0.00">
 				</div>
 			</div>
 			<div class="modal-footer">

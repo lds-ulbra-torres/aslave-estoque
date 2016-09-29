@@ -135,7 +135,8 @@ class StockModel extends CI_Model {
 		return $this->db->delete($this->output, $id_stock);
 	}
 	public function removeProductOutputStock($id_product){
-		return $this->db->delete($this->output_has_products, $id_product);
+		$this->db->where("id_product", $id_product);
+		return $this->db->delete($this->output_has_products);
 	}
 	public function searchOutputByPeople($people){
 		$this->db->join('people', 'stock_output.id_people = people.id_people', 'inner');

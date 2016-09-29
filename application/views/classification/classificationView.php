@@ -4,12 +4,12 @@
 		$(".closeModal").click(function(){
 			$('#deleteClassModal').closeModal();
 		});
-	});		
+	});
 
 	$(document).on("click", ".openDeleteClassModal", function(){
 		$('#deleteClassModal').openModal();
 		document.getElementById('idDelete').value=$(this).attr('id');
-	});	
+	});
 
 	$(document).on("submit","#delete-c",function(e){
 		function reloadTableClassification(){
@@ -23,7 +23,7 @@
 				},
 				error: function(){
 					console.log(data);
-					Materialize.toast('Erro ao recarregar a tabela, atualize a pagina!', 4000);	
+					Materialize.toast('Erro ao recarregar a tabela, atualize a pagina!', 4000);
 				}
 			});
 		}
@@ -79,7 +79,7 @@
 <div>
 	<!-- MODAL 1 -->
 	<div class="input-field col s3">
-		
+
 	</div>
 
 	<div id="deleteClassModal" class="modal">
@@ -104,9 +104,9 @@
 			<div class="col s4">
 				<a class="margin-alter btn green" href="<?= base_url('create-classification-form');?>">ADICIONAR NOVA</a>
 			</div>
-				
+
 			<div class="input-field col s12 m6">
-				<form method="POST" id="typeSearch">	
+				<form method="POST" id="typeSearch">
 					<select id="selectType">
 						<option value="" disabled selected>Selecione um tipo</option>
 						<option value="E">Entrada</option>
@@ -117,9 +117,9 @@
 			</div>
 			<div class="col s12 m2">
 					<button type="submit" class="margin-alter btn green" >Buscar</button>
-				</form>	
+				</form>
 			</div>
-			
+
 
 		</div>
 
@@ -129,6 +129,7 @@
 					<thead>
 						<td><strong class="">Nome: </strong></td>
 						<td><strong class="">Tipo de classificação: </strong></td>
+                    <td><strong>Ações</strong></td>
 					</thead>
 					<tbody id="foundType">
 						<?php foreach ($classifications as $classification) :?>
@@ -145,10 +146,9 @@
 								</td>
 								<td>
 									<a href="update-classification-form/<?= $classification['id_classification'] ?>" class="">
-										Alterar</a>
-										|
+										<i class="material-icons">edit</i></a>
 									<a id="<?= $classification['id_classification'] ?>" class="openDeleteClassModal" href="#deleteClassModal" class="">
-											Apagar</a>
+										<i class="material-icons">delete</i></a>
 								</td>
 							</tr>
 						<?php endforeach ?>

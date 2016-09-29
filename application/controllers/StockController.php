@@ -622,13 +622,22 @@ class StockController extends CI_Controller {
 					array_push($product_array, $row);
 				}
 				if ($this->StockModel->createOutputStockProduct($product_array)) {
-					echo 2;
+					echo 1;
 				}
 				else { echo "Erro ao salvar os produtos."; }
 			}
 			else { echo "Nenhum produto adicionado."; }
 		}
 		else { echo "Ocorreu algum problema interno."; }
+		$delete_products = ($this->input->post('delete_produto'));
+		if($delete_products > 0){
+			foreach ($delete_products as $key => $delete_product) {
+				$id_produto = preg_replace("/[^0-9]/", "", $delete_product);
+				if ($this->StockModel->removeProductOutputStock($id_produto)) {
+					echo 1;
+				}else { echo "Erro ao remover os produtos"; }
+			}
 	}
+}
 
 }
