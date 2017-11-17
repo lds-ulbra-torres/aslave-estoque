@@ -8,6 +8,7 @@ class PeopleController extends CI_Controller {
 	public function __construct(){
 		parent:: __construct();
 		$this->load->model('people/PeopleModel');
+		$this->load->model('people/CitieModel');
 	}
 
 	public function index() {
@@ -178,10 +179,11 @@ class PeopleController extends CI_Controller {
 			}
 		}else{
 			$data['id'] = $id;
-			$data['peoples'] = $this->PeopleModel->get();
+			// $data['peoples'] = $this->PeopleModel->get();
 			$data['states'] = $this->PeopleModel->states();
 			$data['dados_pessoa'] = $this->PeopleModel->listPeople($id);
-			$data['alter_states'] = $this->PeopleModel->alterStates($id);
+			$data['dados_pessoa'][0]->id_state = $this->CitieModel->getStateId($data['dados_pessoa'][0]->id_cities);
+			// $data['alter_states'] = $this->PeopleModel->alterStates($id);
 			if($this->session->userdata($this->sess)){
 				$this->template->load('template/templateMenu', 'people/peopleUpdateView', $data);
 			}else{
@@ -216,28 +218,26 @@ class PeopleController extends CI_Controller {
 		}
 	}
 
-	public function alterCitie($id)
-	{
+	public function searchLocalidadeSelect(){
 		$options = "";
 		if($this->input->post('state'))
 		{
+			$id_person = $this->input->post('person');
 			$state = $this->input->post('state');
 			$localidades = $this->PeopleModel->localidades($state);
-			$data['alter_states'] = $this->PeopleModel->alterStates($id);
+			$user = $this->PeopleModel->listPeople($id_person);
 			foreach($localidades as $fila)
 			{
-				?>
-
-				<option
-				value="<?php echo $fila->id_cities ?>"
-				<?php echo $fila->id_cities==$data['alter_states'][0]->id_cities ?'selected':'';?>
-				>
-				<?= $fila -> name ?>
-			</option>
-			<?php
+				if($fila->id_cities == $user[0]->id_cities){?>
+				<option value="<?=$fila -> id_cities ?>" selected><?=$fila -> name ?></option>
+				<?php }else{
+					?>
+				<option value="<?=$fila -> id_cities ?>"><?=$fila -> name ?></option>		
+					<?php
+				}
+			}
 		}
 	}
-}
 
 public function searchPeople(){
 	$this->form_validation->set_rules('search_string', 'people', 'required');

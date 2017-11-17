@@ -48,14 +48,14 @@
 						</select>
 						<?php } ?>
 					</div>
-				</form>
-				<div class="right-align">
-					<a class="btn teal" href="<?=base_url('stock/products') ?>"><i class="material-icons">input</i> Voltar</a>
-					<button class="btn green" id="update_product_btn" type="submit">Salvar
-						<i class="material-icons right">send</i>
-					</button>
+					<div class="right-align">
+						<a class="btn teal" href="<?=base_url('stock/products') ?>"><i class="material-icons">input</i> Voltar</a>
+						<button class="btn green" id="update_product_btn" type="submit">Salvar
+							<i class="material-icons right">send</i>
+						</button>
+					</div>
 				</div>
-			</div>
+			</form>
 		</div>
 	</div>
 </div>

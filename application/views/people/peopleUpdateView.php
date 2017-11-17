@@ -6,9 +6,8 @@
 						<button class="btn teal" type="button" name="button" onclick="history.back()"><i class="material-icons">input</i> Voltar</button>
 					</div>
 				</div>
-
 				<div class="card-panel col s12">
-					<form class="col s12" action="<?= base_url("update-people/$id")?>" id="update-form" method="POST">
+					<form class="col s12" action="<?= base_url("update-person/$id")?>" id="update-form" method="POST">
 
 						<input type="hidden" name="updatePeopleId" id="id" value="<?= $id ?>" />
 
@@ -58,7 +57,7 @@
 							<select class="browser-default" name="state" id="state">
 								<?php foreach($states as $fila) : ?>
 									<option	value="<?php echo $fila->id_states ?>"
-										<?= $fila->id_states == $alter_states[0]->id_states ? 'selected':'';?>>
+										<?= $fila->id_states == $dados_pessoa[0]->id_state ? 'selected':'';?>>
 										<?= $fila->name ." / (" . $fila -> uf .")" ?>
 									</option>
 								<?php endforeach ?>
@@ -68,6 +67,7 @@
 					<div class="col s6">
 						<label for="updatePeopleCitie">Cidade *</label>
 						<select class="browser-default" name="updatePeopleCitie" id="localidade">
+
 						</select>
 					</select>
 				</div>
@@ -111,6 +111,25 @@
 </div>
 <script type="text/javascript">
 	$(document).ready(function(){
+
+		var state = $('#state option:selected').val();
+		$.ajax({
+			url: "<?php echo site_url('/PeopleController/searchLocalidadeSelect/') ?>",
+			type: "POST",
+			dataType: "html",
+			data: {
+				state: state,
+				person: <?= $dados_pessoa[0]->id_people?>				
+			},
+			success: function(data){
+				$("#localidade").append().html(data);
+				console.log(data);
+			},
+			error: function(data){
+				console.log(data);
+			}
+		});
+		
 //Escode Pessoa juridica ou fisica
 $(function() {
 	var documentFisic = $('.documentFisic');
@@ -161,7 +180,7 @@ $('#update-form').validate({
 $("#state").change(function(){
 	var state = $('#state option:selected').val();
 	$.ajax({
-		url: "<?php echo site_url('/CityStateController/searchLocalidade/') ?>",
+		url: "<?php echo site_url('/PeopleController/searchLocalidade/') ?>",
 		type: "POST",
 		dataType: "html",
 		data:{

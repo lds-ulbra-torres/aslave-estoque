@@ -7,7 +7,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  *
  * Host+Pass do 'prod' tá no trello
  */
-$active_group = 'test';
+$active_group = 'dev';
 $query_builder = TRUE;
 
 $db['test'] = array(

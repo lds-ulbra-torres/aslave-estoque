@@ -53,12 +53,12 @@
 						<li><a href="<?= base_url('financial-movimentation'); ?>">Lançamentos</a></li>
 					</ul>
 				</li>
-				<li>
+				<!-- <li>
 					<a class="dropdown-button blue-text" data-activates="nav_internal" href="#">INTERNOS</a>
 					<ul id="nav_internal" class="dropdown-content">
 						<li><a href="<?= base_url('internal');?>">Gerenciar</a></li>
 					</ul>
-				</li>
+				</li> -->
 				<li>
 					<a class="dropdown-button blue-text" data-activates="nav_user" href="#">USUÁRIOS</a>
 					<ul id="nav_user" class="dropdown-content">
@@ -85,92 +85,95 @@
 			<div class="col l12 center hide-on-med-and-down">
 				<ul class="ulMenu hide-on-small-only color tamanhoMenu ">
 					<label class="white-text labelLogo left fontUt"  style="margin-left: 25px;"><strong>ASLAVE</strong></label>
-					<a href="<?= base_url() ?>" class="aColor">
-						<li class="liclass"><p class="fontUt strMenu " style="vertical-align: middle;">HOME</p>
-						</li>
-					</a>
-					<a class="aColor dropdown-button" data-activates="estoque_buttons" href="#">
-						<li class="liclass">
-							<p class="fontUt strMenu " style="vertical-align: middle;">ESTOQUE
-								<i class="material-icons right">arrow_drop_down</i>
-							</p>
-						</li>
-					</a>
-					<a class="aColor dropdown-button" data-activates="financial_buttons" href="#">
-						<li class="liclass">
-							<p class="fontUt strMenu " style="vertical-align: middle;">FINANCEIRO
-								<i class="material-icons right">arrow_drop_down</i></p>
+
+					<div class="menu">
+						<a href="<?= base_url() ?>" class="aColor">
+							<li class="liclass"><p class="fontUt strMenu " style="vertical-align: middle;">HOME</p>
 							</li>
 						</a>
-						<a class="aColor dropdown-button" data-activates="internal_buttons" href="#">
+						<a class="aColor dropdown-button" data-activates="estoque_buttons" href="#">
 							<li class="liclass">
-								<p class="fontUt strMenu " style="vertical-align: middle;">INTERNOS
+								<p class="fontUt strMenu " style="vertical-align: middle;">ESTOQUE
+									<i class="material-icons right">arrow_drop_down</i>
+								</p>
+							</li>
+						</a>
+						<a class="aColor dropdown-button" data-activates="financial_buttons" href="#">
+							<li class="liclass">
+								<p class="fontUt strMenu " style="vertical-align: middle;">FINANCEIRO
 									<i class="material-icons right">arrow_drop_down</i></p>
 								</li>
 							</a>
-							<a class="aColor dropdown-button" data-activates="user_buttons" href="#">
+							<!-- <a class="aColor dropdown-button" data-activates="internal_buttons" href="#">
 								<li class="liclass">
-									<p class="fontUt strMenu " style="vertical-align: middle;">USUÁRIOS
+									<p class="fontUt strMenu " style="vertical-align: middle;">INTERNOS
 										<i class="material-icons right">arrow_drop_down</i></p>
 									</li>
-								</a>
-								<a class="aColor"  href="<?= base_url('sobre'); ?>">
-
-								</a>
-								<a class="aColor"  href="<?= base_url('UserController/logout'); ?>">
+								</a> -->
+								<a class="aColor dropdown-button" data-activates="user_buttons" href="#">
 									<li class="liclass">
-										<p class="fontUt strMenu " style="vertical-align: middle;">SAIR
+										<p class="fontUt strMenu " style="vertical-align: middle;">USUÁRIOS
+											<i class="material-icons right">arrow_drop_down</i></p>
 										</li>
 									</a>
-									<ul id="financial_buttons" class="dropdown-content">
+									<a class="aColor"  href="<?= base_url('sobre'); ?>">
+
+									</a>
+									<a class="aColor"  href="<?= base_url('UserController/logout'); ?>">
+										<li class="liclass">
+											<p class="fontUt strMenu " style="vertical-align: middle;">SAIR
+											</li>
+										</a>
+										<ul id="financial_buttons" class="dropdown-content">
+											<li>
+												<a href="<?= base_url('people'); ?>">Pessoas</a>
+											</li>
+											<li class="divider"></li>
+											<li>
+												<a href="<?= base_url('classification'); ?>">Classificações</a>
+											</li>
+
+											<li>
+												<a href="<?= base_url('financial-movimentation'); ?>">Lançamentos</a>
+											</li>
+										</ul>
+
+
+									</ul>
+									<ul id="estoque_buttons" class="dropdown-content">
 										<li>
 											<a href="<?= base_url('people'); ?>">Pessoas</a>
 										</li>
 										<li class="divider"></li>
 										<li>
-											<a href="<?= base_url('classification'); ?>">Classificações</a>
+											<a href="<?= base_url('stock/products'); ?>">Produtos</a>
 										</li>
-
 										<li>
-											<a href="<?= base_url('financial-movimentation'); ?>">Lançamentos</a>
+											<a href="<?= base_url('stock/groups'); ?>">Categorias</a>
+										</li>
+										<li class="divider"></li>
+										<li>
+											<a href="<?= base_url('stock/entries'); ?>">Entradas</a>
+										</li>
+										<li>
+											<a href="<?= base_url('stock/outputs'); ?>">Saídas</a>
+										</li>
+										<li class="divider"></li>
+									</ul>
+									<ul id="internal_buttons" class="dropdown-content">
+										<li>
+											<a href="<?= base_url('internal'); ?>">Gerenciar</a>
 										</li>
 									</ul>
-
-
-								</ul>
-								<ul id="estoque_buttons" class="dropdown-content">
-									<li>
-										<a href="<?= base_url('people'); ?>">Pessoas</a>
-									</li>
-									<li class="divider"></li>
-									<li>
-										<a href="<?= base_url('stock/products'); ?>">Produtos</a>
-									</li>
-									<li>
-										<a href="<?= base_url('stock/groups'); ?>">Categorias</a>
-									</li>
-									<li class="divider"></li>
-									<li>
-										<a href="<?= base_url('stock/entries'); ?>">Entradas</a>
-									</li>
-									<li>
-										<a href="<?= base_url('stock/outputs'); ?>">Saídas</a>
-									</li>
-									<li class="divider"></li>
-								</ul>
-								<ul id="internal_buttons" class="dropdown-content">
-									<li>
-										<a href="<?= base_url('internal'); ?>">Gerenciar</a>
-									</li>
-								</ul>
-								<ul id="user_buttons" class="dropdown-content">
-									<li>
-										<a href="<?= base_url('user/create'); ?>">Cadastrar</a>
-									</li>
-									<li>
-										<a href="<?= base_url('users/'); ?>">Gerenciar</a>
-									</li>
-								</ul>
+									<ul id="user_buttons" class="dropdown-content">
+										<li>
+											<a href="<?= base_url('user/create'); ?>">Cadastrar</a>
+										</li>
+										<li>
+											<a href="<?= base_url('users/'); ?>">Gerenciar</a>
+										</li>
+									</ul>
+								</div>
 							</div>
 						</div>
 					</div>

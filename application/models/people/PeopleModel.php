@@ -2,7 +2,6 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class PeopleModel extends CI_Model {
-
 	var $table = "people";
 
 	public function getPerson($id_person) {
@@ -65,11 +64,11 @@ class PeopleModel extends CI_Model {
 			return $localidades->result();
 		}
 	}
-
-	public function alterStates($id)
-	{
-	    return $this->db->query("call SP_people_cities($id)")->result();
-	}
+	
+	// public function alterStates($id)
+	// {
+	//     return $this->db->query("call SP_people_cities($id)")->result();
+	// }
 
     public function get_pagination($max, $init){
 
