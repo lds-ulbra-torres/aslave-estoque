@@ -3,6 +3,13 @@ date_default_timezone_set('America/Sao_Paulo');
 $datePick = date('Y-m-d');
 $monPick = date('Y-m');
 ?>
+
+<script>
+	$(document).ready(function(){		
+		var people_json = "<?php echo site_url('/StockController/searchPeople')?>";
+	    $('#idPeople').simpleSelect2Json(people_json,'id_people','name');
+	});
+</script>
 <div class="container">
     <a href="<?= base_url('financial-movimentation') ?>" >< Voltar para lançamentos</a>
 	<form action="create-movimentation" method="POST" >
@@ -23,15 +30,16 @@ $monPick = date('Y-m');
 			</div>
 			
 			
-				<div class="col s12">
-					<label for="inputPerson">Pessoa:</label>
-					<input type="text" name="people" id="inputPerson" placeholder="Pesquise uma pessoa aqui." value="" required></input>
-					<input type="hidden" name="idPeople" id="idPeople" ></input>
-
-					<a href="#" id="found">
-						
-					</a>
+			<div class="col s12">
+				<label for="searchPeopleId">Pessoa:</label>
+				<div class="col s12 m12">
+					<div class="input-field">
+						<select id="idPeople" class="selectSearch" name="idPeople">
+							<option value="" selected>Todos</option>
+						</select>
+					</div>    
 				</div>
+			</div>
 
 
 				<div class="col s6">

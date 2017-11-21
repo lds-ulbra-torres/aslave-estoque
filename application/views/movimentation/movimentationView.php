@@ -17,40 +17,42 @@ $monPick = date('Y-m');
             $('#found').empty();
         });
 
+        var people_json = "<?php echo site_url('/StockController/searchPeople')?>";
+	    $('#searchPeopleId').simpleSelect2Json(people_json,'id_people','name');
 
         // Pesquisa Pessoa
-        $("input[id=searchPeople]").keyup(function () {
-            if ($(this).val() != '') {
-                $.ajax({
-                    url: "<?= site_url('/SearchController/buscar'); ?>",
-                    type: "POST",
-                    cache: false,
-                    data: {name_people: $(this).val()},
-                    success: function (data) {
-                        $('#found').html("");
-                        var obj = JSON.parse(data);
-                        if (obj.length > 0) {
-                            try {
-                                var items = [];
-                                $.each(obj, function (i, val) {
-                                    items.push($('<option id="' + val.id_people + '" value="' + val.name + '"> ' + val.name + '</option>'));
-                                });
-                                $('#found').append.apply($('#found'), items);
-                            } catch (e) {
-                                alert('Exception while request..');
-                            }
-                        } else {
-                            $('#found').html($('<span/>').text("Nenhum nome encontrado"));
-                        }
-                    },
-                    error: function () {
-                        alert("ERRO!");
-                    }
-                });
-            } else {
-                $('#found').empty();
-            }
-        });
+        // $("input[id=searchPeople]").keyup(function () {
+        //     if ($(this).val() != '') {
+        //         $.ajax({
+        //             url: "<?= site_url('/SearchController/buscar'); ?>",
+        //             type: "POST",
+        //             cache: false,
+        //             data: {name_people: $(this).val()},
+        //             success: function (data) {
+        //                 $('#found').html("");
+        //                 var obj = JSON.parse(data);
+        //                 if (obj.length > 0) {
+        //                     try {
+        //                         var items = [];
+        //                         $.each(obj, function (i, val) {
+        //                             items.push($('<option id="' + val.id_people + '" value="' + val.name + '"> ' + val.name + '</option>'));
+        //                         });
+        //                         $('#found').append.apply($('#found'), items);
+        //                     } catch (e) {
+        //                         alert('Exception while request..');
+        //                     }
+        //                 } else {
+        //                     $('#found').html($('<span/>').text("Nenhum nome encontrado"));
+        //                 }
+        //             },
+        //             error: function () {
+        //                 alert("ERRO!");
+        //             }
+        //         });
+        //     } else {
+        //         $('#found').empty();
+        //     }
+        // });
 
         // Achar a bendita
         $("#toFound").submit(function (e) {
@@ -68,7 +70,7 @@ $monPick = date('Y-m');
                     var saida = 0;
                     var entrada = 0;
                     document.getElementById('searchPeopleId').value = "";
-                    document.getElementById('searchPeople').value = "";
+                    // document.getElementById('searchPeople').value = "";
                     document.getElementById('searchDate').value = "";
                     document.getElementById('typeSearch').value = "";
 
@@ -139,12 +141,13 @@ $monPick = date('Y-m');
                     <a class="margin-alter btn green" href="<?= base_url('create-movimentation-form'); ?>">ADICIONAR
                         NOVO</a>
                 </div>
-                <div class="col s12 m3 ">
-                    <label for="searchPeople" class="black-text ">Pessoa:</label>
-                    <input type="text" autocomplete="off" name="searchPeople" id="searchPeople"></input>
-                    <input type="hidden" name="searchPeopleId" id="searchPeopleId"></input>
-                    <a href="#" id="found">
-                    </a>
+                <div class="col s12 m3 l3">
+                    <label for="people" class="black-text ">Pessoa:</label>
+                    <div class="input-field col s12 m11">
+                        <select id="searchPeopleId" class="selectSearch" name="people">
+                            <option value="" selected>Todos</option>
+                        </select>
+                    </div>                    
                 </div>
                 <div class="col s12 m3">
                     <label for="searchDate" class="black-text">Competência:</label>

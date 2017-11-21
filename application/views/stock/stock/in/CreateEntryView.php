@@ -121,8 +121,8 @@
 					</div>
 				</div>
 				<div class="card-panel col s12 m12 l8">
-					<div class="input-field col s12 m12">
-						<select id="people" name="people"></select>
+					<div class="input-field col s12 m11">
+						<select id="people" class="selectSearch" name="people"></select>
 					</div>
 					<div class="input-field col s12 m5 margin-alter">
 						<select name="stock_type" id="stock_type">
