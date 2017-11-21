@@ -272,6 +272,13 @@ class StockController extends CI_Controller {
 			$product = $this->input->post('search_string');
 			$group = $this->input->post('group');
 			$result = $this->ProductModel->search($product, $group);
+
+			if($group == ""){
+				for($i = 0; $i < count($result); $i++){
+					$groupResult = $this->GroupModel->getGroupById($result[$i]->id_group);
+					$result[$i]->name_group = $groupResult[0]['name_group'];
+				}
+			}
 			echo json_encode($result);
 	}
 	/*public function searchProductByGroup(){

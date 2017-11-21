@@ -57,14 +57,20 @@ class ProductModel extends CI_Model {
 		return false;
 	}
 	public function search($product, $group){
-		$this->db->join('stock_product_groups', 'stock_products.id_group = stock_product_groups.id_group', 'inner');
-		$this->db->group_by('stock_products.id_product');
+		if($group == ""){
+			$this->db->select('*');
+		} else{
+			$this->db->join('stock_product_groups', 'stock_products.id_group = stock_product_groups.id_group', 'inner');
+			$this->db->group_by('stock_products.id_product');
+			$this->db->where('stock_products.id_group', $group);
+		}
+
 		$whereCondition = array('stock_products.name_product' => $product);
 		$this->db->like($whereCondition);
-		$this->db->where('stock_products.id_group', $group);
 		$this->db->from($this->table);
-		$query = $this->db->get();
-		return $query->result();
+		$query = $this->db->get()->result();
+		
+		return $query;
 
 	}
 	/*public function searchByGroup($id_group){
