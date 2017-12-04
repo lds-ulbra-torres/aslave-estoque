@@ -33,14 +33,13 @@
 				<div class="card-panel">
 					<input required="required" type="text" name="group_name" maxlength="45" placeholder="Nome">
 				</div>
-
+				<div class="right-align">
+					<a class="btn teal" href="<?=base_url('stock/groups') ?>"><i class="material-icons">input</i> Voltar</a>
+					<button class="btn green" id="create_group_btn" type="submit">Salvar
+						<i class="material-icons right">send</i>
+					</button>
+				</div>
 			</form>
-			<div class="right-align">
-				<a class="btn teal" href="<?=base_url('stock/groups') ?>"><i class="material-icons">input</i> Voltar</a>
-				<button class="btn green" id="create_group_btn" type="submit">Salvar
-					<i class="material-icons right">send</i>
-				</button>
-			</div>
 		</div>
 	</div>
 </div>

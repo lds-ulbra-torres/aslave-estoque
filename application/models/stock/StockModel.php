@@ -32,12 +32,12 @@ class StockModel extends CI_Model {
 		$entry = $this->db->get($this->input)->result_array();
 		$people = $this->db->get_where('people', array('id_people' => $entry[0]['id_people']))->result_array();
 		return array('entry' => $entry, 'people' => $people);
-		
 	}
+
 	public function getDetailedOutput($id_stock) {
 		$this->db->where('stock_output.id_stock', $id_stock);
-		$this->db->join('stock_output_products', 'stock_output.id_stock = stock_output_products.id_stock', 'inner');
-		$this->db->join('stock_products', 'stock_output_products.id_product = stock_products.id_product', 'inner');
+		$this->db->join('stock_output_products', 'stock_output.id_stock = stock_output_products.id_stock', 'left');
+		$this->db->join('stock_products', 'stock_output_products.id_product = stock_products.id_product', 'left');
 		$this->db->order_by("stock_output_products.id_product", "desc");
 		$output = $this->db->get($this->output)->result_array();
 		$people = $this->db->get_where('people', array('id_people' => $output[0]['id_people']))->result_array();
@@ -59,7 +59,7 @@ class StockModel extends CI_Model {
 		$query = $this->db->get_where($this->input_has_products, $product_id, 1);
 		if ($query->num_rows() > 0){
 			return true;
-		} 
+		}
 		return false;
 	}
 
@@ -88,7 +88,7 @@ class StockModel extends CI_Model {
 	}
 	public function searchStockByDate($from, $to){
 		$this->db->join('people', 'stock_input.id_people = people.id_people', 'inner');
-		$query = 'input_date BETWEEN "'.$from.'" and "'.$to.'"'; 
+		$query = 'input_date BETWEEN "'.$from.'" and "'.$to.'"';
 		$this->db->where($query);
 		return $this->db->get($this->input)->result_array();
 	}
@@ -104,7 +104,7 @@ class StockModel extends CI_Model {
 	}
 	public function searchStockByAllWithDate($data){
 		$this->db->join('people', 'stock_input.id_people = people.id_people', 'inner');
-		$query = 'stock_input.input_date BETWEEN "'.$data['from'].'" and "'.$data['to'].'"'; 
+		$query = 'stock_input.input_date BETWEEN "'.$data['from'].'" and "'.$data['to'].'"';
 		$this->db->where($query);
 		$this->db->like('people.name', $data['people']);
 		$this->db->like('stock_input.input_type', $data['input_type']);

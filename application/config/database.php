@@ -7,30 +7,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  *
  * Host+Pass do 'prod' tá no trello
  */
-$active_group = 'dev';
+$active_group = 'prod';
 $query_builder = TRUE;
-
-$db['test'] = array(
-	'dsn'	=> '',
-	'hostname' => 'slavedb_teste.mysql.dbaas.com.br',
-	'username' => 'slavedb_teste',
-	'password' => 'Peixeira',
-	'database' => 'slavedb_teste',
-	'dbdriver' => 'mysqli',
-	'dbprefix' => '',
-	'pconnect' => FALSE,
-	'db_debug' => (ENVIRONMENT !== 'production'),
-	'cache_on' => FALSE,
-	'cachedir' => '',
-	'char_set' => 'utf8',
-	'dbcollat' => 'utf8_general_ci',
-	'swap_pre' => '',
-	'encrypt' => FALSE,
-	'compress' => FALSE,
-	'stricton' => FALSE,
-	'failover' => array(),
-	'save_queries' => TRUE
-);
 
 $db['dev'] = array(
 	'dsn'	=> '',
@@ -56,10 +34,10 @@ $db['dev'] = array(
 
 $db['prod'] = array(
 	'dsn'	=> '',
-	'hostname' => '',
-	'username' => 'slavedb',
-	'password' => '',
-	'database' => 'slavedb',
+	'hostname' => 'aslave1_bd.mysql.dbaas.com.br',
+	'username' => 'aslave1_bd',
+	'password' => 'user@@@987',
+	'database' => 'aslave1_bd',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,

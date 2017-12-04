@@ -174,7 +174,7 @@
 						<input name="amount" required="required" type="number" placeholder="Quantia">
 					</div>
 					<div class="input-field col s12 m2">
-						<input name="price" required="required" type="number" placeholder="Preço" step="0.00" min="0.00">
+						<input name="price" required="required" type="number" placeholder="Preço" step="0.01" min="0.00">
 					</div>
 				</div>
 				<div class="modal-footer">

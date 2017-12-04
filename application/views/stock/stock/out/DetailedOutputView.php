@@ -1,6 +1,6 @@
 <div class="container">
 	<div class="card-panel blue-text">
-		<h4>Detalhes de Saída [<?= $output_data['output'][0]['id_stock']; ?>]</h4>
+		<h4>Detalhes de Saída</h4>
 		<div class="right-align">
 			<a class="btn teal" href="<?=base_url('stock/outputs') ?>"><i class="material-icons">input</i> Voltar</a>
 			<a class="btn" href="<?= base_url('stock/outputs/update/'.$output_data['output'][0]['id_stock']); ?>"><i class="material-icons">edit</i> Editar</a>
