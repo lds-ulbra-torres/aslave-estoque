@@ -11,13 +11,8 @@ class UserModel extends CI_Model {
 		
 		$this->db->where('login', $login);
 		$this->db->where('password', $password);
-		$query = $this->db->get($this->table);
-
-		if($query->num_rows() > 0){
-			return true;
-		}else{
-			return false;
-		}
+		$query = $this->db->get($this->table)->result();
+		return $query;
 		
 	}
 	public function checkUser($user){

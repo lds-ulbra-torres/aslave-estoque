@@ -243,7 +243,7 @@
 	<div class="row">
 
 		<div class="card-panel blue-text">
-			<h4>Entradas de Estoque [<?= count($input_stocks) ?>]</h4>
+			<h4>Entradas de Estoque</h4>
 			<div class="right-align">
 				<a class="green btn" href="<?=base_url('stock/entries/create') ?>">Adicionar nova</a>
 			</div>

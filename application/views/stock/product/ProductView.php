@@ -111,7 +111,7 @@
 <div class="container">
 	<div class="row">
 		<div class="card-panel blue-text">
-			<h4>Produtos [<?= count($products) ?>]</h4>
+			<h4>Produtos</h4>
 			<div class="right-align">
 				<a class="green btn" id="" href="<?= base_url('stock/products/create'); ?>">Adicionar novo</a>
 			</div>

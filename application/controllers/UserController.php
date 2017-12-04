@@ -49,14 +49,18 @@ class UserController extends CI_Controller {
 		if($this->form_validation->run()){
 			$login = $this->input->post('login');
 			$password = md5($this->input->post('password'));
-			if($this->UserModel->login($login, $password)){
+			$user = $this->UserModel->login($login, $password);
+			if($user){
 				if($this->input->post('remember_me')){
 					$timeCookie = time() + 36000;
 					setcookie('login_aslave', $login, $timeCookie, "/");
 					setcookie('password_aslave', $password, $timeCookie, "/");
 				}
-
-				$this->session->set_userdata('login', $login);
+				$userSession = array(
+					"login" => $user[0]->login,
+					"id_user" => $user[0]->id_user
+				);
+				$this->session->set_userdata($userSession);
 				echo "1";
 			}else{
 				echo "Nome de usuário ou senha incorretos.";
@@ -97,7 +101,8 @@ class UserController extends CI_Controller {
 	}
 	public function deleteUser(){
 		$user = array('id_user' => $this->input->post("user"));
-		if($this->UserModel->delete($user)){
+
+		if($this->UserModel->delete($user) && $user['id_user'] != $this->session->userdata('id_user') && $user['id_user'] != null){
 			echo 'Usuário apagado.';
 		} 
 		else { echo 'Ocorreu algum problema interno. Tente novamente'; }

@@ -140,7 +140,9 @@
                         <td><?= $row['login'] ?></td>
                         <td>
                             <a href="<?= base_url('user/update/' . $row['id_user']); ?>"><i class="material-icons">edit</i></a>&nbsp;
+                            <?php if($this->session->userdata('id_user') != $row['id_user']){?>
                             <a class="delete_user" id="<?= $row['id_user']; ?>" href="#"><i class="material-icons">delete</i></a>
+                            <?php }?>
                         </td>
                     </tr>
                 <?php endforeach; ?>

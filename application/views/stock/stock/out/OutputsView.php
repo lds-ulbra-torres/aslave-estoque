@@ -120,7 +120,7 @@
 <div class="container">
 	<div class="row">
 		<div class="card-panel blue-text">
-			<h4>Saídas de Estoque [<?= count($output_stocks) ?>]</h4>
+			<h4>Saídas de Estoque</h4>
 			<div class="right-align">
 				<a class="green btn" href="<?=base_url('stock/outputs/create') ?>">Adicionar nova</a>
 			</div>

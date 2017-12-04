@@ -72,7 +72,7 @@
 <div class="container">
 	<div class="row">
 		<div class="card-panel blue-text">
-			<h4>Categorias [<?= count($groups) ?>]</h4>
+			<h4>Categorias</h4>
 			<div class="right-align">
 				<a class="green btn" id="" href="<?= base_url('stock/groups/create'); ?>">Adicionar nova</a>
 			</div>
