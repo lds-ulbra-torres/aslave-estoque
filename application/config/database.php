@@ -34,9 +34,9 @@ $db['dev'] = array(
 
 $db['prod'] = array(
 	'dsn'	=> '',
-	'hostname' => 'aslave1_bd.mysql.dbaas.com.br',
+	'hostname' => 'mysql942.umbler.com',
 	'username' => 'aslave1_bd',
-	'password' => 'user@@@987',
+	'password' => 'Presidente*1',
 	'database' => 'aslave1_bd',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
